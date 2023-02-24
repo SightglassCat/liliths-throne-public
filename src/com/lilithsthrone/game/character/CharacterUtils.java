@@ -281,6 +281,7 @@ public class CharacterUtils {
 		AbstractRacialBody motherBody = RacialBody.valueOfRace(body==null?mother.getRace():body.getRace());//RacialBody.valueOfRace(Subspecies.getOffspringFromMotherSubspecies(mother, father).getRace());
 		AbstractRacialBody fatherBody = RacialBody.valueOfRace(body==null?(father==null?mother.getRace():father.getRace()):body.getRace());//RacialBody.valueOfRace(Subspecies.getOffspringFromFatherSubspecies(mother, father).getRace());
 		AbstractSubspecies raceTakesAfter = mother.getSubspecies();
+		AbstractSubspecies raceTakesAfterFlesh = mother.getBody().getFleshSubspecies();
 		boolean feminineGender = startingGender.isFeminine();
 		NPC blankNPC = Main.game.getNpc(GenericAndrogynousNPC.class);
 		
@@ -288,6 +289,8 @@ public class CharacterUtils {
 			father = mother;
 		}
 		
+		if (mother.getRace() == Race.SLIME){ motherBody = mother.getBody().getFleshSubspecies().getRace().getRacialBody(); }
+		if (father.getRace() == Race.SLIME){ fatherBody = father.getBody().getFleshSubspecies().getRace().getRacialBody(); }
 		boolean motherHuman = motherBody.getTorsoType().getRace()==Race.HUMAN;
 		boolean fatherHuman = fatherBody.getTorsoType().getRace()==Race.HUMAN;
 		
@@ -318,6 +321,7 @@ public class CharacterUtils {
 					stage = father.getRaceStage();
 				}
 				raceTakesAfter = father.getSubspecies();
+				raceTakesAfterFlesh = father.getBody().getFleshSubspecies();
 				takesAfterMother = false;
 				raceFromMother = false;
 			}
@@ -358,6 +362,9 @@ public class CharacterUtils {
 		
 		linkedCharacter.setGenderIdentity(startingGender);
 		body.setBodyMaterial(mother.getBodyMaterial());
+		if (Math.random() < 0.20) {
+			body.setBodyMaterial(father.getBodyMaterial());
+		}
 		
 		// Genetics! (Sort of...)
 		
@@ -959,8 +966,14 @@ public class CharacterUtils {
 		// The applyRaceChanges and applySpeciesChanges methods sometimes change covering colours and then call updateCoverings(), which will result in this character's covering colours being unrelated to genetics
 		// To fix, coverings are saved and then restored after the two methods have been called
 		Map<AbstractBodyCoveringType, Covering> preChangesCoverings = body.getCoverings();
-		raceTakesAfter.getRace().applyRaceChanges(body);
-		raceTakesAfter.applySpeciesChanges(body);
+		if (raceTakesAfter.getRace() != Race.SLIME) {
+			raceTakesAfter.getRace().applyRaceChanges(body);
+			raceTakesAfter.applySpeciesChanges(body);
+		} else {
+			//System.err.println(raceTakesAfter.getName(null) + ',' + raceTakesAfterFlesh.getName(null));
+			raceTakesAfterFlesh.getRace().applyRaceChanges(body);
+			raceTakesAfterFlesh.applySpeciesChanges(body);
+		}
 		body.setCoverings(preChangesCoverings);
 		
 		body.setTakesAfterMother(takesAfterMother);
