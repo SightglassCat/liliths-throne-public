@@ -97,7 +97,7 @@
 		All of the returned text is displayed to the player. -->
 		<applyEffects><![CDATA[
 			[##npc.removeStatusEffect(SE_PROMISCUITY_PILL)]
-			[##npc.addStatusEffect(SE_VIXENS_VIRILITY, 60*24*60)]
+			[##npc.addStatusEffect(SE_VIXENS_VIRILITY, 14*60*24*60)]
 			<p style='margin-bottom:0; padding-bottom:0;'>
 				The small pill easily slides down [npc.her] throat, and within moments [npc.she] [npc.verb(feel)]
 				#IF(npc.hasVagina())

@@ -32,7 +32,7 @@
 		
 		<applyEffects><![CDATA[
 			[##npc.removeStatusEffect(SE_PROMISCUITY_PILL)]
-			[##npc.addStatusEffect(SE_BROODMOTHER_PILL, 60*24*60)]
+			[##npc.addStatusEffect(SE_BROODMOTHER_PILL, 7*60*24*60)]
 			<p style='margin-bottom:0; padding-bottom:0;'>
 				As the pill slides down [npc.namePos] throat, [npc.she] [npc.verb(assume)] there's little effect to be felt, but suddenly a powerful cramp takes hold of [npc.her] stomach!
 			</p>
