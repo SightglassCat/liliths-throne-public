@@ -368,13 +368,19 @@ public class CharacterUtils {
 		}
 		
 		// Non-biped parents:
+		boolean motherLegConfigSkipped = false;
+		boolean fatherLegConfigSkipped = false;
 		if(takesAfterMother) {
-			if(body.getLeg().getType().isLegConfigurationAvailable(mother.getLegConfiguration())) {
-				body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
+			if(body.getLeg().getType().isLegConfigurationAvailable(mother.getLegConfiguration()) && Util.random.nextInt(100) < 75) {
+				if (!mother.isFeral()) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
+				} else { motherLegConfigSkipped = true; }
 			}
 		} else {
-			if(body.getLeg().getType().isLegConfigurationAvailable(father.getLegConfiguration())) {
-				body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
+			if(body.getLeg().getType().isLegConfigurationAvailable(father.getLegConfiguration()) && Util.random.nextInt(100) < 75) {
+				if (!father.isFeral()) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
+				} else { fatherLegConfigSkipped = true; }
 			}
 		}
 		
@@ -903,8 +909,44 @@ public class CharacterUtils {
 			}
 		}
 
-		if(mother.isFeral()) { // Feral mothers always birth feral offspring. This is done after the genetics section to make sure that the feral offspring is not modified in an unintended manner (such as making them as tall as the father).
-			body.setFeral(raceTakesAfter.isFeralConfigurationAvailable()?raceTakesAfter:mother.getSubspecies());
+		if(mother.isFeral()) {
+			if (raceTakesAfter.isFeralConfigurationAvailable()) {
+				if(father.isFeral() || (!father.isFeral() && Math.random()<=0.75)) {
+				// Applies leg config only when it was previously skipped above
+				// Already checked for compatible leg config to set motherLegConfigSkipped, fatherLegConfigSkipped
+				if (motherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
+				} else if (fatherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
+				}
+				body.setFeral(raceTakesAfter);
+				}
+			} else {
+				if(father.isFeral() || (!father.isFeral() && Math.random()<=0.75)) {
+				if (motherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
+				} else if (fatherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
+				}
+				body.setFeral(mother.getSubspecies());
+				}
+			}
+		} else if(father.isFeral() && Math.random()<=0.3) {
+			if (raceTakesAfter.isFeralConfigurationAvailable()) {
+				if (motherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
+				} else if (fatherLegConfigSkipped) {
+				body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
+				}
+				body.setFeral(raceTakesAfter);
+			} else if (father.getSubspecies().isFeralConfigurationAvailable()) {
+				if (motherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
+				} else if (fatherLegConfigSkipped) {
+					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
+				}
+				body.setFeral(father.getSubspecies());
+			}
 		}
 		
 		if(!body.isFeral()
