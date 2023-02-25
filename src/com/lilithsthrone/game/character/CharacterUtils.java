@@ -1042,7 +1042,7 @@ public class CharacterUtils {
 	}
 
 	public Body generateHalfDemonBody(GameCharacter linkedCharacter, Gender startingGender, AbstractSubspecies halfSubspecies, boolean applyHalfDemonAttributeChanges) {
-		return generateHalfDemonBody(linkedCharacter, startingGender, halfSubspecies, applyHalfDemonAttributeChanges, null);
+	    return generateHalfDemonBody(linkedCharacter, startingGender, halfSubspecies, applyHalfDemonAttributeChanges, null);
 	}
 	
 	public Body generateHalfDemonBody(GameCharacter linkedCharacter, Gender startingGender, AbstractSubspecies halfSubspecies, boolean applyHalfDemonAttributeChanges, RaceStage overrideStage) {
@@ -1995,7 +1995,7 @@ public class CharacterUtils {
 		character.setHipSize(character.getHipSize().getValue() - assHipVariation);
 		
 		// Body (height):
-		int height = character.getHeightValue()-15 + Util.random.nextInt(30) + 1;
+		int height = character.getHeightValue() - 18 + Util.random.nextInt(20) + Util.random.nextInt(20);
 		
 		// Keep height within category if short stature:
 		if(character.getHeight()==Height.NEGATIVE_THREE_MINIMUM
@@ -2009,7 +2009,7 @@ public class CharacterUtils {
 		}
 		
 		// Body (femininity):
-		int femininityVariation = -10 + Util.random.nextInt(21); // -10 to 10
+		int femininityVariation = -20 + Util.random.nextInt(21) + Util.random.nextInt(21);
 		
 		switch(character.getFemininity()) { // Do not move out of masculine/feminine/androgynous zones:
 			case ANDROGYNOUS:
@@ -2026,10 +2026,10 @@ public class CharacterUtils {
 		}
 		
 		// Body (muscle and size):
-		int muscleVariation = -5 + Util.random.nextInt(11); // -5 to 5
+		int muscleVariation = -10 + Util.random.nextInt(11) + Util.random.nextInt(11); // -5 to 5
 		character.incrementMuscle(muscleVariation);
 
-		int bodySizeVariation = -5 + Util.random.nextInt(11); // -5 to 5
+		int bodySizeVariation = -10 + Util.random.nextInt(11) + Util.random.nextInt(11); // -5 to 5
 		character.incrementBodySize(bodySizeVariation);
 		
 		//Breasts:
