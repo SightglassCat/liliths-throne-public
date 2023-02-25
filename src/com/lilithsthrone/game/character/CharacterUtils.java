@@ -140,6 +140,9 @@ import com.lilithsthrone.utils.colours.ColourListPresets;
 import com.lilithsthrone.utils.colours.PresetColour;
 import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.PlaceType;
+import com.lilithsthrone.game.character.effects.Perk;
+import com.lilithsthrone.game.character.race.Disposition;
+import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
 
 /**
  * @since 0.1.67
@@ -3211,16 +3214,15 @@ public class CharacterUtils {
 	}
 	
 	public void applyTattoos(GameCharacter character, boolean overrideExistingTattoos) {
-		if(character.isShy() || character.isInnocent() || character.isPrude()) {
-			return; // Shy, innocent, and prude characters don't get tattoos
-		}
 		// Higher corruption levels increase tattoo chance:
 		float tattooChance = 0;
 		boolean lewdTattoos = false;
 		int maxTattooCount = 1;
 		switch(character.getCorruptionLevel()) {
 			case ZERO_PURE:
-				return; // Pure characters don't get tattoos
+				tattooChance = 0.05f;
+				break;
+				//return; // Pure characters don't get tattoos
 			case ONE_VANILLA:
 				tattooChance = 0.1f;
 				break;
@@ -3244,6 +3246,23 @@ public class CharacterUtils {
 				maxTattooCount = 8;
 				break;
 		}
+		
+		if (character.isSlave()) {
+			tattooChance += 0.20f;
+		}
+		if (character.isMasochist()) {
+			tattooChance += 0.10f;
+		}
+		if (character.getFetishDesire(Fetish.FETISH_EXHIBITIONIST).isPositive()) {
+			tattooChance += 0.10f;
+		}
+		if (character.getRace().getDisposition() == Disposition.SAVAGE || character.getRace().getDisposition() == Disposition.UNPREDICTABLE) {
+			tattooChance += 0.15f;
+		}
+		if(character.isShy() || character.isInnocent() || character.isPrude()) {
+			tattooChance = 0.8f*tattooChance - 0.05f;
+		}
+		
 		if(Math.random()>tattooChance) {
 			return;
 		}
@@ -3264,6 +3283,51 @@ public class CharacterUtils {
 		List<AbstractTattooType> availableTypes = new ArrayList<>(TattooType.getAllTattooTypes());
 		availableTypes.remove(TattooType.getTattooTypeFromId("innoxia_misc_none"));
 		availableTypes.removeIf(tattoo->tattoo.isUnique());
+		
+		// Make some tattoos a bit less frequent
+		availableTypes.removeIf(tattoo->tattoo.getId().contains("kingdoggo") && Math.random()<0.65); // kingdoggo's runic tattoos
+		availableTypes.removeIf(tattoo->tattoo.getId().contains("nhom_racetats") && Math.random()<0.65); // nhom species icon tattoos
+		
+		switch (character.getSexualOrientation()) {
+		    case ANDROPHILIC -> {
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_weapon_crossed_blades"));
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_knot_trinity"));
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_knot_spiral"));
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_symbol_tribal"));
+		    }
+		    case AMBIPHILIC -> {
+		    }
+		    case GYNEPHILIC -> {
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_hearts_hearts"));
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_animal_butterflies"));
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_plant_rose"));
+			availableTypes.add(TattooType.getTattooTypeFromId("innoxia_plant_flowers"));
+		    }	
+		}
+		if (character.getCorruptionLevel().compareTo(CorruptionLevel.THREE_DIRTY) >= 0 
+			|| character.getRace() == Race.DEMON) {
+		    availableTypes.add(TattooType.getTattooTypeFromId("innoxia_symbol_pentagram"));
+		}
+		if (character.getRace() == Race.HORSE_MORPH) {
+		    availableTypes.add(TattooType.getTattooTypeFromId("innoxia_animal_hoof"));
+		}
+		if (character.getRace() == Race.RAT_MORPH) {
+		    availableTypes.add(TattooType.getTattooTypeFromId("innoxia_gang_rat_skull"));
+		}
+		if (character.getRace().getDisposition() == Disposition.SAVAGE 
+			|| character.getRace().getDisposition() == Disposition.UNPREDICTABLE 
+			|| character.isFeral()) {
+		    availableTypes.add(TattooType.getTattooTypeFromId("innoxia_animal_paw"));
+		}
+		
+		// From NHOM's subspecies tattoo mod
+		/*String raceTatId = "nhom_racetats_"+character.getSubspecies().getName(null);
+		AbstractTattooType raceTat = TattooType.getTattooTypeFromId(raceTatId);
+		// Add if an exact match is found
+		if (raceTatId.equals(raceTat.getName())) {
+		    availableTypes.add(raceTat);
+		    System.err.println("Found "+raceTatId);
+		}*/
 		
 		List<InventorySlot> commonSlots = new ArrayList<>(InventorySlot.getCommonTattooSlots());
 		
@@ -3320,6 +3384,121 @@ public class CharacterUtils {
 				character.addTattoo(slot, tat);
 			}
 		}
+		float wombTatChance = tattooChance;
+		wombTatChance += character.getFetishDesire(Fetish.FETISH_PREGNANCY).isPositive() ? 0.15 : -0.05;
+		wombTatChance += character.getFetishDesire(Fetish.FETISH_PREGNANCY) == FetishDesire.FOUR_LOVE ? 0.20 : 0;
+		wombTatChance += character.getFetishDesire(Fetish.FETISH_EXHIBITIONIST).isPositive() ? 0.05 : -0.05;
+		wombTatChance += character.hasTraitActivated(Perk.FETISH_BROODMOTHER) ? 0.15 : 0;
+		wombTatChance *= character.getFetishDesire(Fetish.FETISH_PREGNANCY).isPositive() ? 2 : 0.75;
+		wombTatChance *= character.getFetishDesire(Fetish.FETISH_PREGNANCY).isNegative() ? 0 : 1;
+		wombTatChance *= character.isAbleToBeImpregnated() ? 1.2 : 0.5;
+		wombTatChance *= character.hasVagina() ? 1 : 0.5;
+		
+		if(Math.random()< wombTatChance) {
+			boolean pregSub = character.getFetishDesire(Fetish.FETISH_SUBMISSIVE).isPositive();
+			boolean pregDom = character.getFetishDesire(Fetish.FETISH_DOMINANT).isPositive();
+			boolean cumDump = character.getFetishDesire(Fetish.FETISH_EXHIBITIONIST).isPositive()||character.getFetishDesire(Fetish.FETISH_CUM_ADDICT).isPositive();
+			boolean fem = character.isFeminine();
+			boolean masc = !fem;
+			boolean masochist = character.isMasochist();
+			boolean cherry = character.isVaginaVirgin();
+			boolean slave = character.isSlave();
+			String writing = Util.randomItemFrom(Util.newArrayListOfValues(
+				"",
+				"",
+				"Breed me",
+				"Breeder",
+				"Breedable",
+				"No Condoms",
+				"Cum Inside",
+
+				fem?"Mommy":null,
+				masc?"Daddy":null,
+				"Make Me A "+(fem?"Mommy":"Daddy"),
+
+				pregSub?"Breeding Bitch":null,
+				pregSub?"Pregslut":null,
+				pregSub?"Wombslut":null,
+				pregSub?"Submissive and Breedable":null,
+				pregSub?"Use Me":null,
+				pregSub&&masc?"Bitchboy":null,
+				pregSub&&masc?"Omega":null,
+				pregDom?"Worship":null,
+				pregDom?"Give Tribute":null,
+				pregDom?"Alpha Breeder":null,
+				pregDom&&fem?"Goddess":null,
+				pregDom&&fem?"Mommy":null,
+				pregDom&&masc?"Master Breeder":null,
+				pregDom&&masc?"Daddy":null,
+				pregDom&&masochist?"Prove Your Worth":null,
+				masochist?"Bastards On Board":null,
+				masochist?"Use Me":null,
+
+				character.getFetishDesire(Fetish.FETISH_SIZE_QUEEN).isPositive()?"Breed Me Deep":null,
+				character.getFetishDesire(Fetish.FETISH_SIZE_QUEEN).isPositive()?"Hilt Me":null,
+				character.getFetishDesire(Fetish.FETISH_SIZE_QUEEN).isPositive()?"All The Way In":null,
+				character.getFetishDesire(Fetish.FETISH_CUM_ADDICT).isPositive()?"Fill Me Up":null,
+				character.getFetishDesire(Fetish.FETISH_CUM_ADDICT).isPositive()?"Sperm Addict":null,
+				character.getFetishDesire(Fetish.FETISH_LACTATION_SELF).isPositive()&&fem?"Milky Mommy":null,
+				character.getFetishDesire(Fetish.FETISH_LACTATION_SELF).isPositive()?"Milky":null,
+				character.getFetishDesire(Fetish.FETISH_PURE_VIRGIN).isPositive()&&cherry?"Pure":null,
+				character.getFetishDesire(Fetish.FETISH_PURE_VIRGIN).isPositive()&&!cherry?"Impure":null,
+				character.getFetishDesire(Fetish.FETISH_NON_CON_SUB).isPositive()?"Fucktoy":null,
+				character.getFetishDesire(Fetish.FETISH_BONDAGE_VICTIM).isPositive()?"Bound Breeder":null,
+				character.getFetishDesire(Fetish.FETISH_EXHIBITIONIST).isPositive()?"Sexual Education":null,
+				character.getFetishDesire(Fetish.FETISH_EXHIBITIONIST).isPositive()?"Make Bets":null,
+				character.getFetishDesire(Fetish.FETISH_EXHIBITIONIST).isPositive()?"Watch Me Swell":null,
+				character.getFetishDesire(Fetish.FETISH_BIMBO).isPositive()&&fem?"Bimbo":null,
+				character.getFetishDesire(Fetish.FETISH_BIMBO).isPositive()&&fem?"Bimbo Breeder":null,
+				character.getFetishDesire(Fetish.FETISH_BIMBO).isPositive()&&masc?"Cum In Me, Bro":null,
+				character.getFetishDesire(Fetish.FETISH_BIMBO).isPositive()&&masc?"Breed Me, Bro":null,
+				character.getFetishDesire(Fetish.FETISH_LUSTY_MAIDEN).isPositive()?"Maiden":null,
+				cumDump?"Public Breeder":null,
+				cumDump?"Cum Dumpster":null,
+				cumDump?"Public Service":null,
+
+				character.hasTraitActivated(Perk.FETISH_BROODMOTHER)?"Broodmother":null,
+				character.hasTraitActivated(Perk.FETISH_BROODMOTHER)?"Extra Fertile":null,
+				character.hasTraitActivated(Perk.FETISH_BROODMOTHER)?"High Capacity":null,
+				character.hasTraitActivated(Perk.FETISH_BROODMOTHER)?"Litter Factory":null,
+				character.isFeral()?"Bestial Breeder":null,
+				character.isFeral()?"Beast Bitch":null,
+				character.isFeral()?"Feral Bitch":null,
+				cherry?"For The One":null,
+
+				slave?"Breeding Slave":null,
+				slave?"Master's Bitch":null,
+				slave?"Use Me":null,
+				slave&&fem?"Slave Bitch":null,
+				slave&&masc?"Slave Bitchboy":null
+			));
+			TattooWriting wombWriting = null;
+			if(writing!=null && !writing.isEmpty()) {
+				wombWriting = new TattooWriting(
+						writing,
+						Util.randomItemFrom(Util.newArrayListOfValues(
+							PresetColour.CLOTHING_RED,
+							PresetColour.CLOTHING_BLACK,
+							PresetColour.CLOTHING_PINK_DARK,
+							PresetColour.CLOTHING_BLUE_DARK,
+							PresetColour.CLOTHING_PURPLE,
+							PresetColour.CLOTHING_PURPLE_ROYAL,
+							character.isFeminine()?PresetColour.CLOTHING_PINK:null,
+							character.isFeminine()?PresetColour.CLOTHING_PINK_DARK:null,
+							!character.isFeminine()?PresetColour.CLOTHING_BLUE:null,
+							!character.isFeminine()?PresetColour.CLOTHING_BLUE_DARK:null,
+							PresetColour.CLOTHING_GREEN
+						)),
+						Math.random()<0.1f, // Glow
+						character.isFeminine()&&Math.random()<0.5f?TattooWritingStyle.ITALICISED:null);
+			} //
+			Tattoo wombTat = new Tattoo(
+				TattooType.getTattooTypeFromId("innoxia_heartWomb_heart_womb"),
+				Math.random()<0.1f || (wombWriting!=null && wombWriting.isGlow()),
+				wombWriting,
+				null);
+			character.addTattoo(InventorySlot.GROIN, wombTat);
+		} // Modified Tattoo Chance
 	}
 	
 	public void applyDirtiness(GameCharacter character) {
