@@ -2083,6 +2083,49 @@ public class CharacterUtils {
 			}
 		}
 		
+		// Eye:
+		if(Math.random()<0.35f) {
+			AbstractBodyCoveringType eyeCovering = character.getEyeCovering();
+			Colour newEyeColour;
+			if(Math.random()<0.15) {
+				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
+			} else if (Math.random()<0.20) {
+				newEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
+			} else if (Math.random()<0.25) {
+				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
+			} else if (Math.random()<0.333) {
+				newEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
+			} else if (Math.random()<0.50) {
+				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
+			} else { 
+				newEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
+			}
+			if(Math.random()<0.03) {
+				Colour newSecondaryEyeColour;
+				if(Math.random()<0.15) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
+				} else if (Math.random()<0.20) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
+				} else if (Math.random()<0.25) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
+				} else if (Math.random()<0.333) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
+				} else if (Math.random()<0.50) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
+				} else { 
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
+				}
+				if (newSecondaryEyeColour != newEyeColour) {
+					character.setEyeCovering(new Covering(
+						eyeCovering, 
+						CoveringPattern.EYE_IRISES_HETEROCHROMATIC, 
+						newEyeColour, false, 
+						newSecondaryEyeColour, false));
+				}
+			} else {
+				character.setEyeCovering(new Covering(eyeCovering, newEyeColour));
+			}
+		}
 		// Face:
 		if(character.hasFetish(Fetish.FETISH_ORAL_GIVING) || character.getHistory()==Occupation.NPC_PROSTITUTE) {
 			character.setFaceCapacity(Capacity.FIVE_ROOMY.getMedianValue(), true);
