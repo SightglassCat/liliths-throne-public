@@ -182,9 +182,9 @@ public class SlaveInStocks extends NPC {
 			this.addSlaveJobSettings(SlaveJob.PUBLIC_STOCKS, SlaveJobSetting.SEX_ANAL);
 			this.setAssVirgin(false);
 		} else {
-			if(Math.random()<0.6f) {
+			if(Math.random()<0.9f) {
 				this.addSlaveJobSettings(SlaveJob.PUBLIC_STOCKS, SlaveJobSetting.SEX_VAGINAL);
-				this.setVaginaVirgin(false);
+				//this.setVaginaVirgin(false);
 			}
 		}
 		
