@@ -283,7 +283,7 @@ public class SlaverAlleyDialogue {
 	
 	
 	public static void stocksUpdate() {
-		float chanceToBeUsed = (12 - Main.game.getHourOfDay()%12)/12f;
+		float chanceToBeUsed = (Main.game.getHourOfDay()%12)/12f;
 		for(NPC npc : Main.game.getCharactersPresent(Main.game.getWorlds().get(WorldType.SLAVER_ALLEY).getCell(PlaceType.SLAVER_ALLEY_PUBLIC_STOCKS))) {
 			if((npc instanceof SlaveInStocks) && !Main.game.getPlayer().getCompanions().contains(npc)) {
 				if (Math.random()<chanceToBeUsed) {
