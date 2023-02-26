@@ -8,25 +8,25 @@ package com.lilithsthrone.game.settings;
 public enum ContentPreferenceValue {
 
 	ZERO_NONE("off", 0),
-	
+
 	ONE_MINIMAL("minimal", 1),
-	
+
 	TWO_LOW("low", 5),
-	
+
 	THREE_AVERAGE("average", 10),
-	
-	FOUR_HIGH("high", 20),
-	
+
+	FOUR_HIGH("high", 25),
+
 	FIVE_ABUNDANT("abundant", 40);
 
 	private String name;
 	private int value;
-	
+
 	private ContentPreferenceValue(String name, int value) {
 		this.name= name;
 		this.value=value;
 	}
-	
+
 	public int getValue() {
 		return value;
 	}
