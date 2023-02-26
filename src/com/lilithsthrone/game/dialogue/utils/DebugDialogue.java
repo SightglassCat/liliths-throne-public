@@ -72,6 +72,7 @@ import com.lilithsthrone.game.character.npc.fields.Flash;
 import com.lilithsthrone.game.character.npc.dominion.Jules;
 import com.lilithsthrone.game.character.npc.fields.HeadlessHorseman;
 import com.lilithsthrone.game.character.npc.fields.Vronti;
+import com.lilithsthrone.game.character.persona.Name;
 /**
  * @since 0.1.0
  * @version 0.4
@@ -1489,7 +1490,11 @@ public class DebugDialogue {
 //									stage,
 //									false);
 						}
-
+						
+						attacker.setName(Name.getRandomTriplet(attacker.getSubspecies()));
+						if (attacker.getAgeValue() >= 52 && attacker.hasVagina()) {
+							attacker.setBirthday(attacker.getBirthday().plusYears(attacker.getAgeValue()-52));
+						}
 						attacker.resetInventory(true);
 						attacker.clearNonEquippedInventory(false);
 						Main.game.getCharacterUtils().generateItemsInInventory(attacker, true, true, true);
