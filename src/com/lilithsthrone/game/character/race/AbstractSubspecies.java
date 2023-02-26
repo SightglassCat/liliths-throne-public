@@ -48,6 +48,7 @@ import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.AbstractPlaceType;
 import com.lilithsthrone.world.places.PlaceType;
 
+import com.lilithsthrone.game.character.body.valueEnums.BodyMaterial;
 /**
  * @since 0.4
  * @version 0.4.0
@@ -1017,6 +1018,13 @@ public abstract class AbstractSubspecies {
 			} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 				
+			} else if (fatherSubspecies==Subspecies.SLIME) {
+				Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherHalfDemonSubspecies, true);
+				if (Math.random()<0.2) {
+					Race.SLIME.applyRaceChanges(body);
+					Subspecies.SLIME.applySpeciesChanges(body);
+				}
+				return body;
 			} else {
 				return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherSubspecies, true);
 			}
@@ -1029,6 +1037,11 @@ public abstract class AbstractSubspecies {
 					} else {
 						return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 					}
+				} else if (fatherSubspecies==Subspecies.SLIME) {
+					Body body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+					Race.SLIME.applyRaceChanges(body);
+					Subspecies.SLIME.applySpeciesChanges(body);
+					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 				}
@@ -1047,6 +1060,11 @@ public abstract class AbstractSubspecies {
 				} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 					
+				} else if (fatherSubspecies==Subspecies.SLIME) {
+					Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
+					Race.SLIME.applyRaceChanges(body);
+					Subspecies.SLIME.applySpeciesChanges(body);
+					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 				}
@@ -1056,7 +1074,12 @@ public abstract class AbstractSubspecies {
 			if(fatherSubspecies==Subspecies.IMP) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 			} else {
-				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+				if (Math.random() < 0.2) {
+					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+				}
+				else {
+					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+				}	
 			}
 			
 		} else {
