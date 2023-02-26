@@ -855,12 +855,17 @@ public class Name {
 			name = getDemonName();
 			
 		} else if(racialNames.containsKey(Subspecies.getIdFromSubspecies(subspecies))) {
-			name = Util.randomItemFrom(racialNames.get(Subspecies.getIdFromSubspecies(subspecies)));
-			
-		} else if(Math.random()<0.1) { // If no racial names are found, then occasionally throw some "prostitute" names in there
-			name = Util.randomItemFrom(prostitute); 
+			if((r!=Race.REINDEER_MORPH && r!=Race.HORSE_MORPH) || Math.random()<0.15) {
+				name = Util.randomItemFrom(racialNames.get(Subspecies.getIdFromSubspecies(subspecies)));
+			}
+
+		} else if(Math.random()<0.12) { // If no racial names are found, then occasionally throw some "prostitute" names in there
+			name = Util.randomItemFrom(prostitute);
 		}
-		
+		else if(Math.random()<0.04) {
+			name = Util.randomItemFrom(petNames);
+		}
+
 		return name;
 	}
 	
