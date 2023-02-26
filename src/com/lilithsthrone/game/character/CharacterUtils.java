@@ -921,7 +921,7 @@ public class CharacterUtils {
 		}
 
 		if(mother.isFeral()) {
-			if (raceTakesAfter.isFeralConfigurationAvailable()) {
+			if (raceTakesAfter.isFeralConfigurationAvailable(body)) {
 				if(father.isFeral() || (!father.isFeral() && Math.random()<=0.75)) {
 				// Applies leg config only when it was previously skipped above
 				// Already checked for compatible leg config to set motherLegConfigSkipped, fatherLegConfigSkipped
@@ -943,14 +943,14 @@ public class CharacterUtils {
 				}
 			}
 		} else if(father.isFeral() && Math.random()<=0.3) {
-			if (raceTakesAfter.isFeralConfigurationAvailable()) {
+			if (raceTakesAfter.isFeralConfigurationAvailable(body)) {
 				if (motherLegConfigSkipped) {
 					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
 				} else if (fatherLegConfigSkipped) {
 				body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
 				}
 				body.setFeral(raceTakesAfter);
-			} else if (father.getSubspecies().isFeralConfigurationAvailable()) {
+			} else if (father.getSubspecies().isFeralConfigurationAvailable(body)) {
 				if (motherLegConfigSkipped) {
 					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
 				} else if (fatherLegConfigSkipped) {
