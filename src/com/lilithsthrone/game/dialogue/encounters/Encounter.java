@@ -196,7 +196,7 @@ public class Encounter {
 			boolean cultistAvailable = 
 					Main.game.getCurrentWeather() != Weather.MAGIC_STORM
 						&& Main.game.getDateNow().getMonth().equals(Month.OCTOBER)
-						&& Main.game.getNumberOfWitches()<4
+						//&& Main.game.getNumberOfWitches()<4
 						&& Main.game.getPlayerCell().getPlace().getPlaceType().equals(PlaceType.DOMINION_STREET);
 
 			
