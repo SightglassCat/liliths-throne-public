@@ -32,7 +32,7 @@
 	
 	<chanceForMaleOffspring>0.5</chanceForMaleOffspring>
 	
-	<numberOfOffspringLow>1</numberOfOffspringLow>
+	<numberOfOffspringLow>2</numberOfOffspringLow>
 	<numberOfOffspringHigh>4</numberOfOffspringHigh>
 	
 	<defaultFemininePreference>NORMAL</defaultFemininePreference>
