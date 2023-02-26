@@ -42,6 +42,12 @@ import com.lilithsthrone.utils.Util.Value;
 import com.lilithsthrone.utils.colours.Colour;
 import com.lilithsthrone.utils.colours.PresetColour;
 
+import com.lilithsthrone.game.character.race.AbstractSubspecies;
+import com.lilithsthrone.game.character.race.Race;
+import com.lilithsthrone.game.character.race.Subspecies;
+import com.lilithsthrone.game.inventory.item.AbstractItemType;
+import com.lilithsthrone.game.inventory.item.ItemType;
+
 /**
  * Call initialiseCombat() before using.
  *
@@ -423,6 +429,39 @@ public class Combat {
 						}
 					}
 				}
+				AbstractSubspecies mainSubspecies = AbstractSubspecies.getMainSubspeciesOfRace(enemy.getRace());
+				AbstractSubspecies halfDemonSubspecies = enemy.getHalfDemonSubspecies();
+				String essence_id = "BOTTLED_ESSENCE_"+Subspecies.getIdFromSubspecies(mainSubspecies).toUpperCase();
+				String essence_id_hd = "BOTTLED_ESSENCE_"+Subspecies.getIdFromSubspecies(
+					AbstractSubspecies.getMainSubspeciesOfRace(
+						halfDemonSubspecies.getRace()
+					)).toUpperCase();
+				String essence_id_slime = "BOTTLED_ESSENCE_"
+					+Subspecies.getIdFromSubspecies(
+						AbstractSubspecies.getMainSubspeciesOfRace(
+							enemy.getBody().getFleshSubspecies().getRace()
+						)
+					).toUpperCase();
+				if (enemy.getSubspecies() == Subspecies.IMP || enemy.getSubspecies() == Subspecies.IMP_ALPHA) { essence_id = "BOTTLED_ESSENCE_IMP"; }
+				else if (enemy.getRace() == Race.DEMON) { essence_id = "BOTTLED_ESSENCE_"
+					+Subspecies.getIdFromSubspecies(
+						enemy.getSubspecies()
+					).toUpperCase(); 
+				} //
+				//System.err.println("Looking for: "+essence_id);
+				Map<String, AbstractItemType> id_to_item_map = ItemType.getIdToItemMap();
+				if (id_to_item_map.containsKey(essence_id)) {
+					AbstractItemType ess = id_to_item_map.get(essence_id);
+					Main.game.getPlayer().addItem(Main.game.getItemGen().generateItem(ess), false, true);
+					if (enemy.getRace() == Race.SLIME) {
+					    AbstractItemType ess_slime = id_to_item_map.get(essence_id_slime);
+					    Main.game.getPlayer().addItem(Main.game.getItemGen().generateItem(ess_slime), false, true);
+					} //
+					else if (enemy.getSubspecies() == Subspecies.HALF_DEMON ) {
+					    AbstractItemType ess_hd = id_to_item_map.get(essence_id_hd);
+					    Main.game.getPlayer().addItem(Main.game.getItemGen().generateItem(ess_hd), false, true);
+					} //
+				} //
 			}
 
 			List<String> itemsLooted = new ArrayList<>();
