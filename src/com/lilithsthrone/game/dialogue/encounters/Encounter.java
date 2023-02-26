@@ -384,13 +384,13 @@ public class Encounter {
 			if(Main.game.isStarted() && DominionPlaces.isCloseToEnforcerHQ()) {
 				map.put(EncounterType.DOMINION_ALLEY_ATTACK, 10f);
 				if(Main.game.getCurrentWeather()!=Weather.MAGIC_STORM
-						&& (!Main.game.getDialogueFlags().hasSavedLong("enforcer_encounter_minutes") || Main.game.getDialogueFlags().getSavedLong("enforcer_encounter_minutes")+(4*60)<Main.game.getMinutesPassed())) {
+						&& (!Main.game.getDialogueFlags().hasSavedLong("enforcer_encounter_minutes") || Main.game.getDialogueFlags().getSavedLong("enforcer_encounter_minutes")+(1*60)<Main.game.getMinutesPassed())) {
 					map.put(EncounterType.DOMINION_ALLEY_ENFORCERS, 15f);
 				}
 			} else {
 				map.put(EncounterType.DOMINION_ALLEY_ATTACK, 15f);
 				if(Main.game.getCurrentWeather()!=Weather.MAGIC_STORM
-						&& (!Main.game.getDialogueFlags().hasSavedLong("enforcer_encounter_minutes") || Main.game.getDialogueFlags().getSavedLong("enforcer_encounter_minutes")+(4*60)<Main.game.getMinutesPassed())) {
+						&& (!Main.game.getDialogueFlags().hasSavedLong("enforcer_encounter_minutes") || Main.game.getDialogueFlags().getSavedLong("enforcer_encounter_minutes")+(1*60)<Main.game.getMinutesPassed())) {
 					map.put(EncounterType.DOMINION_ALLEY_ENFORCERS, 2.5f);
 				}
 			}
