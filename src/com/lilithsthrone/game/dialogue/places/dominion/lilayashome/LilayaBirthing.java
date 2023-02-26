@@ -270,7 +270,7 @@ public class LilayaBirthing {
 		
 		@Override
 		public int getSecondsPassed() {
-			return 240*60;
+			return 180*60;
 		}
 
 		@Override
@@ -355,7 +355,7 @@ public class LilayaBirthing {
 		
 		@Override
 		public int getSecondsPassed() {
-			return 240*60;
+			return 180*60;
 		}
 
 		@Override
