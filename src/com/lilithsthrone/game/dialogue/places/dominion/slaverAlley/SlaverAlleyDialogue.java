@@ -1749,6 +1749,18 @@ public class SlaverAlleyDialogue {
 								stocksSlaveTargeted = ((NPC) slave);
 							}
 						};
+					} else if (index == charactersPresent.size()+2) {
+						return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", PUBLIC_STOCKS) {
+							@Override
+							public void effects() {
+								dailyReset();
+								stocksReset();
+							}//
+							@Override
+							public int getSecondsPassed() {
+								return 8*60;
+							}//
+						};
 					}
 					
 				} else if(isCompanionDialogue()) {
