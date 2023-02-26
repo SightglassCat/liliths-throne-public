@@ -279,7 +279,7 @@ public class WorldType {
 			PresetColour.BASE_CRIMSON,
 			false,
 			false,
-			TeleportPermissions.OUTGOING_ONLY,
+			TeleportPermissions.BOTH,
 			"/com/lilithsthrone/res/map/dominion/zaranixHome/ground_floor.png", PlaceType.WORLD_MAP_DOMINION, PlaceType.ZARANIX_GF_ENTRANCE, Util.newHashMapOfValues(
 					new Value<>(new Color(0xFFFFFF), PlaceType.GENERIC_IMPASSABLE),
 					new Value<>(new Color(0x808080), PlaceType.ZARANIX_GF_CORRIDOR),
