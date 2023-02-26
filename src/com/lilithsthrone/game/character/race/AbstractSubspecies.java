@@ -177,6 +177,14 @@ public abstract class AbstractSubspecies {
 						"succumia",
 						"incumias",
 						"succumias"}),
+			new Value<>(LegConfiguration.WINGED_BIPED,
+					new String[] {
+						"pteridemon",
+						"pteridemons",
+						"pterincubus",
+						"pterisuccubus",
+						"pterincubi",
+						"pterisuccubi"}),
 			new Value<>(LegConfiguration.AVIAN,
 					new String[] {
 						"demoa",
