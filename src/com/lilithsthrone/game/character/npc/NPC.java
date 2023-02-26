@@ -1501,7 +1501,7 @@ public abstract class NPC extends GameCharacter implements XMLSaving {
 		if(this.isRelatedTo(Main.game.getPlayer())) {
 			return this.getAffection(Main.game.getPlayer())>=AffectionLevel.NEGATIVE_TWO_DISLIKE.getMinimumValue();
 		} else {
-			return this.getAffection(Main.game.getPlayer())>=AffectionLevel.POSITIVE_THREE_CARING.getMinimumValue();
+			return this.getAffection(Main.game.getPlayer())>=AffectionLevel.POSITIVE_TWO_LIKE.getMinimumValue();
 		}
 	}
 
