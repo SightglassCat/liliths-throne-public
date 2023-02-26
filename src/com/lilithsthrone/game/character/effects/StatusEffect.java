@@ -3753,7 +3753,7 @@ public class StatusEffect {
 			StringBuilder sb = new StringBuilder();
 			
 			if (target.isPregnant()) {
-				int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) / 2f);
+				int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) * (0.75+(Util.random.nextFloat()*0.5)) / 2f);
 				target.addStatusEffect(PREGNANT_1, 60 * 60 * ((maxHourLength-12) + Util.random.nextInt(13)));
 				target.loadImages(true); // Reload images for pregnant versions
 				
@@ -3946,7 +3946,7 @@ public class StatusEffect {
 		}
 		@Override
 		public String extraRemovalEffects(GameCharacter target) {
-			int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) / 2f);
+			int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) * (0.75+(Util.random.nextFloat()*0.5))/ 2f);
 			target.addStatusEffect(PREGNANT_2, 60 * 60 * ((maxHourLength-12) + Util.random.nextInt(13)));
 			
 			boolean breastGrowth = false;
