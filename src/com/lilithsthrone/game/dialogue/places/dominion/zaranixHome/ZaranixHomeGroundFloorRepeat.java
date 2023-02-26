@@ -873,7 +873,7 @@ public class ZaranixHomeGroundFloorRepeat {
 							Util.newArrayListOfValues(Fetish.FETISH_SUBMISSIVE), CorruptionLevel.THREE_DIRTY, null, null, null) {
 						@Override
 						public void effects() {
-							if(Main.game.getPlayer().getClothingInSlot(InventorySlot.NECK)==null || !Main.game.getPlayer().getClothingInSlot(InventorySlot.NECK).getClothingType().getId().equals("innoxia_neck_ambers_bitch_collar")) {
+							if(false) {//Main.game.getPlayer().getClothingInSlot(InventorySlot.NECK)==null || !Main.game.getPlayer().getClothingInSlot(InventorySlot.NECK).getClothingType().getId().equals("innoxia_neck_ambers_bitch_collar")) {
 								AbstractClothing collar = Main.game.getItemGen().generateClothing("innoxia_neck_ambers_bitch_collar", false);
 								
 								if(Main.game.getPlayer().isAbleToEquip(collar, true, Main.game.getNpc(Amber.class))) {
@@ -1440,13 +1440,13 @@ public class ZaranixHomeGroundFloorRepeat {
 //						if(rnd>0.01f) { // Testing:
 //							return WALKIES_PET_FUCKS;
 //						}
-						if(rnd<0.2) {
+						if(rnd<0.1) {
 							return WALKIES_PEACEFUL;
-						} else if(rnd<0.4) {
+						} else if(rnd<0.1) {
 							return WALKIES_HUMILIATION;
-						} else if(rnd<0.6) {
+						} else if(rnd<0.1) {
 							return WALKIES_PUNISHMENT;
-						} else if(rnd<0.85
+						} else if(rnd<0.1
 								&& (Main.game.getPlayer().isAbleToAccessCoverableArea(CoverableArea.ANUS, true) || (Main.game.getPlayer().hasVagina() && Main.game.getPlayer().isAbleToAccessCoverableArea(CoverableArea.VAGINA, true)))) {
 							return WALKIES_AMBER_FUCKS;
 						} else {
