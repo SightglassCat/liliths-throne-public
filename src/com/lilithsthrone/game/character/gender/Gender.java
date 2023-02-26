@@ -204,7 +204,38 @@ public enum Gender {
 				return Gender.M_P_MALE;
 			}
 		}
-		
+
+		return Util.getRandomObjectFromWeightedMap(genderMap);
+	}
+
+	public static Gender getGenderFromUserPreferences(boolean requiresVagina, boolean requiresPenis, boolean allowFeminine, boolean allowMasculine) {
+		Map<Gender, Integer> genderMap = new HashMap<>();
+
+		for(Gender g : Gender.values()) {
+			if((!requiresVagina || g.getGenderName().isHasVagina())
+					&& (!requiresPenis || g.getGenderName().isHasPenis())
+					&& ((allowMasculine && !g.isFeminine()) || (allowFeminine && g.isFeminine()))
+					&& Main.getProperties().genderPreferencesMap.get(g)>0)
+				{
+				genderMap.put(g, Main.getProperties().genderPreferencesMap.get(g));
+			}
+		}
+
+		if(genderMap.isEmpty()) {
+			if(Math.random()>0.5f || requiresVagina) {
+				if(requiresVagina && requiresPenis) {
+					return Gender.F_P_V_B_FUTANARI;
+
+				} else if(requiresPenis) {
+					return Gender.F_P_B_SHEMALE;
+				}
+				return Gender.F_V_B_FEMALE;
+
+			} else {
+				return Gender.M_P_MALE;
+			}
+		}
+
 		return Util.getRandomObjectFromWeightedMap(genderMap);
 	}
 	
