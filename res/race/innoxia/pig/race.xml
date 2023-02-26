@@ -30,7 +30,7 @@
 	
 	<combatBehaviour>BALANCED</combatBehaviour>
 	
-	<chanceForMaleOffspring>0.5</chanceForMaleOffspring>
+	<chanceForMaleOffspring>0.7</chanceForMaleOffspring>
 	
 	<numberOfOffspringLow>1</numberOfOffspringLow>
 	<numberOfOffspringHigh>2</numberOfOffspringHigh>
