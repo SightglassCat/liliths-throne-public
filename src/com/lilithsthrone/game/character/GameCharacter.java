@@ -4420,6 +4420,9 @@ public abstract class GameCharacter implements XMLSaving {
 				}
 			}
 		}
+		if (getDesiredJobs().contains(Occupation.NPC_PROSTITUTE)) {
+			occupations.add(Occupation.NPC_PROSTITUTE);
+		}
 		clearDesiredJobs();
 		this.setHistory(Util.randomItemFrom(occupations));
 	}
@@ -20134,6 +20137,20 @@ public abstract class GameCharacter implements XMLSaving {
 				if(partner.hasStatusEffect(StatusEffect.BROODMOTHER_PILL)) {
 					numberOfChildren *= 2;
 				}
+				
+				if(numberOfChildren == 5) {
+					if(Util.random.nextInt(100)<55) {numberOfChildren = 7;} else if (Util.random.nextInt(45)<30) {numberOfChildren = 3;}
+				}
+				if(numberOfChildren == 10) {
+					if(Util.random.nextInt(100)<35) {numberOfChildren = 12;} else if (Util.random.nextInt(65)<30) {numberOfChildren = 8;}
+				}
+				if(numberOfChildren == 14) {
+					if(Util.random.nextInt(100)<45) {numberOfChildren = 12;} else if (Util.random.nextInt(55)<30) {numberOfChildren = 16;}
+				}
+				if(numberOfChildren == 15) {
+					if(Util.random.nextInt(100)<55) {numberOfChildren = 13;} else if (Util.random.nextInt(45)<30) {numberOfChildren = 16;}
+				}
+				
 				
 				List<OffspringSeed> offspring = new ArrayList<>(numberOfChildren);
 				for (int i = 0; i < numberOfChildren; i++) { // Add children here:

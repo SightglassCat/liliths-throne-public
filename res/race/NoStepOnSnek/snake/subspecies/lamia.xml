@@ -15,6 +15,9 @@
 	<aquatic>false</aquatic>
 	<applySubspeciesChanges><![CDATA[
 		[#targetedBody.applyLegConfigurationTransformation(LEG_TYPE_NoStepOnSnek_snake_leg, LEG_CONFIGURATION_TAIL_LONG, true)]
+		#IF(targetedBody.hasWings())
+			[#targetedBody.setWingType(WING_TYPE_NONE)]
+		#ENDIF
 	]]></applySubspeciesChanges>
 	<subspeciesWeighting><![CDATA[
 		#IF(targetedRace==RACE_NoStepOnSnek_snake && targetedBody.getLegConfiguration()==LEG_CONFIGURATION_TAIL_LONG)

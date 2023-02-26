@@ -731,7 +731,25 @@ public class CompanionManagement {
 					return new Response("Set names", "You haven't selected anyone...", null);
 				}
 				return new Response("Set names", UtilText.parse(characterSelected(), "Tell [npc.name] to call you by a different name."), OCCUPANT_CHOOSE_NAME);
-				
+			} else if(index==9) {
+				return new Response("Auto Move-Out", "Move all employed occupants out", Main.game.getDefaultDialogue(false)) {
+					@Override
+					public void effects() {
+						List<String> friendlyOccupants = new ArrayList<>(Main.game.getPlayer().getFriendlyOccupants());
+						for (String id : friendlyOccupants) {
+							try {
+								NPC occupant = (NPC) Main.game.getNPCById(id);
+								String occupantJob = occupant.getOccupation().getName(occupant);
+								if (!occupantJob.equals("unemployed") && occupant.getHomeWorldLocation()!=WorldType.DOMINION) {
+									Main.game.getPlayer().removeFriendlyOccupant(occupant);
+									Main.game.banishNPC(occupant);
+								}
+							} catch (Exception e) {
+								Util.logGetNpcByIdError("SLAVE_LIST.getResponse()", id);
+							}
+						}
+					}
+				};
 			} else if(index==10 && Main.getProperties().hasValue(PropertyValue.companionContent)) {
 				if(characterSelected() == null) {
 					return new Response("Send home", "You haven't selected anyone...", null);

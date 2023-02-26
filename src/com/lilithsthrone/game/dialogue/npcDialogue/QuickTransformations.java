@@ -168,7 +168,7 @@ public class QuickTransformations {
 						targetedNpc.setPenisType(RacialBody.valueOfRace(targetedNpc.getBody().getRaceFromPartWeighting()).getPenisType());
 						targetedNpc.setPenisGirth(PenetrationGirth.THREE_AVERAGE);
 						targetedNpc.setPenisSize(15);
-						targetedNpc.setTesticleSize(TesticleSize.ZERO_VESTIGIAL.getValue());
+						targetedNpc.setTesticleSize(TesticleSize.TWO_AVERAGE.getValue());
 						targetedNpc.setPenisCumStorage(CumProduction.THREE_AVERAGE.getMaximumValue());
 						targetedNpc.setPenisStoredCum(CumProduction.THREE_AVERAGE.getMaximumValue());
 						Main.game.getTextStartStringBuilder().append(UtilText.parseFromXMLFile(dialoguePath, "QUICK_TRANSFORMATIONS_PENIS_AVERAGE", targetedNpc));
@@ -189,7 +189,7 @@ public class QuickTransformations {
 						targetedNpc.setPenisType(RacialBody.valueOfRace(targetedNpc.getBody().getRaceFromPartWeighting()).getPenisType());
 						targetedNpc.setPenisGirth(PenetrationGirth.FOUR_GIRTHY);
 						targetedNpc.setPenisSize(30);
-						targetedNpc.setTesticleSize(TesticleSize.ZERO_VESTIGIAL.getValue());
+						targetedNpc.setTesticleSize(TesticleSize.THREE_LARGE.getValue());
 						targetedNpc.setPenisCumStorage(CumProduction.FIVE_HUGE.getMedianValue());
 						targetedNpc.setPenisStoredCum(CumProduction.FIVE_HUGE.getMedianValue());
 						Main.game.getTextStartStringBuilder().append(UtilText.parseFromXMLFile(dialoguePath, "QUICK_TRANSFORMATIONS_PENIS_LARGE", targetedNpc));
@@ -210,7 +210,7 @@ public class QuickTransformations {
 						targetedNpc.setPenisType(RacialBody.valueOfRace(targetedNpc.getBody().getRaceFromPartWeighting()).getPenisType());
 						targetedNpc.setPenisGirth(PenetrationGirth.FIVE_THICK);
 						targetedNpc.setPenisSize(50);
-						targetedNpc.setTesticleSize(TesticleSize.ZERO_VESTIGIAL.getValue());
+						targetedNpc.setTesticleSize(TesticleSize.FOUR_HUGE.getValue());
 						targetedNpc.setPenisCumStorage(CumProduction.FIVE_HUGE.getMaximumValue());
 						targetedNpc.setPenisStoredCum(CumProduction.FIVE_HUGE.getMaximumValue());
 						Main.game.getTextStartStringBuilder().append(UtilText.parseFromXMLFile(dialoguePath, "QUICK_TRANSFORMATIONS_PENIS_HUGE", targetedNpc));

@@ -88,7 +88,7 @@ public enum Occupation {
 	NPC_TAUR_TRANSPORT(Perk.JOB_TAUR_TRANSPORT, "taur transporter", "[npc.Name] uses [npc.her] tauric body to its full potential by pulling carts and transporting goods.", OccupationTag.HAS_PREREQUISITES),
 
 	NPC_ELIS_MAYOR(Perk.JOB_NPC_MAYOR, "mayor of Elis", "[npc.NameIs] the mayor of Elis, and is responsible for the wellbeing and safety of not only the town itself, but also the surrounding Foloi Fields.", OccupationTag.HAS_PREREQUISITES),
-	NPC_ASSISTANT(Perk.JOB_NPC_ASSISTANT, "personal assistant", "[npc.NameIs] a personal assistant and helps [npc.her] boss with a wide range of everyday tasks.", OccupationTag.HAS_PREREQUISITES),
+	NPC_ASSISTANT(Perk.JOB_NPC_ASSISTANT, "personal assistant", "[npc.NameIs] a personal assistant and helps [npc.her] boss with a wide range of everyday tasks."),
 	
 	NPC_LUNETTE_HERD(Perk.JOB_LUNETTE_HERD, "Daughter of Lunette", "[npc.NameIsFull] one of Lunette's daughters, and inherits [npc.her] mother's love of causing mayhem and havoc.", OccupationTag.HAS_PREREQUISITES),
 
@@ -125,31 +125,31 @@ public enum Occupation {
 	
 	NPC_MASSAGE_THERAPIST(Perk.JOB_MISC, "massage therapist", "[npc.Name] [npc.verb(work)] at a spa as a massage therapist."),
 	
-	NPC_WAITRESS(Perk.JOB_MISC, "waitress", "[npc.Name] [npc.verb(work)] as a waitress in a restaurant.") {
-		@Override
-		public boolean isAvailable(GameCharacter character) {
-			return character.isFeminine();
-		}
-	},
+	NPC_WAITRESS(Perk.JOB_MISC, "waitress", "[npc.Name] [npc.verb(work)] as a waitress in a restaurant."),
 	
-	NPC_MUSICIAN(Perk.JOB_MISC, "musician", "[npc.Name] [npc.verb(work)] as a musician.", OccupationTag.HAS_PREREQUISITES),
+	NPC_MUSICIAN(Perk.JOB_MISC, "musician", "[npc.Name] [npc.verb(work)] as a musician."),
 	
-	NPC_FITNESS_INSTRUCTOR(Perk.JOB_MISC, "fitness instructor", "-", OccupationTag.HAS_PREREQUISITES),
+	NPC_FITNESS_INSTRUCTOR(Perk.JOB_MISC, "fitness instructor", "-"),
 	
 	NPC_MUGGER(Perk.JOB_MUGGER, "mugger", "[npc.NameIsFull] a mugger, and [npc.verb(make)] a living by stealing other people's possessions.", OccupationTag.LOWLIFE),
 
-	NPC_BOUNTY_HUNTER(Perk.JOB_BOUNTY_HUNTER, "bounty hunter", "[npc.NameIsFull] a bounty hunter, who earns a wage by tracking down and capturing wanted criminals.", OccupationTag.HAS_PREREQUISITES),
+	NPC_BOUNTY_HUNTER(Perk.JOB_BOUNTY_HUNTER, "bounty hunter", "[npc.NameIsFull] a bounty hunter, who earns a wage by tracking down and capturing wanted criminals."),
 	
 	NPC_CONSTRUCTION_WORKER(Perk.JOB_CONSTRUCTION_WORKER, "construction worker", "-"),
 	NPC_CONSTRUCTION_WORKER_ARCANE(Perk.JOB_CONSTRUCTION_WORKER_ARCANE, "arcane construction worker", "-", OccupationTag.HAS_PREREQUISITES),
 
-	NPC_MECHANIC(Perk.JOB_MISC, "mechanic", "-", OccupationTag.HAS_PREREQUISITES),
+	NPC_MECHANIC(Perk.JOB_MISC, "mechanic", "-"),
 	
 	NPC_TEACHER(Perk.JOB_MISC, "teacher", "-", OccupationTag.HAS_PREREQUISITES),
 	
 	NPC_LIBRARIAN(Perk.JOB_MISC, "librarian", "-"),
 	
-	NPC_UNIVERSITY_STUDENT(Perk.JOB_MISC, "university student", "-", OccupationTag.HAS_PREREQUISITES),
+	NPC_UNIVERSITY_STUDENT(Perk.JOB_MISC, "university student", "-") {
+		@Override
+		public boolean isAvailable(GameCharacter character) {
+			return character.getAgeValue() < 32;
+		}
+	},
 	
 	NPC_WRITER(Perk.JOB_MISC, "writer", "-"),
 	
@@ -161,10 +161,6 @@ public enum Occupation {
 	
 	NPC_MAID(Perk.JOB_MISC, "maid", "-") {
 		@Override
-		public boolean isAvailable(GameCharacter character) {
-			return character.isFeminine();
-		}
-		@Override
 		public DayOfWeek getStartDay() {
 			return DayOfWeek.MONDAY;
 		}
@@ -175,10 +171,6 @@ public enum Occupation {
 	},
 
 	NPC_BUTLER(Perk.JOB_MISC, "butler", "-") {
-		@Override
-		public boolean isAvailable(GameCharacter character) {
-			return !character.isFeminine();
-		}
 		@Override
 		public DayOfWeek getStartDay() {
 			return DayOfWeek.MONDAY;
@@ -205,13 +197,9 @@ public enum Occupation {
 	
 	NPC_SHOP_ASSISTANT(Perk.JOB_MISC, "shop assistant", "-"),
 	
-	NPC_ARTIST(Perk.JOB_MISC, "artist", "-", OccupationTag.HAS_PREREQUISITES),
+	NPC_ARTIST(Perk.JOB_MISC, "artist", "-"),
 	
 	NPC_NURSE(Perk.JOB_MISC, "nurse", "-") {
-		@Override
-		public boolean isAvailable(GameCharacter character) {
-			return character.isFeminine();
-		}
 		@Override
 		public DayOfWeek getStartDay() {
 			return DayOfWeek.MONDAY;
@@ -224,7 +212,7 @@ public enum Occupation {
 	
 	NPC_CHEF(Perk.JOB_MISC, "chef", "-"),
 	
-	NPC_ATHLETE(Perk.JOB_MISC, "athlete", "-", OccupationTag.HAS_PREREQUISITES),
+	NPC_ATHLETE(Perk.JOB_MISC, "athlete", "-"),
 	
 	NPC_MODEL(Perk.JOB_MISC, "model", "-"),
 

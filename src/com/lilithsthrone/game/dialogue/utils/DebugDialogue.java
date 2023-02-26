@@ -68,6 +68,11 @@ import com.lilithsthrone.utils.colours.PresetColour;
 import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.PlaceType;
 
+import com.lilithsthrone.game.character.npc.fields.Flash;
+import com.lilithsthrone.game.character.npc.dominion.Jules;
+import com.lilithsthrone.game.character.npc.fields.HeadlessHorseman;
+import com.lilithsthrone.game.character.npc.fields.Vronti;
+import com.lilithsthrone.game.character.persona.Name;
 /**
  * @since 0.1.0
  * @version 0.4
@@ -804,8 +809,35 @@ public class DebugDialogue {
 					};
 					
 				} else if(index==30) {
-					return new Response("Item collage", "View a collage of all item, weapon, and clothing icons which are currently in the game.<br/>[style.italicsMinorBad(Will be slow to load and display!)]", CLOTHING_COLLAGE);
-					
+					return new Response("Item collage", "View a collage of all item, weapon, and clothing icons which are currently in the game.<br/>[style.italicsMinorBad(Will be slow to load and display!)]", CLOTHING_COLLAGE);	
+				} else if (index==31) {
+					return new Response("Flash Flood", "Flash cums in your vagina!", DEBUG_MENU){
+						@Override
+						public void effects() {
+							Main.game.getPlayer().ingestFluid(Main.game.getNpc(Flash.class), Main.game.getNpc(Flash.class).getCum(), SexAreaOrifice.VAGINA, 5000);
+						}
+					};
+				} else if (index==32) {
+					return new Response("Jules Juice", "Jules cums in your vagina!", DEBUG_MENU){
+						@Override
+						public void effects() {
+							Main.game.getPlayer().ingestFluid(Main.game.getNpc(Jules.class), Main.game.getNpc(Jules.class).getCum(), SexAreaOrifice.VAGINA, 100);
+						}
+					};
+				} else if (index==33) {
+					return new Response("Spooky Spunk", "The headless horseman cums in your vagina!", DEBUG_MENU){
+						@Override
+						public void effects() {
+							Main.game.getPlayer().ingestFluid(Main.game.getNpc(HeadlessHorseman.class), Main.game.getNpc(HeadlessHorseman.class).getCum(), SexAreaOrifice.VAGINA, 100);
+						}
+					};
+				} else if (index==34) {
+					return new Response("Centaur Seeding", "The Vronti cums in your vagina!", DEBUG_MENU){
+						@Override
+						public void effects() {
+							Main.game.getPlayer().ingestFluid(Main.game.getNpc(Vronti.class), Main.game.getNpc(Vronti.class).getCum(), SexAreaOrifice.VAGINA, 100);
+						}
+					};
 				}
 				
 			} else if(responseTab == 3) {
@@ -1458,7 +1490,11 @@ public class DebugDialogue {
 //									stage,
 //									false);
 						}
-
+						
+						attacker.setName(Name.getRandomTriplet(attacker.getSubspecies()));
+						if (attacker.getAgeValue() >= 52 && attacker.hasVagina()) {
+							attacker.setBirthday(attacker.getBirthday().plusYears(attacker.getAgeValue()-52));
+						}
 						attacker.resetInventory(true);
 						attacker.clearNonEquippedInventory(false);
 						Main.game.getCharacterUtils().generateItemsInInventory(attacker, true, true, true);

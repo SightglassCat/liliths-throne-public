@@ -776,13 +776,37 @@ public class EnchantmentDialogue {
 						+ "</div>"
 					+ "</div>");
 
+			List<LoadedEnchantment> loadedEnchantmentsList = new ArrayList<LoadedEnchantment>();
+			List<String> loadedEnchantmentKeyList = new ArrayList<String>();
+			for(Entry<String, LoadedEnchantment> entry : loadedEnchantmentsMap.entrySet()){
+				int insertIndex = 0;
+				boolean inserted = false;
+				LoadedEnchantment enchA = entry.getValue();
+				String enchAname = enchA.getName();
+				for (LoadedEnchantment enchB : loadedEnchantmentsList) {
+					String enchBname = enchB.getName();
+					if (enchAname.compareTo(enchBname) < 0) {
+						loadedEnchantmentsList.add(insertIndex, enchA);
+						loadedEnchantmentKeyList.add(insertIndex, entry.getKey());
+						inserted = true;
+						break;
+					} else {
+						insertIndex++;
+					}
+				}
+				if (!inserted) {
+					loadedEnchantmentsList.add(enchA);
+					loadedEnchantmentKeyList.add(entry.getKey());
+				}
+			}
+
 			int i=0;
 			
 			saveLoadSB.append(getSaveLoadRow(null, null, i%2==0));
 			i++;
-			
-			for(Entry<String, LoadedEnchantment> entry : loadedEnchantmentsMap.entrySet()){
-				saveLoadSB.append(getSaveLoadRow(entry.getKey(), entry.getValue(), i%2==0));
+
+			for (int enchIndex=0; enchIndex < loadedEnchantmentsList.size(); enchIndex++) {
+				saveLoadSB.append(getSaveLoadRow(loadedEnchantmentKeyList.get(enchIndex), loadedEnchantmentsList.get(enchIndex), i%2==0));
 				i++;
 			}
 			
@@ -846,8 +870,8 @@ public class EnchantmentDialogue {
 		if(loadedEnchantment!=null){
 			String fileName = (baseName+".xml");
 			
-			boolean suitableItemAvailable = loadedEnchantment.isSuitableItemAvailable();
 			
+			boolean suitableItemAvailable = true; //loadedEnchantment.isSuitableItemAvailable();
 			return "<div class='container-full-width' style='padding:0; margin:0 0 4px 0;"+(altColour?"background:#222;":"")+" position:relative;'>"
 						
 						+ "<div class='container-full-width' style='width:calc(75% - 16px); background:transparent;'>"

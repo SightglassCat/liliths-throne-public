@@ -60,6 +60,15 @@ import com.lilithsthrone.utils.time.SolarElevationAngle;
 import com.lilithsthrone.world.places.GenericPlace;
 import com.lilithsthrone.world.places.PlaceUpgrade;
 
+import com.lilithsthrone.world.WorldType;
+import com.lilithsthrone.world.Cell;
+import com.lilithsthrone.game.occupantManagement.OccupancyUtil;
+import com.lilithsthrone.game.character.npc.misc.OffspringSeed;
+import com.lilithsthrone.game.character.npc.misc.NPCOffspring;
+import com.lilithsthrone.game.character.EquipClothingSetting;
+import com.lilithsthrone.game.character.npc.NPCFlagValue;
+import com.lilithsthrone.game.character.persona.Occupation;
+import com.lilithsthrone.world.places.PlaceType;
 /**
  * @since 0.1.75
  * @version 0.3.5.5
@@ -231,11 +240,170 @@ public class RoomPlayer {
 				} else {
 					return new Response("Rest until alarm (unset)", "<span style='color:"+PresetColour.GENERIC_BAD.toWebHexString()+";'>Your alarm is unset!</span>", null);
 				}
+			} else if (index == 11) {
+				return new Response("Auto Move-Out", "Move all employed occupants out", Main.game.getDefaultDialogue(false)) {
+					@Override
+					public void effects() {
+						List<String> friendlyOccupants = new ArrayList<>(Main.game.getPlayer().getFriendlyOccupants());
+						for (String id : friendlyOccupants) {
+							try {
+								NPC occupant = (NPC) Main.game.getNPCById(id);
+								Occupation occupantJob = occupant.getOccupation();
+								if (occupantJob != Occupation.NPC_UNEMPLOYED && occupant.getHomeWorldLocation()!=WorldType.DOMINION) {
+									Main.game.getPlayer().removeFriendlyOccupant(occupant);
+									Main.game.banishNPC(occupant);
+								}
+							} catch (Exception e) {
+								Util.logGetNpcByIdError("SLAVE_LIST.getResponse()", id);
+							}
+						}
+					}
+				};
+			} else if (index == 12) {
+				return new ResponseEffectsOnly("Auto-Parenting", "Move unmet offspring on into empty rooms in Lilaya's House") {
+					@Override
+					public void effects() {
+						boolean relocFirst = false;
+						boolean relocDone = false;
+						while(!relocDone) {
+							Cell openRoom = OccupancyUtil.getFreeRoomForOccupant();
+							if (openRoom != null) {
+								List<OffspringSeed> offspringAvailable = Main.game.getOffspringNotSpawned(os-> true);
+								if(!offspringAvailable.isEmpty()) {
+									NPC offspring = new NPCOffspring(offspringAvailable.get(Util.random.nextInt(offspringAvailable.size())));
+									offspring.equipClothing(EquipClothingSetting.getAllClothingSettings());
+									offspring.setFlag(NPCFlagValue.flagOffspringIntroduced, true);
+									offspring.setLocation(openRoom.getType(), openRoom.getLocation(), true);
+									offspring.setLastTimeEncountered(Main.game.getMinutesPassed());
+									Main.game.getPlayer().addFriendlyOccupant(offspring);
+									Main.game.getTextEndStringBuilder().append(offspring.incrementAffection(Main.game.getPlayer(), 50));
+									if (!relocFirst) {
+										Main.game.getTextStartStringBuilder().append(
+											"<p style='text-align:center'>"
+											+ "[style.italicsArcane(Bending time and space, you track down and introduce yourself to some of your wayward offspring, before teleporting them to their new rooms at Lilaya's mansion.)]"
+											+ "</p>");
+										relocFirst = true;
+									}
+								} else {
+									relocDone = true;
+								}
+							} else {
+								relocDone = true;
+							}
+						}
+						if (relocFirst) {
+							Main.game.getPlayer().setLocation(WorldType.LILAYAS_HOUSE_FIRST_FLOOR, PlaceType.LILAYA_HOME_ROOM_PLAYER, false);
+							DialogueNode dn = Main.game.getActiveWorld().getCell(Main.game.getPlayer().getLocation()).getDialogue(true);
+							Main.game.setContent(new Response("", "", dn));
+						}
+					}
+				};
+			} else if (index == 13) {
+				return new Response("Time Skip",
+						"Move out all employed occupants, move in your wayward offspring, then sleep a whole day.",
+						AUNT_HOME_PLAYERS_ROOM_SLEEP) {
+					@Override
+					public void effects() {
+						List<String> friendlyOccupants = new ArrayList<>(Main.game.getPlayer().getFriendlyOccupants());
+						for (String id : friendlyOccupants) {
+							try {
+								NPC occupant = (NPC) Main.game.getNPCById(id);
+								Occupation occupantJob = occupant.getOccupation();
+								if (occupantJob != Occupation.NPC_UNEMPLOYED && occupant.getHomeWorldLocation()!=WorldType.DOMINION) {
+									Main.game.getPlayer().removeFriendlyOccupant(occupant);
+									Main.game.banishNPC(occupant);
+								}
+							} catch (Exception e) {
+								Util.logGetNpcByIdError("SLAVE_LIST.getResponse()", id);
+							}
+						}
+						boolean relocFirst = false;
+						boolean relocDone = false;
+						while(!relocDone) {
+							Cell openRoom = OccupancyUtil.getFreeRoomForOccupant();
+							if (openRoom != null) {
+								List<OffspringSeed> offspringAvailable = Main.game.getOffspringNotSpawned(os-> true);
+								if(!offspringAvailable.isEmpty()) {
+									NPC offspring = new NPCOffspring(offspringAvailable.get(Util.random.nextInt(offspringAvailable.size())));
+									offspring.equipClothing(EquipClothingSetting.getAllClothingSettings());
+									offspring.setFlag(NPCFlagValue.flagOffspringIntroduced, true);
+									offspring.setLocation(openRoom.getType(), openRoom.getLocation(), true);
+									offspring.setLastTimeEncountered(Main.game.getMinutesPassed());
+									Main.game.getPlayer().addFriendlyOccupant(offspring);
+									Main.game.getTextEndStringBuilder().append(offspring.incrementAffection(Main.game.getPlayer(), 50));
+								} else {
+									relocDone = true;
+								}
+							} else {
+								relocDone = true;
+							}
+						}
+						sleepTimeInMinutes = 60*24;
+						applySleep(sleepTimeInMinutes);
+						if (relocFirst) {
+							Main.game.getPlayer().setLocation(WorldType.LILAYAS_HOUSE_FIRST_FLOOR, PlaceType.LILAYA_HOME_ROOM_PLAYER, false);
+							DialogueNode dn = Main.game.getActiveWorld().getCell(Main.game.getPlayer().getLocation()).getDialogue(true);
+							Main.game.setContent(new Response("", "", dn));
+						}
+					}
+				};
+			} else if (index == 14) {
+				return new Response("Time Skip x30",
+						"Each day for 30 days, move out all employed occupants, move in your wayward offspring, then sleep 24 hours.",
+						AUNT_HOME_PLAYERS_ROOM_SLEEP) {
+					@Override
+					public void effects() {
+						System.err.println("Start: "+LocalDateTime.now());
+						for (int ts = 0; ts<30; ts++) {
+							List<String> friendlyOccupants = new ArrayList<>(Main.game.getPlayer().getFriendlyOccupants());
+							for (String id : friendlyOccupants) {
+								try {
+									NPC occupant = (NPC) Main.game.getNPCById(id);
+									Occupation occupantJob = occupant.getOccupation();
+									if (occupantJob != Occupation.NPC_UNEMPLOYED && occupant.getHomeWorldLocation()!=WorldType.DOMINION) {
+										Main.game.getPlayer().removeFriendlyOccupant(occupant);
+										Main.game.banishNPC(occupant);
+									}
+								} catch (Exception e) {
+									Util.logGetNpcByIdError("Time skip", id);
+								}
+							}
+							boolean relocDone = false;
+							while(!relocDone) {
+								Cell openRoom = OccupancyUtil.getFreeRoomForOccupant();
+								if (openRoom != null) {
+									List<OffspringSeed> offspringAvailable = Main.game.getOffspringNotSpawned(os-> true);
+									if(!offspringAvailable.isEmpty()) {
+										NPC offspring = new NPCOffspring(offspringAvailable.get(Util.random.nextInt(offspringAvailable.size())));
+										offspring.equipClothing(EquipClothingSetting.getAllClothingSettings());
+										offspring.setFlag(NPCFlagValue.flagOffspringIntroduced, true);
+										offspring.setLocation(openRoom.getType(), openRoom.getLocation(), true);
+										offspring.setLastTimeEncountered(Main.game.getMinutesPassed());
+										Main.game.getPlayer().addFriendlyOccupant(offspring);
+										offspring.incrementAffection(Main.game.getPlayer(), 50);
+									} else {
+										relocDone = true;
+									}
+								} else {
+									relocDone = true;
+								}
+							}
+							sleepTimeInMinutes = 60*24;
+							applySleep(sleepTimeInMinutes);
+							System.err.println("Day: " + Main.game.getDayNumber() + " @ " + LocalDateTime.now());
+						}
+						Main.game.getPlayer().setLocation(WorldType.LILAYAS_HOUSE_FIRST_FLOOR, PlaceType.LILAYA_HOME_ROOM_PLAYER, false);
+						DialogueNode dn = Main.game.getActiveWorld().getCell(Main.game.getPlayer().getLocation()).getDialogue(true);
+						Main.game.setContent(new Response("", "", dn));
+						System.err.println("End: "+LocalDateTime.now());
+						System.err.println("Remaining: "+Main.game.getOffspringNotSpawned(os-> true).size());
+					}
+				};
 			}
 			
 			List<NPC> charactersPresent = LilayaHomeGeneric.getSlavesAndOccupantsPresent();
-			
-			int indexPresentStart = 11;
+
+			int indexPresentStart = 15;
 			if(index-indexPresentStart<charactersPresent.size() && index-indexPresentStart>=0) {
 				NPC character = charactersPresent.get(index-indexPresentStart);
 				return new Response(

@@ -23,7 +23,7 @@
 		<colourTertiary/>
 		
 		<statusEffects>
-			<effect seconds="86400">BROODMOTHER_PILL</effect>
+			<effect seconds="604800">BROODMOTHER_PILL</effect>
 		</statusEffects>
 		
 		<effectTooltipLines>

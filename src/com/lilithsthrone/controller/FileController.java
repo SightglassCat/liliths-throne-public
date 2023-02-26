@@ -407,6 +407,9 @@ public class FileController {
 						LoadedEnchantment lEnch = EnchantmentDialogue.loadEnchant(fileName);
 						
 						EnchantmentDialogue.resetNonTattooEnchantmentVariables();
+						if (!lEnch.isSuitableItemAvailable()) {
+							Main.game.getPlayer().addItem(Main.game.getItemGen().generateItem(lEnch.getItemType()), false, true);
+						}
 						AbstractCoreItem abstractItem = lEnch.getSuitableItem();
 						EnchantmentDialogue.initModifiers(abstractItem);
 						EnchantmentDialogue.getEffects().clear();

@@ -86,8 +86,9 @@ public class PregnancyRoulette {
 	}
 	
 	private static void initMother() {
-		mother = new GenericSexualPartner(Gender.F_V_B_FEMALE, Main.game.getPlayer().getWorldLocation(), Main.game.getPlayer().getLocation(), false);
-		mother.clearFetishes();
+		mother = new GenericSexualPartner(
+			Gender.getGenderFromUserPreferences(true, false),
+			Main.game.getPlayer().getWorldLocation(), Main.game.getPlayer().getLocation(), false);		mother.clearFetishes();
 		mother.clearFetishDesires();
 		mother.addFetish(Fetish.FETISH_PREGNANCY);
 		mother.addFetish(Fetish.FETISH_VAGINAL_RECEIVING);
@@ -234,7 +235,8 @@ public class PregnancyRoulette {
 								selectedBreeder=null;
 								
 								for(int i=0; i<6; i++) {
-									GenericSexualPartner partner = new GenericSexualPartner(Gender.M_P_MALE, Main.game.getPlayer().getWorldLocation(), Main.game.getPlayer().getLocation(), false, ((s) -> s.getRace()==Race.HARPY));
+									GenericSexualPartner partner = new GenericSexualPartner(Gender.getGenderFromUserPreferences(false, true, false, true),
+										Main.game.getPlayer().getWorldLocation(), Main.game.getPlayer().getLocation(), false, ((s) -> s.getRace()==Race.HARPY));
 									initBreeder(partner);
 									breeders.add(partner);
 								}
@@ -280,7 +282,8 @@ public class PregnancyRoulette {
 								selectedBreeder=null;
 								
 								for(int i=0; i<6; i++) {
-									GenericSexualPartner partner = new GenericSexualPartner(Gender.F_P_V_B_FUTANARI, Main.game.getPlayer().getWorldLocation(), Main.game.getPlayer().getLocation(), false);
+									GenericSexualPartner partner = new GenericSexualPartner(Gender.getGenderFromUserPreferences(false, true, true, false),
+										Main.game.getPlayer().getWorldLocation(), Main.game.getPlayer().getLocation(), false);
 									initBreeder(partner);
 									breeders.add(partner);
 								}
@@ -314,7 +317,7 @@ public class PregnancyRoulette {
 								
 								// Skew the dice roll in the player's favour (lowest number goes first):
 								Dice d = new Dice(Util.newHashMapOfValues(
-										new Value<>(DiceFace.ONE, 4f),
+										new Value<>(DiceFace.ONE, 20f),
 										new Value<>(DiceFace.TWO, 3f),
 										new Value<>(DiceFace.THREE, 2f),
 										new Value<>(DiceFace.FOUR, 1f),

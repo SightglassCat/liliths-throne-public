@@ -48,6 +48,7 @@ import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.AbstractPlaceType;
 import com.lilithsthrone.world.places.PlaceType;
 
+import com.lilithsthrone.game.character.body.valueEnums.BodyMaterial;
 /**
  * @since 0.4
  * @version 0.4.0
@@ -179,6 +180,14 @@ public abstract class AbstractSubspecies {
 						"succumia",
 						"incumias",
 						"succumias"}),
+			new Value<>(LegConfiguration.WINGED_BIPED,
+					new String[] {
+						"pteridemon",
+						"pteridemons",
+						"pterincubus",
+						"pterisuccubus",
+						"pterincubi",
+						"pterisuccubi"}),
 			new Value<>(LegConfiguration.AVIAN,
 					new String[] {
 						"demoa",
@@ -705,6 +714,19 @@ public abstract class AbstractSubspecies {
 					}
 				}
 				
+				if (!this.regionLocations.containsKey(WorldRegion.DOMINION)) {
+					this.regionLocations.put(WorldRegion.DOMINION, SubspeciesSpawnRarity.TWO);
+				}
+				if (!this.regionLocations.containsKey(WorldRegion.SUBMISSION)) {
+					this.regionLocations.put(WorldRegion.SUBMISSION, SubspeciesSpawnRarity.TWO);
+				}
+				if (!this.regionLocations.containsKey(WorldRegion.FIELDS)) {
+					this.regionLocations.put(WorldRegion.FIELDS, SubspeciesSpawnRarity.TWO);
+				}
+				if (!this.regionLocations.containsKey(WorldRegion.FIELD_CITY)) {
+					this.regionLocations.put(WorldRegion.FIELD_CITY, SubspeciesSpawnRarity.TWO);
+				}
+
 				this.worldLocations = new HashMap<>();
 				if(coreElement.getOptionalFirstOf("worldLocations").isPresent()) {
 					for(Element e : coreElement.getMandatoryFirstOf("worldLocations").getAllOf("world")) {
@@ -828,12 +850,38 @@ public abstract class AbstractSubspecies {
 		
 		int highestWeighting = 0;
 		int newWeighting;
-		for(AbstractSubspecies sub : Subspecies.getAllSubspecies()) {
+		// Primary: Look for subspecies within race
+		for(AbstractSubspecies sub : Subspecies.getSubspeciesOfRace(race)) {
 			newWeighting = sub.getSubspeciesWeighting(body, race);
 			if(newWeighting>highestWeighting
 					&& (!body.isFeral() || sub.isFeralConfigurationAvailable(body))) {
 				subspecies = sub;
 				highestWeighting = newWeighting;
+			}
+		}
+		/*// Backup: Calculate body race from part weighting
+		if(subspecies==null && Main.game.isStarted()) {
+			AbstractRace raceFromPartWeighting = body.getRaceFromPartWeighting();
+			highestWeighting = 0;
+			for(AbstractSubspecies sub : Subspecies.getSubspeciesOfRace(raceFromPartWeighting)) {
+				newWeighting = sub.getSubspeciesWeighting(body, raceFromPartWeighting);
+				if(newWeighting>highestWeighting
+						&& (!body.isFeral() || sub.isFeralConfigurationAvailable())) {
+					subspecies = sub;
+					highestWeighting = newWeighting;
+				}
+			}
+		}*/
+		// Last resort: Search through all subspecies
+		if(subspecies==null && Main.game.isStarted()) {
+			highestWeighting = 0;
+			for(AbstractSubspecies sub : Subspecies.getAllSubspecies()) {
+				newWeighting = sub.getSubspeciesWeighting(body, race);
+				if(newWeighting>highestWeighting
+						&& (!body.isFeral() || sub.isFeralConfigurationAvailable())) {
+					subspecies = sub;
+					highestWeighting = newWeighting;
+				}
 			}
 		}
 		if(subspecies==null) {
@@ -977,6 +1025,13 @@ public abstract class AbstractSubspecies {
 			} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 				
+			} else if (fatherSubspecies==Subspecies.SLIME) {
+				Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherHalfDemonSubspecies, true);
+				if (Math.random()<0.2) {
+					Race.SLIME.applyRaceChanges(body);
+					Subspecies.SLIME.applySpeciesChanges(body);
+				}
+				return body;
 			} else {
 				return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherSubspecies, true);
 			}
@@ -989,6 +1044,11 @@ public abstract class AbstractSubspecies {
 					} else {
 						return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 					}
+				} else if (fatherSubspecies==Subspecies.SLIME) {
+					Body body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+					Race.SLIME.applyRaceChanges(body);
+					Subspecies.SLIME.applySpeciesChanges(body);
+					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 				}
@@ -1007,6 +1067,11 @@ public abstract class AbstractSubspecies {
 				} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 					
+				} else if (fatherSubspecies==Subspecies.SLIME) {
+					Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
+					Race.SLIME.applyRaceChanges(body);
+					Subspecies.SLIME.applySpeciesChanges(body);
+					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 				}
@@ -1016,7 +1081,12 @@ public abstract class AbstractSubspecies {
 			if(fatherSubspecies==Subspecies.IMP) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 			} else {
-				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+				if (Math.random() < 0.2) {
+					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+				}
+				else {
+					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+				}	
 			}
 			
 		} else {

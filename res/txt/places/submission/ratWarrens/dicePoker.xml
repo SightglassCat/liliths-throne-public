@@ -281,5 +281,61 @@
 	</p>
 	]]>
 	</htmlContent>
+		<!-- SEDUCE -->
+	<htmlContent tag="SEDUCE_OFFER_BODY"><![CDATA[
+	<p>
+		Instead of readying yourself for a game of dice poker, you instead walk to [npc.her] side and power on your seductive aura.
+	</p>
+	<p>
+		[npc.speech(Huh? What is it?)] [npc.name] asks, [npc.her] eyes showing a growing arousal.
+	</p>
+	<p>
+		[pc.speech(How about I take my money back, and we can play something... a little more hands on?)] you ask, putting on your most salacious look.
+	</p>
+	<p>
+		[npc.speech(Hmm, well, I could use a break from playing,)] [npc.name] replies, with an unmistakable hint of lust in [npc.her] voice.
+	</p>
+	]]>
+	</htmlContent>
 	
+	<htmlContent tag="SEDUCE_OFFER_BODY_DECLINE"><![CDATA[
+	<p>
+		[pc.speech(On second thought, maybe not,)] you say, before turning around and quickly taking your leave. [npc.Name] briefly looks disappointed, but the expression quickly fades under [npc.her] poker face. [npc.speech(Trying to knock me off my game? What a tease.)] [npc.she] chuckles, before turning back to face another challenger.
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="SEDUCE_OFFER_BODY_ACCEPT_SUB"><![CDATA[
+	<p>
+		You tell [npc.herHim] that [npc.she] can use you however [npc.she] wants. [npc.Name] lets out a lustful [npc.moan], before stepping forwards and wrapping [npc.her] [npc.arms] around your back. Giving you an hungry grin, [npc.she] hungrily licks [npc.her] [npc.lips], before growling, [npc.speech(This is gonna' be good!)]
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="SEDUCE_OFFER_BODY_ACCEPT_DOM"><![CDATA[
+	<p>
+		You tell [npc.herHim] that you're going to take charge and help [npc.her] let out some tension. [npc.Name] lets out a lustful [npc.moan], before stepping forwards and falling into your embrace. Giving you an hungry grin, [npc.she] hungrily licks [npc.her] [npc.lips], before moaning, [npc.speech(Oh, I really need this!)]
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="SEDUCE_AFTER_SEX_SUB"><![CDATA[
+	<p>
+		[npc.Name] steps away from you, utterly satisfied. With a quick change of clothes and a few wet wipes, [npc.she] is as game-ready as before, but with a little bit more pep.
+	</p>
+	<p>
+		As you gather your things, take back your initial buy-in, and head off, most of crowd turns back to their tables and games, though the hungry looks in some of their eyes shows they could use a "confidence boost" too. Maybe next time though...
+	</p>
+	]]>
+	</htmlContent>
+	
+	<htmlContent tag="SEDUCE_AFTER_SEX_DOM"><![CDATA[
+	<p>
+		[npc.Name] collapses back into [npc.her] seat, utterly satisfied. Leisurely replacing [npc.her] clothing, [npc.she] looks a lot more calm and composed for [npc.her] next game.
+	</p>
+	<p>
+		As you gather your things, take back your initial buy-in, and head off, most of crowd turns back to their tables and games, though the hungry looks in some of their eyes shows some of them could use a "break" too. Maybe next time though...
+	</p>
+	]]>
+	</htmlContent>
 </dialogue>

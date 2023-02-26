@@ -3766,8 +3766,8 @@ public class StatusEffect {
 			return (Main.getProperties().hasValue(PropertyValue.ageContent) || target.isUnique())
 					&& target.hasVagina()
 					&& (target.isPlayer()
-							?target.getAgeValue()>=52+Game.TIME_SKIP_YEARS
-							:target.getAgeValue()>=52)
+							?target.getAgeValue()>=54+Game.TIME_SKIP_YEARS
+							:target.getAgeValue()>=54)
 					&& (target.getSubspecies()==Subspecies.ANGEL || target.getSubspeciesOverride()==null) // Angels and demons are immune
 					&& !target.isElemental()
 					&& !target.hasStatusEffect(StatusEffect.VIXENS_VIRILITY)
@@ -3802,7 +3802,7 @@ public class StatusEffect {
 			StringBuilder sb = new StringBuilder();
 			
 			if (target.isPregnant()) {
-				int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) / 2f);
+				int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) * (0.75+(Util.random.nextFloat()*0.5)) / 2f);
 				target.addStatusEffect(PREGNANT_1, 60 * 60 * ((maxHourLength-12) + Util.random.nextInt(13)));
 				target.loadImages(true); // Reload images for pregnant versions
 				
@@ -3995,7 +3995,7 @@ public class StatusEffect {
 		}
 		@Override
 		public String extraRemovalEffects(GameCharacter target) {
-			int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) / 2f);
+			int maxHourLength = (int)((Main.getProperties().pregnancyDuration * 7 * 24) * (0.75+(Util.random.nextFloat()*0.5))/ 2f);
 			target.addStatusEffect(PREGNANT_2, 60 * 60 * ((maxHourLength-12) + Util.random.nextInt(13)));
 			
 			boolean breastGrowth = false;

@@ -988,7 +988,7 @@ public class Evelyx extends NPC {
 	}
 	
 	public void applyEndWorkEffects() {
-		Main.game.getPlayer().addStatusEffect(StatusEffect.FATIGUED, 21600);
+		Main.game.getPlayer().addStatusEffect(StatusEffect.FATIGUED, 3600);
 		unequipMilkingPumps(Main.game.getPlayer());
 	}
 	

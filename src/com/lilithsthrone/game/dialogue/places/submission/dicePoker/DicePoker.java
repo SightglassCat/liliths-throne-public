@@ -316,21 +316,28 @@ public class DicePoker {
 						progress++;
 					}
 				};
+			} else if(index==2) {
+				if(!gambler.isAttractedTo(Main.game.getPlayer())) {
+					return new Response("Seduce", UtilText.parse(gambler, "[npc.Name] is not attracted to you, so you offering your body to [npc.herHim] is futile."), null);
+				}
+				return new Response("Seduce",
+					UtilText.parse(gambler, "Offer [npc.name] use of your body."),
+					SEDUCE_OFFER_BODY);
 			}
 			return null;
 		}
 	};
-	
+
 	private static final DialogueNode ROLL = new DialogueNode("Dice Poker", "", true) {
-		
+
 		@Override
 		public String getContent() {
 			if(Hand.compareHands(playerDice, gamblerDice)>0) {
 				return getGamblingFormat(UtilText.parseFromXMLFile(dialoguePath, "ROLL_WINNING", gambler));
-					
+
 			} else if(Hand.compareHands(playerDice, gamblerDice)==0) {
 				return getGamblingFormat(UtilText.parseFromXMLFile(dialoguePath, "ROLL_DRAWING", gambler));
-					
+
 			} else {
 				return getGamblingFormat(UtilText.parseFromXMLFile(dialoguePath, "ROLL_LOSING", gambler));
 			}
@@ -628,4 +635,94 @@ public class DicePoker {
 			return null;
 		}
 	};
+
+	private static final DialogueNode SEDUCE_OFFER_BODY = new DialogueNode("Dice Poker", "", true) {
+
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile(dialoguePath, "SEDUCE_OFFER_BODY", gambler);
+		}
+
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			if(index==1) {
+				return new ResponseSex("Take Charge",
+						UtilText.parse(gambler, "Publicly fuck [npc.name]."),
+						true, false,
+						new SMGeneric(
+								Util.newArrayListOfValues(Main.game.getPlayer()),
+								Util.newArrayListOfValues(gambler),
+						null,
+						null),
+						SEDUCE_AFTER_SEX_DOM,
+						UtilText.parseFromXMLFile(dialoguePath, "SEDUCE_OFFER_BODY_ACCEPT_DOM", gambler)) {
+					@Override
+					public void effects() {
+					}
+				};
+
+			} else if(index==2) {
+				return new ResponseSex("Submit",
+						UtilText.parse(gambler, "Allow [npc.name] to publicly fuck you."),
+						true, false,
+						new SMGeneric(
+								Util.newArrayListOfValues(gambler),
+								Util.newArrayListOfValues(Main.game.getPlayer()),
+						null,
+						null),
+						SEDUCE_AFTER_SEX_SUB,
+						UtilText.parseFromXMLFile(dialoguePath, "SEDUCE_OFFER_BODY_ACCEPT_SUB", gambler)) {
+					@Override
+					public void effects() {
+					}
+				};
+			}
+			return null;
+		}
+	};
+
+	private static final DialogueNode SEDUCE_AFTER_SEX_SUB = new DialogueNode("Finished", "", true) {
+
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile(dialoguePath, "SEDUCE_AFTER_SEX_SUB", gambler);
+		}
+
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			if(index==1) {
+				return new Response("Continue", "Step away from the table.", endingNode) {
+					@Override
+					public void effects() {
+						Main.game.getTextStartStringBuilder().append(Main.game.getPlayer().incrementMoney(moneyPool/2));
+						progress = 0;
+					}
+				};
+			}
+			return null;
+		}
+	};
+
+	private static final DialogueNode SEDUCE_AFTER_SEX_DOM = new DialogueNode("Finished", "", true) {
+
+		@Override
+		public String getContent() {
+			return UtilText.parseFromXMLFile(dialoguePath, "SEDUCE_AFTER_SEX_DOM", gambler);
+		}
+
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			if(index==1) {
+				return new Response("Continue", "Step away from the table.", endingNode) {
+					@Override
+					public void effects() {
+						Main.game.getTextStartStringBuilder().append(Main.game.getPlayer().incrementMoney(moneyPool/2));
+						progress = 0;
+					}
+				};
+			}
+			return null;
+		}
+	};
+
 }

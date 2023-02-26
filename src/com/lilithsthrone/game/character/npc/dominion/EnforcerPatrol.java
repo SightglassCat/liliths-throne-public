@@ -105,6 +105,8 @@ public class EnforcerPatrol extends NPC {
 					this.setLegType(this.getRace().getRacialBody().getLegType());
 					Main.game.getCharacterUtils().applyTaurConversion(this);
 				}
+			} else if (Main.getProperties().taurSpawnRate > 0 && (Math.random() * (1-Main.getProperties().taurSpawnRate/100f)< 0.06)) {
+				body.setFeral(body.getSubspecies());
 			}
 			
 			setSexualOrientation(RacialBody.valueOfRace(this.getRace()).getSexualOrientation(gender));
@@ -136,8 +138,8 @@ public class EnforcerPatrol extends NPC {
 			resetInventory(true);
 			inventory.setMoney(10 + Util.random.nextInt(getLevel()*10) + 1);
 			Main.game.getCharacterUtils().generateItemsInInventory(this, true, true, false);
-			this.addClothing(Main.game.getItemGen().generateClothing("innoxia_penis_condom", PresetColour.CLOTHING_PURPLE_DARK, false), 5, false, false);
-			
+			//this.addClothing(Main.game.getItemGen().generateClothing("innoxia_penis_condom", PresetColour.CLOTHING_PURPLE_DARK, false), 5, false, false);
+
 			if(!Arrays.asList(generationFlags).contains(NPCGenerationFlag.NO_CLOTHING_EQUIP)) {
 				this.equipClothing(EquipClothingSetting.getAllClothingSettings());
 			}

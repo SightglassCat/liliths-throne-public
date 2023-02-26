@@ -855,12 +855,17 @@ public class Name {
 			name = getDemonName();
 			
 		} else if(racialNames.containsKey(Subspecies.getIdFromSubspecies(subspecies))) {
-			name = Util.randomItemFrom(racialNames.get(Subspecies.getIdFromSubspecies(subspecies)));
-			
-		} else if(Math.random()<0.1) { // If no racial names are found, then occasionally throw some "prostitute" names in there
-			name = Util.randomItemFrom(prostitute); 
+			if((r!=Race.REINDEER_MORPH && r!=Race.HORSE_MORPH) || Math.random()<0.15) {
+				name = Util.randomItemFrom(racialNames.get(Subspecies.getIdFromSubspecies(subspecies)));
+			}
+
+		} else if(Math.random()<0.12) { // If no racial names are found, then occasionally throw some "prostitute" names in there
+			name = Util.randomItemFrom(prostitute);
 		}
-		
+		else if(Math.random()<0.04) {
+			name = Util.randomItemFrom(petNames);
+		}
+
 		return name;
 	}
 	
@@ -872,6 +877,9 @@ public class Name {
 	}
 	
 	private static NameTriplet getDemonName() {
+		if (Math.random() < 0.80) {
+			return getNewStyleDemonName();
+		}    
 		String[] prefixFem = new String[] {"Aella", "Bella", "Cae", "Deva", "Ella", "Fae", "Hela", "Isa", "Katha", "Loe", "Nysa", "Oella", "Rae", "Sytha", "Vixxa", "Wynna"};
 		String[] prefixMas = new String[] {"Ada", "Boro", "Foro", "Helio", "Kiri", "Zara"};
 		
@@ -895,6 +903,37 @@ public class Name {
 		
 		return new NameTriplet(masName, femName, femName);
 	}
+	
+	private static NameTriplet getNewStyleDemonName() {
+		final String[] prefixFem = { "A", "Ae", "Ael", "Ag", "Ah", "Ai", "Al", "Aph", "Ar", "As", "Au", "Ba", "Be", "Bel", "Bi", "Bo", "By", "C", "Ca", "Cae", "Ce", "Ci", "Co", "Cy", "Da", "Dae", "De", "Di", "Do", "Dy", "E", "Ei", "El", "Es", "F", "Fa", "Fae", "Fe", "Fi", "Fo", "Fu", "Fy", "G", "Ga", "Gae", "Ge", "Gi", "Gre", "Gy", "Ha", "Hae", "He", "Hel", "Hi", "Ho", "Hol", "I", "Ia", "Ie", "Io", "Is", "Isa", "K", "Ka", "Kae", "Ke", "Ki", "Ko", "Kry", "Ky", "Kys", "L", "La", "Lae", "Le", "Li", "Lo", "Loe", "Lu", "Ly", "Lys", "Ma", "Mae", "Me", "Mer", "My", "Myr", "N", "Na", "Nae", "Ny", "Oa", "Oe", "Oel", "Pe", "Phi", "Py", "Pyr", "Qu", "Qui", "R", "Ra", "Rae", "Ri", "Ro", "Ru", "Ry", "Rys", "S", "Sa", "Sae", "So", "Soe", "Su", "Sy", "Ta", "Tae", "Te", "Tri", "Tyr", "Se", "Sye", "Syr", "V", "Ve", "Vi", "Vix", "Vo", "Voe", "Vu", "Vy", "Vys", "Wi", "Wyn", "Wys", "Ys",
+		"Aella", "Aka", "Ana", "Ao", "Asa", "Ata", "Ay", "Bela", "Bella", "Boe", "Bya", "Cal", "Cala", "Cana", "Capha", "Cas", "Casa", "Casca", "Caza", "Cazi", "Cera", "Che", "Cin", "Cya", "Cyn", "Cyo", "Dara", "Daya", "Dea", "Des", "Deva", "Dia", "Dya", "Ea", "Eali", "Ela", "Ella", "Eoxa", "Era", "Ero", "Esa", "Eu", "Euli", "Ey", "Fara", "Fera", "Fla", "Fyn", "Fyo", "Gala", "Gan", "Haya", "Hei", "Hela", "Hio", "Hya", "Hyo", "Ino", "Jea", "Kai", "Kao", "Kara", "Kas", "Kasa", "Kata", "Katha", "Kes", "Kura", "Lea", "Lem", "Les", "Lez", "Mai", "Mar", "Mea", "Mel", "Mir", "Nao", "Nay", "Nea", "Nesa", "Ney", "Nisa", "Noe", "Nya", "Nyo", "Nys", "Nysa", "Oca", "Oce", "Oela", "Oella", "Ona", "Os", "Osa", "Ose", "Oxa", "Pa", "Par", "Paz", "Pha", "Phae", "Phe", "Phera", "Prim", "Ray", "Rie", "Saa", "Saba", "Sal", "San", "Sao", "Saya", "Sea", "Sekh", "Sel", "Sela", "Sen", "Sera", "Ses", "Shi", "Shira", "Sin", "Ske", "Ste", "Sua", "Sura", "Suza", "Suzu", "Sva", "Svel", "Syta", "Sytha", "Tana", "Taya", "Ti", "Til", "Ula", "Un", "Una", "Ursa", "Va", "Vaja", "Val", "Vao", "Var", "Vara", "Vari", "Vasa", "Vaya", "Ven", "Vera", "Vila", "Vixa", "Vixxa", "Viya", "Voya", "Vula", "Vyla", "Wa", "Wy", "Wya", "Wynna", "Xa", "Xe", "Xena", "Xera", "Xy", "Ya", "Yn", "Yo", "Yua", "Yuna", "Yune", "Yva", "Yve", "Za", "Zari", "Ze", "Zea", "Zi"};
+		final String[] prefixMas = { "Aba", "Ada", "Ag", "Ah", "Al", "Aph", "Ar", "As", "Ash", "Au", "Az", "Ba", "Bel", "B", "Bee", "Bo", "Bu", "By", "Cas", "Ci", "Co", "Cu", "Cy", "Da", "Dae", "De", "Do", "Du", "Dy", "E", "Ei", "El", "Fa", "Fo", "Fy", "G", "Ga", "Ge", "Gre", "Gri", "Gy", "H", "Ha", "He", "Hel", "Ho", "Hol", "Hy", "I", "Ia", "Io", "Is", "Iys", "K", "Ka", "Kae", "Ki", "Ko", "Ky", "Kys", "L", "Le", "Lo", "Li", "Lu", "Ly", "Mi", "Mo", "Mys", "N", "Nae", "Ne", "Ni", "No", "Ny", "Oa", "Oe", "Ou", "Oy", "Oys", "Nys", "Pa", "Pe", "Pi", "Po", "Py", "Pyr", "Q", "Qy", "Qys", "R", "Ra", "Ri", "Ro", "Ry", "Rys", "S", "Se", "Si", "Soe", "Sye", "Ta", "Te", "To", "Tri", "Ty", "Tys", "Va", "Vo", "Vu", "Vy", "Za", "Z", "Ze", "Zo",
+		"Aka", "Ax", "Aza", "Bae", "Bael", "Bal", "Bar", "Ber", "Boro", "Bors", "Bra", "Caa", "Caz", "Cha", "Che", "Chu", "Cin", "Coel", "Cro", "Cru", "Dar", "Das", "Dath", "Des", "Dis", "Dro", "Eo", "Er", "Ero", "Eru", "Et", "Eu", "Ex", "Ey", "Ez", "Fal", "Fero", "Ferro", "Fex", "For", "Foro", "Ger", "Gren", "Gru", "Gys", "Har", "Hei", "Helio", "Her", "Hor", "Hra", "Hry", "Ior", "Ire", "Ix", "Iz", "Jax", "Je", "Jor", "Jul", "Kan", "Kao", "Kar", "Kas", "Ker", "Kers", "Kil", "Kir", "Kiri", "Kirs", "Kos", "Kuro", "Lar", "Laz", "Les", "Lex", "Lor", "Lyao", "Maro", "Mas", "Max", "Maz", "Mir", "Mne", "Mos", "Mra", "Mro", "Mus", "Mux", "Na", "Nar", "Nas", "Nax", "Ner", "Nes", "Nex", "Nil", "Nis", "Nu", "Nur", "Oax", "Oca", "Ok", "Oko", "Olo", "Omo", "Oto", "Ox", "Paz", "Pen", "Per", "Phae", "Pho", "Phy", "Pto", "Qax", "Quo", "Rax", "Raz", "Rex", "Rez", "Rix", "Riz", "Roa", "Rux", "Ruz", "Sar", "Ser", "Shiro", "Sol", "Soz", "Sra", "Sre", "Sur", "Sva", "Sve", "Tah", "Tao", "Tas", "Taz", "Teo", "Tez", "Tik", "Tir", "Tis", "Tu", "Tur", "Tyr", "Ul", "Un", "Uo", "Uro", "Ux", "Vaz", "Vik", "Vir", "Vos", "Vox", "Vul", "Vyr", "Wer", "Wul", "Wur", "Wyl", "Xa", "Xax", "Xer", "Xo", "Xuo", "Xy", "Yar", "Yaz", "Yer", "Yr", "Zar", "Zara", "Zaro", "Zas", "Zax", "Zaz", "Zer", "Zes", "Zi", "Zir", "Zuz", "Zys"};
+		final String[] infixFem = { "al", "as", "ci", "ch", "e", "el", "ha", "hae", "he", "io", "il", "k", "ki", "la", "lae", "li", "lyn", "oe", "m", "mo", "mode", "n", "na", "nae", "no", "pho", "ra", "ram", "re", "rem", "ri", "ryn", "sa", "sae", "she", "te", "ti", "tha", "uri", "va", "vae", "xa" ,
+		"a", "en", "ie", "o", "ue", "", ""};
+		final String[] infixMas = { "al", "as", "ci", "ch", "ei", "el", "ha", "hae", "he", "io", "il", "k", "ke", "ki", "la", "lae", "li", "lio", "lyn", "oe", "mo", "mode", "n", "na", "nae", "no", "nu", "pho", "pro", "ra", "rae", "ram", "rem", "ro", "ri", "rc", "ryn", "sa", "sae", "si", "t", "te", "ti", "tha", "uri", "va", "vae", "xa", "lze",
+		"a", "an", "az", "e", "i", "o", "u", "ue", "ie", "on", "eon", "", ""};
+		final String[] postfixFem = { "ryth", "ney", "nix", "sys", "trix", "la", "lyth", "yth", "yx", "eth", "ia", "iya", "is", "ya", "na", "yna", "mis", "eth", "ra", "re", "ry", "cys", "ys", "yn", "rys", "nys", "us", "dai", "n", "y", "ya",
+		"ana", "as", "asa", "ea", "es", "ina", "isa", "jyx", "sae", "zae", "ze", "eri", "ira", "era"};
+		final String[] postfixMas = { "ryth", "ney", "nix", "sys", "trix", "ial", "iel", "yx", "mas", "xas", "man", "ias", "tor", "mis", "ius", "cer", "ces", "met", "ry", "rys", "nys", "us", "dai", "fer", "bis", "eth", "ia", "ys",
+		"ak", "al", "am", "aph", "as", "ath", "ek", "em", "en", "ex", "im", "in", "is", "ium", "iz", "jyx", "os", "ox", "uls", "um", "yr", "emus", "imus", "vus"};
+		final String femName = String.valueOf(prefixFem[Util.random.nextInt(prefixFem.length)]) + infixFem[Util.random.nextInt(infixFem.length)] + postfixFem[Util.random.nextInt(postfixFem.length)];
+		final char startingChar = femName.charAt(0);
+		String masName = String.valueOf(prefixMas[Util.random.nextInt(prefixMas.length)]) + infixMas[Util.random.nextInt(infixMas.length)] + postfixMas[Util.random.nextInt(postfixMas.length)];
+		final List<String> masculineNames = new ArrayList<String>();
+		String[] array;
+		for (int length = (array = prefixMas).length, i = 0; i < length; ++i) {
+			final String s = array[i];
+			if (s.charAt(0) == startingChar) {
+				masculineNames.add(s);
+			}
+		}
+		if (!masculineNames.isEmpty()) {
+			//masName = String.valueOf(masculineNames.get(Util.random.nextInt(masculineNames.size()))) + postfixMas[Util.random.nextInt(postfixMas.length)];
+			masName = String.valueOf(masculineNames.get(Util.random.nextInt(masculineNames.size()))) + infixMas[Util.random.nextInt(infixMas.length)] + postfixMas[Util.random.nextInt(postfixMas.length)];
+		}
+		return new NameTriplet(masName, femName, femName); // NAAS's demon names
+	}	
 	
 	public static NameTriplet getRandomProstituteTriplet() {
 		// occasionally throw some "regular" names in there - 25% of the time

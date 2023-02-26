@@ -86,7 +86,7 @@
 				e.g. The status effect ID for Amazonian's Secret is 'innoxia_amazons_secret' (from res/statusEffects/innoxia/amazons_secret.xml)
 				Hard coded effects are here: https://github.com/Innoxia/liliths-throne-public/blob/dev/src/com/lilithsthrone/game/character/effects/StatusEffect.java -->
 		<statusEffects>
-			<effect seconds="86400">VIXENS_VIRILITY</effect> <!-- 'seconds' defines how long the status effect should be applied for. -->
+			<effect seconds="604800">VIXENS_VIRILITY</effect> <!-- 'seconds' defines how long the status effect should be applied for. -->
 		</statusEffects>
 		
 		<!-- You can use this section to describe any extra features of this item.

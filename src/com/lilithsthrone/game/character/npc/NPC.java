@@ -1199,6 +1199,38 @@ public abstract class NPC extends GameCharacter implements XMLSaving {
 			}
 		}
 
+		if(!this.getLittersBirthed().isEmpty()) {
+			for (Litter litter : this.getLittersBirthed()) {
+				if (litter.getFather()!=null && litter.getFather().isPlayer()) {
+					return false;
+				}
+			}
+		}
+		if(!this.getLittersFathered().isEmpty()) {
+			for(Litter litter : this.getLittersFathered()) {
+				if(litter.getMother()!=null && litter.getMother().isPlayer()) {
+					return false;
+				}
+			}
+		}
+		if(!this.getLittersImplanted().isEmpty()) {
+			for (Litter litter : this.getLittersImplanted()) {
+				if (litter.getFather()!=null && litter.getFather().isPlayer()) {
+					return false;
+				}
+			}
+		}
+		if(!this.getLittersIncubated().isEmpty()) {
+			for(Litter litter : this.getLittersIncubated()) {
+				if(litter.getMother()!=null && litter.getMother().isPlayer()) {
+					return false;
+				}
+				if (litter.getFather()!=null && litter.getFather().isPlayer()) {
+					return false;
+				}
+			}
+		}		
+		
 		return true;
 	}
 
@@ -1469,7 +1501,7 @@ public abstract class NPC extends GameCharacter implements XMLSaving {
 		if(this.isRelatedTo(Main.game.getPlayer())) {
 			return this.getAffection(Main.game.getPlayer())>=AffectionLevel.NEGATIVE_TWO_DISLIKE.getMinimumValue();
 		} else {
-			return this.getAffection(Main.game.getPlayer())>=AffectionLevel.POSITIVE_THREE_CARING.getMinimumValue();
+			return this.getAffection(Main.game.getPlayer())>=AffectionLevel.POSITIVE_TWO_LIKE.getMinimumValue();
 		}
 	}
 

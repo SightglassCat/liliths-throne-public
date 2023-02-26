@@ -603,7 +603,7 @@ public class OffspringSeed implements XMLSaving {
 	}
 	
 	public String getGenderName() {
-		return this.getGender().getNounYoung();
+		return this.getGender().getName();
 	}
 	
 	public BodyShape getBodyShape() {

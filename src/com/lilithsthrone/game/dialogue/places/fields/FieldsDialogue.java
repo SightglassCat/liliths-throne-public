@@ -196,7 +196,7 @@ public class FieldsDialogue {
 							"Take some time to explore the fields. Although you don't think you're any more or less likely to find anything by doing this, at least you won't have to keep travelling back and forth..."){
 							@Override
 							public int getSecondsPassed() {
-								return 30*60;
+								return 5*60;
 							}
 							@Override
 							public void effects() {

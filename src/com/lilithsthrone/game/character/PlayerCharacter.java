@@ -1794,6 +1794,7 @@ public class PlayerCharacter extends GameCharacter implements XMLSaving {
 			}
 		}
 		
+		npc.addDesiredJob(Occupation.NPC_PROSTITUTE);
 		return friendlyOccupants.add(npc.getId());
 	}
 	

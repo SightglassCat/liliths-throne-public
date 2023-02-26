@@ -115,7 +115,7 @@ public class SlaverAlleyDialogue {
 		Main.game.getNpc(Finch.class).removeAllSlaves();
 		
 		// Female stall:
-		Gender[] genders = new Gender[] {Gender.F_V_B_FEMALE, Gender.F_V_B_FEMALE, Gender.F_P_V_B_FUTANARI};
+		Gender[] genders = new Gender[] {Gender.F_V_B_FEMALE, Gender.F_V_B_FEMALE, Gender.F_P_V_B_FUTANARI, Gender.F_P_B_SHEMALE, Gender.F_P_B_SHEMALE};
 		for (Gender gender : genders) {
 			NPC slave = new SlaveForSale(gender, false);
 			try {
@@ -133,7 +133,7 @@ public class SlaverAlleyDialogue {
 		}
 
 		// Male stall:
-		genders = new Gender[] {Gender.M_P_MALE, Gender.M_P_MALE, Gender.M_P_MALE};
+		genders = new Gender[] {Gender.M_P_MALE, Gender.M_P_MALE, Gender.M_P_MALE, Gender.M_V_CUNTBOY, Gender.M_P_V_HERMAPHRODITE};
 		for (Gender gender : genders) {
 			NPC slave = new SlaveForSale(gender, false);
 			try {
@@ -283,7 +283,7 @@ public class SlaverAlleyDialogue {
 	
 	
 	public static void stocksUpdate() {
-		float chanceToBeUsed = (12 - Main.game.getHourOfDay()%12)/12f;
+		float chanceToBeUsed = (Main.game.getHourOfDay()%12)/12f;
 		for(NPC npc : Main.game.getCharactersPresent(Main.game.getWorlds().get(WorldType.SLAVER_ALLEY).getCell(PlaceType.SLAVER_ALLEY_PUBLIC_STOCKS))) {
 			if((npc instanceof SlaveInStocks) && !Main.game.getPlayer().getCompanions().contains(npc)) {
 				if (Math.random()<chanceToBeUsed) {
@@ -1748,6 +1748,18 @@ public class SlaverAlleyDialogue {
 							public void effects() {
 								stocksSlaveTargeted = ((NPC) slave);
 							}
+						};
+					} else if (index == charactersPresent.size()+2) {
+						return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", PUBLIC_STOCKS) {
+							@Override
+							public void effects() {
+								dailyReset();
+								stocksReset();
+							}//
+							@Override
+							public int getSecondsPassed() {
+								return 8*60;
+							}//
 						};
 					}
 					

@@ -1099,7 +1099,23 @@ public class OccupantManagementDialogue {
 					
 				} else {
 					int i = 0;
-					for(String id : Main.game.getPlayer().getFriendlyOccupants()) {
+					List<String> friendlyOccupantsSorted = new ArrayList<String>();
+					for (String id : Main.game.getPlayer().getFriendlyOccupants()) {
+						try {
+							NPC occupant = (NPC) Main.game.getNPCById(id);
+							String occupantJob = occupant.getOccupation().getName(occupant);
+							if (occupantJob == "unemployed") {
+								friendlyOccupantsSorted.add(id);
+							} else {
+								friendlyOccupantsSorted.add(0, id);
+							}
+						} catch (Exception e) {
+							Util.logGetNpcByIdError("SLAVE_LIST.getResponse()", id);
+						}
+					}
+
+					//for(String id : Main.game.getPlayer().getFriendlyOccupants()) {
+					for(String id : friendlyOccupantsSorted ) {
 						try {
 							NPC occupant = (NPC) Main.game.getNPCById(id);
 							if(occupant.getHomeWorldLocation()!=WorldType.DOMINION) {

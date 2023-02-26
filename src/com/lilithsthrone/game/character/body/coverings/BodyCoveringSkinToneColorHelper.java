@@ -69,7 +69,7 @@ public class BodyCoveringSkinToneColorHelper {
 			Set<Colour> colourApplicationListPrimary = new HashSet<>();
 
 			colourApplicationListPrimary.addAll(bct.getNaturalColoursPrimary());
-			colourApplicationListPrimary.retainAll(tone.getAssociatedColours());
+			//colourApplicationListPrimary.retainAll(tone.getAssociatedColours());
 			if(colourApplicationListPrimary.isEmpty()) {
 				colourApplicationListPrimary.addAll(bct.getNaturalColoursPrimary());
 			}
@@ -77,7 +77,7 @@ public class BodyCoveringSkinToneColorHelper {
 			Set<Colour> colourApplicationListSecondary = new HashSet<>();
 
 			colourApplicationListSecondary.addAll(bct.getNaturalColoursSecondary());
-			colourApplicationListSecondary.retainAll(tone.getAssociatedColours());
+			//colourApplicationListSecondary.retainAll(tone.getAssociatedColours());
 			if(colourApplicationListSecondary.isEmpty()) {
 				colourApplicationListSecondary.addAll(bct.getNaturalColoursSecondary());
 			}

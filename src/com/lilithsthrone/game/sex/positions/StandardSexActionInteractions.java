@@ -958,6 +958,7 @@ public class StandardSexActionInteractions {
 								SexActionPresets.kissing,
 								SexActionPresets.appendagesToAllAreas,
 								SexActionPresets.allAreasToAppendages,
+								SexActionPresets.groinToGroin,
 								SexActionPresets.vaginaToPenis),
 						Util.newArrayListOfValues(
 								OrgasmCumTarget.LEGS,
