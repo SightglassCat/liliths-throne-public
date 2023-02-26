@@ -706,6 +706,19 @@ public abstract class AbstractSubspecies {
 					}
 				}
 				
+				if (!this.regionLocations.containsKey(WorldRegion.DOMINION)) {
+					this.regionLocations.put(WorldRegion.DOMINION, SubspeciesSpawnRarity.TWO);
+				}
+				if (!this.regionLocations.containsKey(WorldRegion.SUBMISSION)) {
+					this.regionLocations.put(WorldRegion.SUBMISSION, SubspeciesSpawnRarity.TWO);
+				}
+				if (!this.regionLocations.containsKey(WorldRegion.FIELDS)) {
+					this.regionLocations.put(WorldRegion.FIELDS, SubspeciesSpawnRarity.TWO);
+				}
+				if (!this.regionLocations.containsKey(WorldRegion.FIELD_CITY)) {
+					this.regionLocations.put(WorldRegion.FIELD_CITY, SubspeciesSpawnRarity.TWO);
+				}
+
 				this.worldLocations = new HashMap<>();
 				if(coreElement.getOptionalFirstOf("worldLocations").isPresent()) {
 					for(Element e : coreElement.getMandatoryFirstOf("worldLocations").getAllOf("world")) {
