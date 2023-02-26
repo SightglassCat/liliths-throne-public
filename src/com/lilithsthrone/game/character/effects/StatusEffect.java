@@ -3723,8 +3723,8 @@ public class StatusEffect {
 			return (Main.getProperties().hasValue(PropertyValue.ageContent) || target.isUnique())
 					&& target.hasVagina()
 					&& (target.isPlayer()
-							?target.getAgeValue()>=52+Game.TIME_SKIP_YEARS
-							:target.getAgeValue()>=52)
+							?target.getAgeValue()>=54+Game.TIME_SKIP_YEARS
+							:target.getAgeValue()>=54)
 					&& (target.getSubspecies()==Subspecies.ANGEL || target.getSubspeciesOverride()==null) // Angels and demons are immune
 					&& !(target.isElemental());
 		}
