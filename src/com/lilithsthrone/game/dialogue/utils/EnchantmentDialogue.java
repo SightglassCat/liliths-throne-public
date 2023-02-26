@@ -846,8 +846,8 @@ public class EnchantmentDialogue {
 		if(loadedEnchantment!=null){
 			String fileName = (baseName+".xml");
 			
-			boolean suitableItemAvailable = loadedEnchantment.isSuitableItemAvailable();
 			
+			boolean suitableItemAvailable = true; //loadedEnchantment.isSuitableItemAvailable();
 			return "<div class='container-full-width' style='padding:0; margin:0 0 4px 0;"+(altColour?"background:#222;":"")+" position:relative;'>"
 						
 						+ "<div class='container-full-width' style='width:calc(75% - 16px); background:transparent;'>"
