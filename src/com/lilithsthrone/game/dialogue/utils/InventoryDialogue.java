@@ -7054,14 +7054,6 @@ public class InventoryDialogue {
 				};
 
 			} else if (index == 11) {
-				if(dyePreviews.equals(clothing.getColours())
-						&& dyePreviewPattern.equals(clothing.getPattern())
-						&& dyePreviewPatterns.equals(clothing.getPatternColours())
-						&& dyePreviewStickers.equals(clothing.getStickersAsObjects())) {
-					return new Response("Dye all",
-							"You need to choose different colours before being able to dye the " + clothing.getName() + "!",
-							null); 
-				}
 				
 				List<AbstractClothing> clothingMatches = new ArrayList<>();
 				int stackCount = 0;
@@ -7851,11 +7843,6 @@ public class InventoryDialogue {
 				};
 
 			} else if (index == 11) {
-				if(dyePreviews.equals(weapon.getColours())) {
-					return new Response("Dye all",
-							"You need to choose different colours before being able to dye the " + weapon.getName() + "!",
-							null); 
-				}
 				
 				List<AbstractWeapon> weaponMatches = new ArrayList<>();
 				int stackCount = 0;
@@ -7956,11 +7943,6 @@ public class InventoryDialogue {
 				};
 
 			} else if (index == 12) {
-				if(damageTypePreview == weapon.getDamageType()) {
-					return new Response("Reforge all",
-							"You need to choose a different damage type before being able to reforge the " + weapon.getName() + "!",
-							null); 
-				}
 				
 				List<AbstractWeapon> weaponMatches = new ArrayList<>();
 				int stackCount = 0;
