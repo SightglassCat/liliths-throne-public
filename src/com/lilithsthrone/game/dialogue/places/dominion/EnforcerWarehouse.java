@@ -20,6 +20,7 @@ import com.lilithsthrone.game.character.race.AbstractSubspecies;
 import com.lilithsthrone.game.character.race.FurryPreference;
 import com.lilithsthrone.game.character.race.RaceStage;
 import com.lilithsthrone.game.character.race.Subspecies;
+import com.lilithsthrone.game.character.race.Disposition;
 import com.lilithsthrone.game.combat.DamageType;
 import com.lilithsthrone.game.combat.spells.Spell;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
@@ -87,7 +88,11 @@ public class EnforcerWarehouse {
 	}
 	
 	private static EnforcerWarehouseGuard generateGuard(Occupation occupation) {
-		Gender gender = Gender.getGenderFromUserPreferences(false, false);
+		return generateGuard(occupation, false, false);
+	}
+
+	private static EnforcerWarehouseGuard generateGuard(Occupation occupation, boolean reqV, boolean reqP) {
+		Gender gender = Gender.getGenderFromUserPreferences(reqV, reqP);
 		Map<AbstractSubspecies, Integer> subspeciesMap = new HashMap<>();
 		
 		// Make SWORD guards a predator subspecies:
@@ -95,11 +100,47 @@ public class EnforcerWarehouse {
 				Subspecies.getSubspeciesFromId("innoxia_panther_subspecies_tiger"),
 				Subspecies.getSubspeciesFromId("innoxia_panther_subspecies_lion"),
 				Subspecies.getSubspeciesFromId("innoxia_panther_subspecies_leopard"),
+
+				Subspecies.getSubspeciesFromId("dsg_bear_subspecies_bear"),
+				Subspecies.getSubspeciesFromId("sightglass_polarbear_subspecies_polarbear"),
+				Subspecies.CAT_MORPH_LYNX,
+				Subspecies.CAT_MORPH_CHEETAH,
+				Subspecies.CAT_MORPH_CARACAL,
+				Subspecies.DOG_MORPH,
+				Subspecies.FOX_MORPH_ARCTIC,
+				Subspecies.getSubspeciesFromId("sightglass_hippo_subspecies_hippo"),
+				Subspecies.getSubspeciesFromId("innoxia_hyena_subspecies_spotted"),
+				Subspecies.getSubspeciesFromId("innoxia_hyena_subspecies_striped"),
+				Subspecies.getSubspeciesFromId("sightglass_mongoose_subspecies_mongoose"),
+				Subspecies.getSubspeciesFromId("sightglass_paintedwolf_subspecies_paintedwolf"),
+				Subspecies.getSubspeciesFromId("Aurelia_Jackal_subspecies_default"),
+				Subspecies.getSubspeciesFromId("Aurelia_Dromaeosaur_subspecies_default"),
+				Subspecies.getSubspeciesFromId("Aurelia_Sergal_subspecies_default"),
+				Subspecies.getSubspeciesFromId("innoxia_panther_subspecies_snow_leopard"),
+				Subspecies.getSubspeciesFromId("innoxia_pig_subspecies_pig"),
+				Subspecies.getSubspeciesFromId("sightglass_boar_subspecies_boar"),
+				Subspecies.getSubspeciesFromId("innoxia_raptor_subspecies_falcon"),
+				Subspecies.getSubspeciesFromId("innoxia_raptor_subspecies_bald_eagle"),
+				Subspecies.getSubspeciesFromId("innoxia_raptor_subspecies_eagle"),
+				Subspecies.getSubspeciesFromId("innoxia_raptor_subspecies_owl"),
+				Subspecies.getSubspeciesFromId("sightglass_rhino_subspecies_rhino"),
+				Subspecies.getSubspeciesFromId("NoStepOnSnek_snake_subspecies_snake"),
+				Subspecies.getSubspeciesFromId("sightglass_snakevariants_subspecies_cobra"),
+				Subspecies.getSubspeciesFromId("sightglass_snakevariants_subspecies_rattlesnake"),
+				Subspecies.getSubspeciesFromId("sightglass_wolverine_subspecies_wolverine"),
+
 				Subspecies.DOG_MORPH_DOBERMANN,
 				Subspecies.DOG_MORPH_GERMAN_SHEPHERD,
 				Subspecies.FOX_MORPH,
 				Subspecies.WOLF_MORPH);
 		
+		for(AbstractSubspecies sub : Subspecies.getAllSubspecies()) {
+		    if (subspeciesAvailable.contains(sub)) {continue;}
+		    if (sub.getRace().getDisposition() == Disposition.UNPREDICTABLE || sub.getRace().getDisposition() == Disposition.SAVAGE) {
+			subspeciesAvailable.add(sub);
+		    }
+		}
+
 		for(AbstractSubspecies subspecies : subspeciesAvailable) {
 			if(gender.isFeminine()) {
 				if(Main.getProperties().getSubspeciesFeminineFurryPreferencesMap().get(subspecies)!=FurryPreference.HUMAN
@@ -169,13 +210,13 @@ public class EnforcerWarehouse {
 		
 		// Add an Enforcer onto each of the Enforcer post tiles:
 		for(Cell c : Main.game.getWorlds().get(WorldType.ENFORCER_WAREHOUSE).getCells(PlaceType.ENFORCER_WAREHOUSE_ENFORCER_GUARD_POST)) {
-			EnforcerWarehouseGuard guard = generateGuard(Occupation.NPC_ENFORCER_SWORD_CONSTABLE);
+			EnforcerWarehouseGuard guard = generateGuard(Occupation.NPC_ENFORCER_SWORD_CONSTABLE, true, false);
 			guard.setLocation(c.getType(), c.getLocation(), true);
 			usedAdjectives.add(Main.game.getCharacterUtils().setGenericName(guard, "SWORD guard", usedAdjectives));
 		}
 		
 		// Add four Enforcers to the entrance:
-		EnforcerWarehouseGuard guard = generateGuard(Occupation.NPC_ENFORCER_SWORD_INSPECTOR);
+		EnforcerWarehouseGuard guard = generateGuard(Occupation.NPC_ENFORCER_SWORD_INSPECTOR, false, true);
 		guard.setLocation(WorldType.ENFORCER_WAREHOUSE, PlaceType.ENFORCER_WAREHOUSE_ENTRANCE, true);
 		guard.setGenericName("SWORD Inspector");
 		
