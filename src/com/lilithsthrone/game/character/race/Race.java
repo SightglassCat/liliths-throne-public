@@ -648,7 +648,7 @@ public class Race {
 			CombatBehaviour.BALANCED,
 			0.5f,
 			1,
-			1,
+			2,
 			FurryPreference.MAXIMUM,
 			FurryPreference.MAXIMUM,
 			false) {
