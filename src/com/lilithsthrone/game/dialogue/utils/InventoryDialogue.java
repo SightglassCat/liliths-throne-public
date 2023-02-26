@@ -1040,8 +1040,7 @@ public class InventoryDialogue {
 								}
 								
 							} else if(index == 7) {
-								return new Response(Util.capitaliseSentence(item.getItemType().getUseName())+" all (Self)", "You can only use one item at a time during sex!", null);
-								
+								return new Response(Util.capitaliseSentence(item.getItemType().getUseName())+" all (Self)", "You can only use one item at a time during sex!", null);								
 							} else if (index == 10) {
 								return getQuickTradeResponse();
 								
@@ -1147,6 +1146,42 @@ public class InventoryDialogue {
 									}
 								}
 								
+							} else if(index==4) {
+								if(owner.getLocationPlace().isItemsDisappear()) {
+									if(!item.getItemType().isAbleToBeDropped()) {
+										return new Response("Drop (Excess)", "You cannot drop the " + item.getName() + "!", null);
+									} else if(areaFull) {
+										return new Response("Drop (Excess)", "This area is full, so you can't drop your " + item.getNamePlural() + " here!", null);
+									} else {
+										return new Response("Drop (Excess)", "Store a few of your extra " + item.getNamePlural() + ".", INVENTORY_MENU){
+											@Override
+											public void effects(){
+												dropItems(owner, item, owner.getItemCount(item));
+											}
+										};
+									}
+								} else {
+									if(!item.getItemType().isAbleToBeDropped()) {
+										return new Response("Store (Excess)", "You cannot drop the " + item.getName() + "!", null);
+									} else if(areaFull) {
+										return new Response("Store (Excess)", "This area is full, so you can't store your " + item.getNamePlural() + " here!", null);
+									} else {
+										return new Response("Store (Excess)", "Store a few of your extra " + item.getNamePlural() + " in this area.", INVENTORY_MENU){
+											@Override
+											public void effects(){
+												int itemcount = owner.getItemCount(item);
+												int dropth = 5;
+												if (itemcount <= dropth) {
+													dropItems(owner, item, itemcount);
+												} else if (itemcount % dropth == 0) {
+													dropItems(owner, item, dropth);
+												} else {
+													dropItems(owner, item, itemcount % dropth);
+												}
+											}
+										};
+									}
+								}								
 							} else if(index == 5) {
 								if(item.getEnchantmentItemType(null)==null || item.getItemTags().contains(ItemTag.UNENCHANTABLE)) {
 									return new Response("Enchant", "This item cannot be enchanted!", null);
@@ -1221,6 +1256,26 @@ public class InventoryDialogue {
 									};
 								}
 								
+							} else if (index == 8) {
+								if (!item.isAbleToBeUsedFromInventory()) {
+									return new Response(Util.capitaliseSentence(item.getItemType().getUseName())+" 3 (Self)", item.getUnableToBeUsedFromInventoryDescription(), null);
+								} else if(!item.isAbleToBeUsed(Main.game.getPlayer())) {
+									return new Response(Util.capitaliseSentence(item.getItemType().getUseName())+" 3 (Self)", item.getUnableToBeUsedDescription(Main.game.getPlayer()), null);
+								} else {
+									return new Response(
+											Util.capitaliseSentence(item.getItemType().getUseName())+" 3 (Self)",
+											item.getItemType().getUseTooltipDescription(Main.game.getPlayer(), Main.game.getPlayer())
+												+"<br/>[style.italicsMinorGood(Repeat this for three of the " + item.getNamePlural() + " which are in your inventory.)]",
+											INVENTORY_MENU){
+										@Override
+										public void effects(){
+											for(int i=0;i<3;i++) {
+												Main.game.getTextEndStringBuilder().append("<p style='text-align:center;'>" + Main.game.getPlayer().useItem(item, Main.game.getPlayer(), false) + "</p>");
+											}
+											resetPostAction();
+										}
+									};
+								}
 							} else if (index == 10) {
 								return getQuickTradeResponse();
 								
@@ -1479,6 +1534,26 @@ public class InventoryDialogue {
 									};
 								}
 								
+							} else if (index == 8) {
+								if (!item.isAbleToBeUsedFromInventory()) {
+									return new Response(Util.capitaliseSentence(item.getItemType().getUseName())+" 3 (Self)", item.getUnableToBeUsedFromInventoryDescription(), null);
+								} else if(!item.isAbleToBeUsed(Main.game.getPlayer())) {
+									return new Response(Util.capitaliseSentence(item.getItemType().getUseName())+" 3 (Self)", item.getUnableToBeUsedDescription(Main.game.getPlayer()), null);
+								} else {
+									return new Response(
+											Util.capitaliseSentence(item.getItemType().getUseName())+" 3 (Self)",
+											item.getItemType().getUseTooltipDescription(Main.game.getPlayer(), Main.game.getPlayer())
+												+"<br/>[style.italicsMinorGood(Repeat this for three of the " + item.getNamePlural() + " which are in your inventory.)]",
+											INVENTORY_MENU){
+										@Override
+										public void effects(){
+											for(int i=0;i<3;i++) {
+												Main.game.getTextEndStringBuilder().append("<p style='text-align:center;'>" + Main.game.getPlayer().useItem(item, Main.game.getPlayer(), false) + "</p>");
+											}
+											resetPostAction();
+										}
+									};
+								}								
 							} else if (index == 10) {
 								return getQuickTradeResponse();
 								
