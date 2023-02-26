@@ -95,8 +95,8 @@ public class NPCOffspring extends NPC {
 		
         Main.game.getCharacterUtils().setHistoryAndPersonality(this, true);
         // Undo any name change when spawned as prostitute:
-        this.setName(os.nameTriplet);
 		
+        //this.setName(os.nameTriplet);
 		// ADDING FETISHES:
 		
 		Main.game.getCharacterUtils().addFetishes(this);
