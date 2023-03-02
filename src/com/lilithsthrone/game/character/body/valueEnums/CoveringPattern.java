@@ -47,7 +47,10 @@ public enum CoveringPattern {
 	FRECKLED(true, "freckled"),
 	FRECKLED_FACE(false, "freckled (face)"),
 	
-	OMBRE(true, "ombre");
+	OMBRE(true, "ombre"),
+	SPOTTED_ROSETTE(true, "rosette-spotted"),
+	SPOTTED_CLOUD(true, "cloud-spotted");
+	
 	
 	
 	public static Map<CoveringPattern, Integer> allStandardCoveringPatterns = new HashMap<>();

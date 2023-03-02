@@ -22,7 +22,10 @@
 		<pattern weighting="1">STRIPED</pattern>
 	</naturalPatterns>
 	
-	<extraPatterns/>
+	<extraPatterns>
+                <pattern weighting="1">SPOTTED_ROSETTE</pattern>
+                <pattern weighting="1">SPOTTED_CLOUD</pattern>
+        </extraPatterns>
 	
 	<naturalColoursPrimary values="naturalFurColours"/> 
 	<extraColoursPrimary values="allCoveringColours"/>
