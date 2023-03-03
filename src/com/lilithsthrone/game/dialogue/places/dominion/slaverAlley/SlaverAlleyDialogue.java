@@ -912,6 +912,18 @@ public class SlaverAlleyDialogue {
 						return OccupantManagementDialogue.getSlaveryManagementDialogue(null, Main.game.getNpc(Finch.class));
 					}
 				};
+			} else if (index==2) {
+				return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", MARKET_STALL_FEMALE) {
+							    @Override
+							    public void effects() {
+								    dailyReset();
+								    stocksReset();
+							    }//
+							    @Override
+							    public int getSecondsPassed() {
+								    return 8*60;
+							    }//
+				};
 			}
 			return null;
 		}
@@ -945,6 +957,18 @@ public class SlaverAlleyDialogue {
 						CompanionManagement.initManagement(null, 0, null);
 						return OccupantManagementDialogue.getSlaveryManagementDialogue(null, Main.game.getNpc(Finch.class));
 					}
+				};
+			} else if (index==2) {
+				return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", MARKET_STALL_MALE) {
+							    @Override
+							    public void effects() {
+								    dailyReset();
+								    stocksReset();
+							    }//
+							    @Override
+							    public int getSecondsPassed() {
+								    return 8*60;
+							    }//
 				};
 			}
 			return null;
@@ -980,6 +1004,18 @@ public class SlaverAlleyDialogue {
 						return OccupantManagementDialogue.getSlaveryManagementDialogue(null, Main.game.getNpc(Finch.class));
 					}
 				};
+			} else if (index==2) {
+				return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", MARKET_STALL_ANAL) {
+							    @Override
+							    public void effects() {
+								    dailyReset();
+								    stocksReset();
+							    }//
+							    @Override
+							    public int getSecondsPassed() {
+								    return 8*60;
+							    }//
+				};
 			}
 			return null;
 		}
@@ -1014,6 +1050,18 @@ public class SlaverAlleyDialogue {
 						return OccupantManagementDialogue.getSlaveryManagementDialogue(null, Main.game.getNpc(Finch.class));
 					}
 				};
+			} else if (index==2) {
+				return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", MARKET_STALL_VAGINAL) {
+							    @Override
+							    public void effects() {
+								    dailyReset();
+								    stocksReset();
+							    }//
+							    @Override
+							    public int getSecondsPassed() {
+								    return 8*60;
+							    }//
+				};
 			}
 			return null;
 		}
@@ -1047,6 +1095,18 @@ public class SlaverAlleyDialogue {
 						CompanionManagement.initManagement(null, 0, null);
 						return OccupantManagementDialogue.getSlaveryManagementDialogue(null, Main.game.getNpc(Finch.class));
 					}
+				};
+			} else if (index==2) {
+				return new Response("Refresh", "Wait a while for new merchandise in the stalls, and new toys in stocks.", MARKET_STALL_ORAL) {
+							    @Override
+							    public void effects() {
+								    dailyReset();
+								    stocksReset();
+							    }//
+							    @Override
+							    public int getSecondsPassed() {
+								    return 8*60;
+							    }//
 				};
 			}
 			return null;
