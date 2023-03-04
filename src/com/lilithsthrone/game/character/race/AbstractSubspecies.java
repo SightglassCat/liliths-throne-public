@@ -850,25 +850,12 @@ public abstract class AbstractSubspecies {
 		
 		int highestWeighting = 0;
 		int newWeighting;
-		// Look for subspecies within race
-		for(AbstractSubspecies sub : Subspecies.getSubspeciesOfRace(race)) {
+		for(AbstractSubspecies sub : Subspecies.getAllSubspecies()) {
 			newWeighting = sub.getSubspeciesWeighting(body, race);
 			if(newWeighting>highestWeighting
 					&& (!body.isFeral() || sub.isFeralConfigurationAvailable(body))) {
 				subspecies = sub;
 				highestWeighting = newWeighting;
-			}
-		}
-		// If that fails, search through all subspecies
-		if(subspecies==null && Main.game.isStarted()) {
-			highestWeighting = 0;
-			for(AbstractSubspecies sub : Subspecies.getAllSubspecies()) {
-				newWeighting = sub.getSubspeciesWeighting(body, race);
-				if(newWeighting>highestWeighting
-						&& (!body.isFeral() || sub.isFeralConfigurationAvailable(body))) {
-					subspecies = sub;
-					highestWeighting = newWeighting;
-				}
 			}
 		}
 		if(subspecies==null) {
