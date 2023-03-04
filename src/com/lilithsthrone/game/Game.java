@@ -879,7 +879,9 @@ public class Game implements XMLSaving {
 	public static void importGame(String name) {
 		File file = new File("data"+System.getProperty("file.separator")+"saves"+System.getProperty("file.separator"), name+".xml");
 
+		System.err.println("Start: "+LocalDateTime.now());
 		importGame(file);
+		System.err.println("End  : "+LocalDateTime.now());
 	}
 	
 	public static void importGame(File file) {
