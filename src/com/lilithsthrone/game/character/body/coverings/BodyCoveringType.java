@@ -169,7 +169,8 @@ public class BodyCoveringType {
 					new Value<>(CoveringPattern.SPOTTED, 5),
 					new Value<>(CoveringPattern.MARKED, 5),
 					new Value<>(CoveringPattern.STRIPED, 5),
-					new Value<>(CoveringPattern.HIGHLIGHTS, 5)))) {
+					new Value<>(CoveringPattern.HIGHLIGHTS, 5),
+					new Value<>(CoveringPattern.SPOTTED_ROSETTE, 5)))) {
 	};
 
 	public static AbstractBodyCoveringType SQUIRREL_FUR = new AbstractBodyCoveringType(
