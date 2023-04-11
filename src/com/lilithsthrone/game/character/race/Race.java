@@ -3,7 +3,10 @@ package com.lilithsthrone.game.character.race;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,6 +22,7 @@ import com.lilithsthrone.game.character.body.types.PenisType;
 import com.lilithsthrone.game.character.body.types.VaginaType;
 import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
 import com.lilithsthrone.game.character.body.valueEnums.LegConfiguration;
+import com.lilithsthrone.game.character.body.valueEnums.BodyMaterial;
 import com.lilithsthrone.game.character.fetishes.AbstractFetish;
 import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.combat.CombatBehaviour;
@@ -1397,6 +1401,9 @@ public class Race {
 	public static Map<AbstractRace, String> raceToIdMap = new HashMap<>();
 	public static Map<String, AbstractRace> idToRaceMap = new HashMap<>();
 	
+        public static Map<AbstractRace, Set<BodyMaterial>> raceToBodyMaterialSetMap = new HashMap<>();
+        public static Map<BodyMaterial, AbstractRace> bodyMaterialToRaceMap = new HashMap<>();
+	
 	/**
 	 * @param id Will be in the format of: 'innoxia_hyena'.
 	 */
@@ -1408,6 +1415,14 @@ public class Race {
 	public static String getIdFromRace(AbstractRace race) {
 		return raceToIdMap.get(race);
 	}
+	
+        public static AbstractRace getRaceFromBodyMaterial(BodyMaterial bMat) {
+                return bodyMaterialToRaceMap.get(bMat);
+        }
+        
+        public static Set<BodyMaterial> getBodyMaterialSetFromRace(AbstractRace race) {
+                return raceToBodyMaterialSetMap.get(race);
+        }
 	
 	static {
 		allRaces = new ArrayList<>();
@@ -1493,6 +1508,15 @@ public class Race {
 				Attribute.attributeToIdMap.put(racialAttribute, id);
 				Attribute.idToAttributeMap.put(id, racialAttribute);
 				Attribute.allAttributes.add(racialAttribute);
+                                
+                                //Building race/body material mappings
+                                if (race.isMaterialRace()) {
+                                        raceToBodyMaterialSetMap.put(race, race.getRacialBodyMaterialSet());
+                                        for (BodyMaterial bMat : race.getRacialBodyMaterialSet()) {
+                                                bodyMaterialToRaceMap.put(bMat, race);
+                                        } //
+                                } //
+                                
 			}
 		}
 	}
