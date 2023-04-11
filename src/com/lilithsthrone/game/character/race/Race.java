@@ -655,7 +655,10 @@ public class Race {
 			2,
 			FurryPreference.MAXIMUM,
 			FurryPreference.MAXIMUM,
-			false) {
+			false,
+                        true,
+                        new HashSet<BodyMaterial>(Arrays.asList(BodyMaterial.SLIME))
+        ) {
 		@Override
 		public boolean isAbleToSelfTransform() {
 			return true;
@@ -1400,7 +1403,7 @@ public class Race {
 	
 	public static Map<AbstractRace, String> raceToIdMap = new HashMap<>();
 	public static Map<String, AbstractRace> idToRaceMap = new HashMap<>();
-	
+        
         public static Map<AbstractRace, Set<BodyMaterial>> raceToBodyMaterialSetMap = new HashMap<>();
         public static Map<BodyMaterial, AbstractRace> bodyMaterialToRaceMap = new HashMap<>();
 	
@@ -1415,7 +1418,7 @@ public class Race {
 	public static String getIdFromRace(AbstractRace race) {
 		return raceToIdMap.get(race);
 	}
-	
+        
         public static AbstractRace getRaceFromBodyMaterial(BodyMaterial bMat) {
                 return bodyMaterialToRaceMap.get(bMat);
         }
