@@ -114,7 +114,8 @@ public abstract class AbstractRace {
 			FurryPreference defaultMasculinePreference,
 			boolean affectedByFurryPreference,
                         boolean materialRace,
-                        Set<BodyMaterial> racialBodyMaterials) {
+                        Set<BodyMaterial> racialBodyMaterials,
+                        boolean ableToSelfTransform) {
 		this(name,
 				namePlural,
 				Util.newHashMapOfValues(new Value<>(LegConfiguration.BIPEDAL, nameFeral)),
@@ -136,6 +137,7 @@ public abstract class AbstractRace {
                 } else {
                         this.racialBodyMaterials = new HashSet<BodyMaterial>();
                 }
+                this.ableToSelfTransform = ableToSelfTransform;
 	}
         
 	public AbstractRace(String name,
@@ -367,6 +369,9 @@ public abstract class AbstractRace {
 		if(this.isFromExternalFile()) {
 			return RacialBody.getRacialBodyFromId(racialBodyId);
 		}
+                if(this.isMaterialRace()) {
+                        return RacialBody.HUMAN;
+                }
 		System.err.println("Warning: AbstractRacialBody is calling getRacialBody() where racialBodyId does not exist!");
 		return null;
 	}

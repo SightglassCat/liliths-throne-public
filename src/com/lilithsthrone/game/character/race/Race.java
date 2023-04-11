@@ -657,16 +657,8 @@ public class Race {
 			FurryPreference.MAXIMUM,
 			false,
                         true,
-                        new HashSet<BodyMaterial>(Arrays.asList(BodyMaterial.SLIME))
-        ) {
-		@Override
-		public boolean isAbleToSelfTransform() {
-			return true;
-		}
-		@Override
-		public AbstractRacialBody getRacialBody() {
-			return RacialBody.HUMAN;
-		}
+                        new HashSet<BodyMaterial>(Arrays.asList(BodyMaterial.SLIME)),
+                        true) {
 	};
 
 	// AVIAN:
