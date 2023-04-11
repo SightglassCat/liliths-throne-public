@@ -1406,6 +1406,7 @@ public class Race {
         
         public static Map<AbstractRace, Set<BodyMaterial>> raceToBodyMaterialSetMap = new HashMap<>();
         public static Map<BodyMaterial, AbstractRace> bodyMaterialToRaceMap = new HashMap<>();
+        public static List<BodyMaterial> racialBodyMaterialList;
 	
 	/**
 	 * @param id Will be in the format of: 'innoxia_hyena'.
@@ -1429,6 +1430,7 @@ public class Race {
 	
 	static {
 		allRaces = new ArrayList<>();
+                racialBodyMaterialList = new ArrayList<>();
 		
 		// Modded races:
 		
@@ -1517,6 +1519,7 @@ public class Race {
                                         raceToBodyMaterialSetMap.put(race, race.getRacialBodyMaterialSet());
                                         for (BodyMaterial bMat : race.getRacialBodyMaterialSet()) {
                                                 bodyMaterialToRaceMap.put(bMat, race);
+                                                racialBodyMaterialList.add(bMat);
                                         } //
                                 } //
                                 
