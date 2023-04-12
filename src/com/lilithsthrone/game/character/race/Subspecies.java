@@ -4237,12 +4237,19 @@ public class Subspecies {
 			"rubber-girls",
 			null,
 			Nocturnality.DIURNAL,
-			"Placeholder: LATEX CREATURE",
-                        "Placeholder: DEMONIC LATEX CREATURE",
+			"Due to [npc.her] body being made of living latex, [npc.nameIsFull] highly resistant to physical damage and generally immune to substances that would be toxic to fleshy creatures."
+                            + " However, the material does not hold up well to heat or cold."
+                            + " The constant rubbing and roiling of the slick, pliable latex constantly stimulates [npc.himHer], raising [npc.her] lust during the excitement of combat.",
+                        "Due to [npc.her] body being made of living latex, [npc.nameIsFull] highly resistant to physical damage."
+                            + " The slick, glossy latex that makes up [npc.her] body shimmers with an eerie iridescence, hinting at [npc.her] true nature as a latex demon.",
 			Util.newHashMapOfValues(
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 0f),
 					new Value<>(Attribute.MAJOR_ARCANE, 0f),
-					new Value<>(Attribute.MAJOR_CORRUPTION, 25f)),
+                                        new Value<>(Attribute.RESISTANCE_POISON, 25f),
+                                        new Value<>(Attribute.RESISTANCE_ICE, -10f),
+                                        new Value<>(Attribute.RESISTANCE_FIRE, -10f),
+					new Value<>(Attribute.MAJOR_CORRUPTION, 25f),
+                                        new Value<>(Attribute.RESTING_LUST, 15f)),
 			Util.newArrayListOfValues(),
 			"Playing with Latex",
 			"Playing with Latex",
@@ -4374,7 +4381,7 @@ public class Subspecies {
 		@Override
 		public int getSubspeciesWeighting(Body body, AbstractRace race) {
 			if(race==Race.LATEX_CREATURE) {
-				return 10_000; // Slimes should always be slime, no matter their underlying subspecies
+				return 10_000;
 			}
 			return 0;
 		}
