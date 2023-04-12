@@ -4221,6 +4221,168 @@ public class Subspecies {
 			return body.getFleshSubspecies().getFeralAttributes(body);
 		}
 	};
+        
+        // SLIMES:
+	public static AbstractSubspecies LATEX_CREATURE = new AbstractSubspecies(true,
+			10000,
+			"innoxia_race_slime_slime_quencher",
+			"innoxia_race_slime_biojuice_canister",
+			"statusEffects/race/raceSlime",
+			"statusEffects/race/raceBackgroundSlime",
+			"latex creature",
+			"latex creatures",
+			"rubber-boy",
+			"rubber-girl",
+			"rubber-boys",
+			"rubber-girls",
+			null,
+			Nocturnality.DIURNAL,
+			"Placeholder: LATEX CREATURE",
+                        "Placeholder: DEMONIC LATEX CREATURE",
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, 0f),
+					new Value<>(Attribute.MAJOR_ARCANE, 0f),
+					new Value<>(Attribute.MAJOR_CORRUPTION, 25f)),
+			Util.newArrayListOfValues(),
+			"Slimy Fun",
+			"Slimy Funs",
+			"SLIME_BASIC",
+			"SLIME_ADVANCED",
+			Race.LATEX_CREATURE,
+			Util.newHashMapOfValues(
+					new Value<>(PerkCategory.PHYSICAL, 1),
+					new Value<>(PerkCategory.LUST, 5),
+					new Value<>(PerkCategory.ARCANE, 0)),
+			Util.newHashMapOfValues(
+					new Value<>(PerkCategory.PHYSICAL, 2),
+					new Value<>(PerkCategory.LUST, 5),
+					new Value<>(PerkCategory.ARCANE, 0)),
+			PresetColour.BASE_PITCH_BLACK,
+			SubspeciesPreference.FOUR_ABUNDANT,
+			"Someone who is made completely of slime, with a sold core suspended in the place where their heart should be.",
+			Util.newHashMapOfValues(
+					new Value<>(WorldRegion.SUBMISSION, SubspeciesSpawnRarity.TEN)),
+			Util.newHashMapOfValues(
+					new Value<>(WorldType.BAT_CAVERNS, SubspeciesSpawnRarity.TEN)), null, Util.newArrayListOfValues(
+					SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
+                        true, BodyMaterial.RUBBER
+        ) {
+            
+		@Override
+		public String getSVGString(GameCharacter character) {
+                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
+			if(character==null) {
+				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial());
+                        }
+			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial());
+		}
+                
+		@Override
+		public String getName(Body body) {
+			if(body == null) {
+				return super.getName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted latex "+coreSubspecies.getName(body);
+			}
+			return "latex "+coreSubspecies.getName(body);
+		}
+		
+		@Override
+		public String getNamePlural(Body body) {
+			if(body ==null) {
+				return super.getNamePlural(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getNamePlural(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted latex "+coreSubspecies.getNamePlural(body);
+			}
+			return "latex "+coreSubspecies.getNamePlural(body);
+		}
+
+		@Override
+		public String getSingularMaleName(Body body) {
+			if(body ==null) {
+				return super.getSingularMaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getSingularMaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted latex "+coreSubspecies.getSingularMaleName(body);
+			}
+			return "latex "+coreSubspecies.getSingularMaleName(body);
+		}
+
+		@Override
+		public String getSingularFemaleName(Body body) {
+			if(body ==null) {
+				return super.getSingularFemaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getSingularFemaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted latex "+coreSubspecies.getSingularFemaleName(body);
+			}
+			return "latex "+coreSubspecies.getSingularFemaleName(body);
+		}
+
+		@Override
+		public String getPluralMaleName(Body body) {
+			if(body ==null) {
+				return super.getPluralMaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getPluralMaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted latex "+coreSubspecies.getPluralMaleName(body);
+			}
+			return "latex "+coreSubspecies.getPluralMaleName(body);
+		}
+
+		@Override
+		public String getPluralFemaleName(Body body) {
+			if(body ==null) {
+				return super.getPluralFemaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getPluralFemaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted latex "+coreSubspecies.getPluralFemaleName(body);
+			}
+			return "corrupted latex "+coreSubspecies.getPluralFemaleName(body);
+		}
+
+
+		@Override
+		public String getSVGStringDesaturated(GameCharacter character) {
+			if(character==null) {
+				return Subspecies.HUMAN.getSVGStringDesaturated(null);
+			}
+			return character.getBody().getFleshSubspecies().getSVGStringDesaturated(character);
+		}
+		@Override
+		public int getSubspeciesWeighting(Body body, AbstractRace race) {
+			if(race==Race.LATEX_CREATURE) {
+				return 10_000; // Slimes should always be slime, no matter their underlying subspecies
+			}
+			return 0;
+		}
+		public FeralAttributes getFeralAttributes(Body body) {
+			if(body==null) {
+				return super.getFeralAttributes(body);
+			}
+			return body.getFleshSubspecies().getFeralAttributes(body);
+		}
+	};
 	
 	// RODENTS:
 	public static AbstractSubspecies SQUIRREL_MORPH = new AbstractSubspecies(true,

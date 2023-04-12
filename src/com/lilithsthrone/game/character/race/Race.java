@@ -660,6 +660,27 @@ public class Race {
                         new HashSet<BodyMaterial>(Arrays.asList(BodyMaterial.SLIME)),
                         true) {
 	};
+        
+        // LATEX CREATURE
+        public static AbstractRace LATEX_CREATURE = new AbstractRace("latex",
+			"latex creatures",
+			"latex creature",
+			"latex creatures",
+			"latex creature",
+			PresetColour.BASE_PITCH_BLACK,
+			Disposition.UNPREDICTABLE,
+			RacialClass.OTHER,
+			CombatBehaviour.BALANCED,
+			0.5f,
+			1,
+			2,
+			FurryPreference.MAXIMUM,
+			FurryPreference.MAXIMUM,
+			false,
+                        true,
+                        new HashSet<BodyMaterial>(Arrays.asList(BodyMaterial.RUBBER)),
+                        false) {
+	};
 
 	// AVIAN:
 	public static AbstractRace HARPY = new AbstractRace("harpy",
