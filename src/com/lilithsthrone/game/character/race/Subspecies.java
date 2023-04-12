@@ -4238,7 +4238,6 @@ public class Subspecies {
 			null,
 			Nocturnality.DIURNAL,
 			"Due to [npc.her] body being made of living latex, [npc.nameIsFull] highly resistant to physical damage and generally immune to substances that would be toxic to fleshy creatures."
-                            + " However, the material does not hold up well to heat or cold."
                             + " The constant rubbing and roiling of the slick, pliable latex constantly stimulates [npc.himHer], raising [npc.her] lust during the excitement of combat.",
                         "Due to [npc.her] body being made of living latex, [npc.nameIsFull] highly resistant to physical damage."
                             + " The slick, glossy latex that makes up [npc.her] body shimmers with an eerie iridescence, hinting at [npc.her] true nature as a latex demon.",
@@ -4246,8 +4245,6 @@ public class Subspecies {
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 0f),
 					new Value<>(Attribute.MAJOR_ARCANE, 0f),
                                         new Value<>(Attribute.RESISTANCE_POISON, 25f),
-                                        new Value<>(Attribute.RESISTANCE_ICE, -10f),
-                                        new Value<>(Attribute.RESISTANCE_FIRE, -10f),
 					new Value<>(Attribute.MAJOR_CORRUPTION, 25f),
                                         new Value<>(Attribute.RESTING_LUST, 15f)),
 			Util.newArrayListOfValues(),
@@ -4266,7 +4263,7 @@ public class Subspecies {
 					new Value<>(PerkCategory.ARCANE, 0)),
 			PresetColour.BASE_PITCH_BLACK,
 			SubspeciesPreference.FOUR_ABUNDANT,
-			"Someone who is made completely of slime, with a sold core suspended in the place where their heart should be.",
+			"Someone who is made completely of living rubber.",
 			Util.newHashMapOfValues(
 					new Value<>(WorldRegion.SUBMISSION, SubspeciesSpawnRarity.TEN)),
 			Util.newHashMapOfValues(
