@@ -571,6 +571,22 @@
 	]]>
 	</htmlContent>
 
+	<!-- SLIMES -->
+
+	<htmlContent tag="LATEX_BASIC"><![CDATA[
+	<p>
+		Latex Basic Placeholder
+        </p>
+	]]>
+	</htmlContent>
+
+	<htmlContent tag="LATEX_ADVANCED"><![CDATA[
+	<p>
+		Latex Advanced Placeholder
+	</p>
+	]]>
+	</htmlContent>
+
 	<!-- HARPIES -->
 
 	<htmlContent tag="HARPY_BASIC"><![CDATA[
