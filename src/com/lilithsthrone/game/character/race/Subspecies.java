@@ -4072,6 +4072,8 @@ public class Subspecies {
 			Nocturnality.DIURNAL,
 			"Due to [npc.her] soft, slimy body, [npc.nameIsFull] almost completely immune to physical damage, but [npc.sheIs] also unable to inflict any significant damage while unarmed."
 					+ " [npc.She] can also morph [npc.her] body at will, allowing [npc.herHim] to take on any form that [npc.she] [npc.verb(desire)].",
+                        "Due to [npc.her] soft, slimy body, [npc.nameIsFull] almost completely immune to physical damage, but [npc.she] is also unable to inflict any serious unarmed damage."
+                                        + " [npc.Her] slime core is pulsating with an immense power, revealing the fact that [npc.sheIs] a true demonic slime.",
 			Util.newHashMapOfValues(
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 0f),
 					new Value<>(Attribute.MAJOR_ARCANE, 0f),
@@ -4097,40 +4099,22 @@ public class Subspecies {
 					new Value<>(WorldRegion.SUBMISSION, SubspeciesSpawnRarity.TEN)),
 			Util.newHashMapOfValues(
 					new Value<>(WorldType.BAT_CAVERNS, SubspeciesSpawnRarity.TEN)), null, Util.newArrayListOfValues(
-					SubspeciesFlag.HIDDEN_FROM_PREFERENCES)) {
+					SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
+                        true, BodyMaterial.SLIME
+        ) {
+            
 		@Override
-		public AbstractItemType getTransformativeItem(GameCharacter owner) {
-			if(getTransformativeItemId()==null || getTransformativeItemId().isEmpty()) {
-				return null;	
-			}
-			if(owner!=null && !owner.hasFetish(Fetish.FETISH_TRANSFORMATION_GIVING)) {
-				return ItemType.getItemTypeFromId("innoxia_race_slime_slime_quencher");
-			}
-			return ItemType.getItemTypeFromId(getTransformativeItemId());
+		public String getSVGString(GameCharacter character) {
+                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
+			if(character==null) {
+				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial());
+			} 
+                        if (fleshSubspecies == Subspecies.HUMAN) {
+                                return Subspecies.SLIME.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial());
+                        }
+			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial());
 		}
-		@Override
-		public void applySpeciesChanges(Body body) {
-			// Slime subspecies are set in the Main.game.getCharacterUtils().generateBody() method
-			body.setBodyMaterial(BodyMaterial.SLIME);
-		}
-
-		@Override
-		public String getStatusEffectDescription(GameCharacter character) {
-			if(character!=null) {
-				AbstractSubspecies coreSubspecies = character.getBody().getFleshSubspecies();
-				if(character.getSubspeciesOverrideRace()==Race.DEMON) {
-					return UtilText.parse(character,
-							"Due to [npc.her] soft, slimy body, [npc.nameIsFull] almost completely immune to physical damage, but [npc.she] is also unable to inflict any serious unarmed damage."
-							+ " [npc.Her] slime core is pulsating with an immense power, revealing the fact that [npc.sheIs] a true demonic slime.");
-				} else if(coreSubspecies==Subspecies.DEMON) {
-					return UtilText.parse(character,
-							"Due to [npc.her] soft, slimy body, [npc.nameIsFull] almost completely immune to physical damage, but [npc.she] is also unable to inflict any serious unarmed damage."
-							+ " Although [npc.she] [npc.verb(appear)] to be a demon, [npc.sheIs] just mimicking their appearance...");
-				}
-			}
-			return super.getStatusEffectDescription(character);
-		}
-		
+                
 		@Override
 		public String getName(Body body) {
 			if(body == null) {
@@ -4215,13 +4199,6 @@ public class Subspecies {
 			return coreSubspecies.getSingularFemaleName(body)+"-slimes";
 		}
 
-		@Override
-		public String getSVGString(GameCharacter character) {
-			if(character==null) {
-				return Subspecies.HUMAN.getSlimeSVGString(null);
-			}
-			return character.getBody().getFleshSubspecies().getSlimeSVGString(character);
-		}
 
 		@Override
 		public String getSVGStringDesaturated(GameCharacter character) {

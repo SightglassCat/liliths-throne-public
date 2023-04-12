@@ -49,6 +49,7 @@ import com.lilithsthrone.world.places.AbstractPlaceType;
 import com.lilithsthrone.world.places.PlaceType;
 
 import com.lilithsthrone.game.character.body.valueEnums.BodyMaterial;
+import com.lilithsthrone.game.character.fetishes.Fetish;
 /**
  * @since 0.4
  * @version 0.4.0
@@ -114,7 +115,6 @@ public abstract class AbstractSubspecies {
 	protected String SVGStringUncoloured;
 	protected String SVGStringNoBackground;
 	protected String SVGStringDesaturated;
-	protected String slimeSVGString;
 	protected String halfDemonSVGString;
 	protected String demonSVGString;
 	
@@ -130,6 +130,12 @@ public abstract class AbstractSubspecies {
 	protected static Map<Integer, String> youkoIconMap;
 	protected static Map<Integer, String> youkoDesaturatedIconMap;
 	protected static Map<Integer, String> youkoHalfDemonIconMap;
+        
+        private boolean materialSubspecies;
+        private BodyMaterial subspeciesBodyMaterial;
+        private Map<BodyMaterial, String> bodyMaterialSVGStringMap;
+        //private Map<String, String> materialSubspeciesSVGStringMap;
+        private String statusEffectDescriptionDemonCore;
 	
 	public static Map<LegConfiguration, String[]> demonLegConfigurationNames = Util.newHashMapOfValues(
 			new Value<>(LegConfiguration.ARACHNID,
@@ -253,7 +259,7 @@ public abstract class AbstractSubspecies {
 			}
 		}
 	}
-	
+
 	public AbstractSubspecies(
 			boolean mainSubspecies,
 			int baseSlaveValue,
@@ -384,8 +390,90 @@ public abstract class AbstractSubspecies {
 		this.backgroundPathName = "/com/lilithsthrone/res/" + backgroundPathName;
 		this.SVGString = null;
 		this.iconSize = 80;
-	}
-	
+                
+                this.materialSubspecies = false;
+                this.subspeciesBodyMaterial = BodyMaterial.FLESH;
+                this.bodyMaterialSVGStringMap = new HashMap<>();
+                
+                this.statusEffectDescriptionDemonCore = null;
+	}        
+        
+	public AbstractSubspecies(
+			boolean mainSubspecies,
+			int baseSlaveValue,
+			String attributeItemId,
+			String transformativeItemId,
+			String pathName,
+			String backgroundPathName,
+			String name,
+			String namePlural,
+			String singularMaleName,
+			String singularFemaleName,
+			String pluralMaleName,
+			String pluralFemaleName,
+			FeralAttributes feralAttributes,
+			Nocturnality nocturnality,
+			String statusEffectDescription,
+                        String statusEffectDescriptionDemonCore,
+			Map<AbstractAttribute, Float> statusEffectAttributeModifiers,
+			List<String> extraEffects,
+			String bookName,
+			String bookNamePlural,
+			String basicDescription,
+			String advancedDescription,
+			AbstractRace race,
+			Map<PerkCategory, Integer> perkWeightingFeminine,
+			Map<PerkCategory, Integer> perkWeightingMasculine,
+			Colour colour,
+			SubspeciesPreference subspeciesPreferenceDefault,
+			String description,
+			Map<WorldRegion, SubspeciesSpawnRarity> regionLocations,
+			Map<AbstractWorldType, SubspeciesSpawnRarity> worldLocations,
+			Map<AbstractPlaceType, SubspeciesSpawnRarity> placeLocations, List<SubspeciesFlag> flags,
+                        
+                        boolean materialSubspecies, BodyMaterial subspeciesBodyMaterial
+        ) {
+		this(
+			mainSubspecies,
+			baseSlaveValue,
+			attributeItemId,
+			transformativeItemId,
+			pathName,
+			backgroundPathName,
+			name,
+			namePlural,
+			singularMaleName,
+			singularFemaleName,
+			pluralMaleName,
+			pluralFemaleName,
+			feralAttributes,
+			nocturnality,
+			statusEffectDescription,
+			statusEffectAttributeModifiers,
+			extraEffects,
+			bookName,
+			bookNamePlural,
+			basicDescription,
+			advancedDescription,
+			race,
+			perkWeightingFeminine,
+			perkWeightingMasculine,
+			colour,
+			subspeciesPreferenceDefault,
+			description,
+			regionLocations,
+			worldLocations, placeLocations,
+			flags);
+                this.materialSubspecies = materialSubspecies;
+                if (this.materialSubspecies) { 
+                    this.subspeciesBodyMaterial = subspeciesBodyMaterial;
+                } else {
+                    this.subspeciesBodyMaterial = BodyMaterial.FLESH;
+                }
+                this.bodyMaterialSVGStringMap = new HashMap<>();
+                this.statusEffectDescriptionDemonCore = statusEffectDescriptionDemonCore;
+	} 
+        
 	public AbstractSubspecies(File XMLFile, String author, boolean mod) {
 		if (XMLFile.exists()) {
 			try {
@@ -745,6 +833,24 @@ public abstract class AbstractSubspecies {
 				for(Element e : coreElement.getMandatoryFirstOf("flags").getAllOf("flag")) {
 					flags.add(SubspeciesFlag.getSubspeciesFlagFromString(e.getTextContent()));
 				}
+                                
+                                this.materialSubspecies = false;
+                                if(coreElement.getOptionalFirstOf("materialSubspecies").isPresent()) {
+                                        Boolean.valueOf(coreElement.getMandatoryFirstOf("materialSubspecies").getTextContent());
+                                }
+                                if (this.materialSubspecies && coreElement.getOptionalFirstOf("subspeciesBodyMaterial").isPresent()) { 
+                                        BodyMaterial.valueOf(coreElement.getMandatoryFirstOf("subspeciesBodyMaterial").getTextContent());
+                                } else {
+                                    this.subspeciesBodyMaterial = BodyMaterial.FLESH;
+                                }
+                                this.bodyMaterialSVGStringMap = new HashMap<>();
+                                if (coreElement.getOptionalFirstOf("statusEffectDescriptionDemonCore").isPresent()) {
+                                        this.statusEffectDescriptionDemonCore = coreElement.getMandatoryFirstOf("statusEffectDescriptionDemonCore").getTextContent();
+                                }
+                                else {
+                                        this.statusEffectDescriptionDemonCore = statusEffectDescription;
+                                }
+                                
 				
 			} catch(Exception ex) {
 				ex.printStackTrace();
@@ -796,7 +902,9 @@ public abstract class AbstractSubspecies {
 			} catch(Exception ex) {
 				ex.printStackTrace();
 			}
-		}
+		} else if (materialSubspecies) {
+                        body.setBodyMaterial(subspeciesBodyMaterial);
+                }
 	}
 
 	/**
@@ -1136,6 +1244,9 @@ public abstract class AbstractSubspecies {
 //			System.err.println("Warning: AbstractSubspecies is calling getTransformativeItem() where transformativeItemId does not exist!");
 			return null;	
 		}
+                if(owner!=null && (materialSubspecies && !owner.hasFetish(Fetish.FETISH_TRANSFORMATION_GIVING))) {
+                        getAttributeItem(owner);
+                }
 		return ItemType.getItemTypeFromId(getTransformativeItemId());
 	}
 
@@ -1346,8 +1457,8 @@ public abstract class AbstractSubspecies {
 	}
 
 	public String getStatusEffectDescription(GameCharacter character) {
-		return UtilText.parse(character, statusEffectDescription);
-	}
+                return UtilText.parse(character, statusEffectDescription);
+        }
 
 	public Map<AbstractAttribute, Float> getStatusEffectAttributeModifiers(GameCharacter character) {
 		return statusEffectAttributeModifiers;
@@ -1641,13 +1752,6 @@ public abstract class AbstractSubspecies {
 						"<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
 				
 				SVGStringUncoloured = SVGStringBackground + "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>";
-				
-				slimeSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
-						PresetColour.RACE_SLIME,
-						PresetColour.RACE_SLIME,
-						PresetColour.RACE_SLIME,
-						"<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
-						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
 
 				halfDemonSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
 						PresetColour.RACE_HALF_DEMON,
@@ -1748,12 +1852,22 @@ public abstract class AbstractSubspecies {
 		return getBipedBackground(SVGStringDesaturated, character, colour);
 	}
 
-	public String getSlimeSVGString(GameCharacter character) {
+	public String getBodyMaterialSVGString(GameCharacter character, BodyMaterial bMat) {
 		if(SVGString==null) {
 			initSVGStrings();
-		}
-		return getBipedBackground(slimeSVGString, character, PresetColour.RACE_SLIME);
-	}
+                }
+                if ( !bodyMaterialSVGStringMap.containsKey(bMat) ) {
+                        String fullDivStyle = "width:100%;height:100%;margin:0;padding:0;position:absolute;left:0;bottom:0;";
+                        String newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
+						bMat.getColour(),
+						bMat.getColour(),
+						bMat.getColour(),
+						"<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
+						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+                        bodyMaterialSVGStringMap.put(bMat, newSVGString);
+                }
+		return getBipedBackground(bodyMaterialSVGStringMap.get(bMat), character, PresetColour.RACE_SLIME);
+        }
 
 	public String getHalfDemonSVGString(GameCharacter character) {
 		if(SVGString==null) {
@@ -1908,6 +2022,17 @@ public abstract class AbstractSubspecies {
 	public int getBaseSlaveValue(GameCharacter character) {
 		return baseSlaveValue;
 	}
+        
+        public boolean isMaterialSubspecies() {
+                return materialSubspecies;
+        }
+        
+        public BodyMaterial getSubspeciesBodyMaterial() {
+                if (isMaterialSubspecies()) {
+                        return subspeciesBodyMaterial;
+                }
+                return null;
+        }
 	
 	public static Map<AbstractSubspecies, Integer> getGenericSexPartnerSubspeciesMap(Gender gender, AbstractSubspecies... subspeciesToExclude) {
 		Map<AbstractSubspecies, Integer> availableRaces = new HashMap<>();
