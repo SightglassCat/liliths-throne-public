@@ -4272,9 +4272,11 @@ public class Subspecies {
 		public String getSVGString(GameCharacter character) {
                         AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			if(character==null) {
-				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial());
+				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial(), 
+                                        "#ffffff", Util.newArrayListOfValues("#404040", "#202020", "#101010"));
                         }
-			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial());
+			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
+                                "#ffffff", Util.newArrayListOfValues("#404040", "#202020", "#101010"));
 		}
                 
 		@Override

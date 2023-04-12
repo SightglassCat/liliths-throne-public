@@ -1852,18 +1852,49 @@ public abstract class AbstractSubspecies {
 		return getBipedBackground(SVGStringDesaturated, character, colour);
 	}
 
-	public String getBodyMaterialSVGString(GameCharacter character, BodyMaterial bMat) {
+        public String getBodyMaterialSVGString(GameCharacter character, BodyMaterial bMat) {
+                return getBodyMaterialSVGString(character, bMat, (Colour)null, null);
+        }
+        
+        public String getBodyMaterialSVGString(GameCharacter character, BodyMaterial bMat, String strokeColor, List<String> fillColourCodes) {
+                List<Colour> fillColours = new ArrayList<>();
+                for (String fcc : fillColourCodes) {
+                        fillColours.add(new Colour(Util.newColour(fcc)));
+                }
+                Colour dstColour = new Colour(Util.newColour(strokeColor));
+                return getBodyMaterialSVGString(character, bMat, dstColour, fillColours);
+        }
+        
+	public String getBodyMaterialSVGString(GameCharacter character, BodyMaterial bMat, Colour strokeColor, List<Colour> fillColours) {
 		if(SVGString==null) {
 			initSVGStrings();
                 }
                 if ( !bodyMaterialSVGStringMap.containsKey(bMat) ) {
                         String fullDivStyle = "width:100%;height:100%;margin:0;padding:0;position:absolute;left:0;bottom:0;";
-                        String newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
-						bMat.getColour(),
-						bMat.getColour(),
-						bMat.getColour(),
-						"<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
-						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+                        String newSVGString;
+                        if (fillColours == null || fillColours.size() < 3) {
+                                newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
+                                        bMat.getColour(),
+                                        bMat.getColour(),
+                                        bMat.getColour(),
+                                        "<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
+                                        + "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+                        } else {
+                                newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
+                                        fillColours.get(0),
+                                        fillColours.get(1),
+                                        fillColours.get(2),
+                                        "<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
+                                        + "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+                        }
+                        if (strokeColor != null) {
+                                //Colour srcColour = new Colour(Util.newColour("#000000"));
+                                List<Colour> targetColourList = Util.newArrayListOfValues(strokeColor);
+                                ColourReplacement replacement = new ColourReplacement(true, Util.newArrayListOfValues("#000000"), targetColourList, null);
+                            
+                                newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this), targetColourList, Util.newArrayListOfValues(replacement), newSVGString);
+                        }
+                        
                         bodyMaterialSVGStringMap.put(bMat, newSVGString);
                 }
 		return getBipedBackground(bodyMaterialSVGStringMap.get(bMat), character, PresetColour.RACE_SLIME);
