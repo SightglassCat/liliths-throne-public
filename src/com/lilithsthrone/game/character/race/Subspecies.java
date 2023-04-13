@@ -4261,7 +4261,7 @@ public class Subspecies {
 					new Value<>(PerkCategory.PHYSICAL, 2),
 					new Value<>(PerkCategory.LUST, 5),
 					new Value<>(PerkCategory.ARCANE, 0)),
-			PresetColour.BASE_PITCH_BLACK,
+			PresetColour.BASE_BLACK,
 			SubspeciesPreference.FOUR_ABUNDANT,
 			"Someone who is made completely of living rubber.",
 			Util.newHashMapOfValues(

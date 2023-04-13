@@ -667,7 +667,7 @@ public class Race {
 			"latex creature",
 			"latex creatures",
 			"latex creature",
-			PresetColour.BASE_PITCH_BLACK,
+			PresetColour.BASE_BLACK,
 			Disposition.UNPREDICTABLE,
 			RacialClass.OTHER,
 			CombatBehaviour.BALANCED,
