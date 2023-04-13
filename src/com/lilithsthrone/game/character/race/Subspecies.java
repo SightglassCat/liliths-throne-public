@@ -4105,10 +4105,10 @@ public class Subspecies {
             
 		@Override
 		public String getSVGString(GameCharacter character) {
-                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			if(character==null) {
 				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial());
-			} 
+			}
+                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
                         if (fleshSubspecies == Subspecies.HUMAN) {
                                 return Subspecies.SLIME.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial());
                         }
@@ -4274,11 +4274,11 @@ public class Subspecies {
             
 		@Override
 		public String getSVGString(GameCharacter character) {
-                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			if(character==null) {
 				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial(), 
                                         "#ffffff", Util.newArrayListOfValues("#404040", "#202020", "#101010"));
                         }
+                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
                                 "#ffffff", Util.newArrayListOfValues("#404040", "#202020", "#101010"));
 		}
