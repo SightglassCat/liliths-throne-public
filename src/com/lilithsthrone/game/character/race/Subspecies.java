@@ -4225,7 +4225,7 @@ public class Subspecies {
         // SLIMES:
 	public static AbstractSubspecies LATEX_CREATURE = new AbstractSubspecies(true,
 			10000,
-			"innoxia_race_slime_slime_quencher",
+			"sightglass_race_latex_liqueur",
 			"sightglass_race_latex_licorice",
 			"statusEffects/race/raceSlime",
 			"statusEffects/race/raceBackgroundSlime",
