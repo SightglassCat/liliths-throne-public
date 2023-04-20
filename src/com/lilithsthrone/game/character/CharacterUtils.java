@@ -293,8 +293,8 @@ public class CharacterUtils {
 			father = mother;
 		}
 		
-		if (mother.getRace() == Race.SLIME){ motherBody = mother.getBody().getFleshSubspecies().getRace().getRacialBody(); }
-		if (father.getRace() == Race.SLIME){ fatherBody = father.getBody().getFleshSubspecies().getRace().getRacialBody(); }
+		if (mother.getRace().isMaterialRace()){ motherBody = mother.getBody().getFleshSubspecies().getRace().getRacialBody(); }
+		if (father.getRace().isMaterialRace()){ fatherBody = father.getBody().getFleshSubspecies().getRace().getRacialBody(); }
 		boolean motherHuman = motherBody.getTorsoType().getRace()==Race.HUMAN;
 		boolean fatherHuman = fatherBody.getTorsoType().getRace()==Race.HUMAN;
 		
@@ -970,7 +970,7 @@ public class CharacterUtils {
 		// The applyRaceChanges and applySpeciesChanges methods sometimes change covering colours and then call updateCoverings(), which will result in this character's covering colours being unrelated to genetics
 		// To fix, coverings are saved and then restored after the two methods have been called
 		Map<AbstractBodyCoveringType, Covering> preChangesCoverings = body.getCoverings();
-		if (raceTakesAfter.getRace() != Race.SLIME) {
+		if (!raceTakesAfter.getRace().isMaterialRace()) {
 			raceTakesAfter.getRace().applyRaceChanges(body);
 			raceTakesAfter.applySpeciesChanges(body);
 		} else {
@@ -1245,7 +1245,7 @@ public class CharacterUtils {
 		boolean hasVagina = startingGender.getGenderName().isHasVagina();
 		boolean hasPenis = startingGender.getGenderName().isHasPenis();
 		boolean hasBreasts = startingGender.getGenderName().isHasBreasts();
-		boolean isSlime = species == Subspecies.SLIME;
+		boolean isSlime = species.getRace().isMaterialRace();
 		boolean isHalfDemon = species == Subspecies.HALF_DEMON;
 		
 		if(isSlime || isHalfDemon) {
@@ -1253,7 +1253,7 @@ public class CharacterUtils {
 				List<AbstractSubspecies> slimeSubspecies = new ArrayList<>();
 				for(AbstractSubspecies subspecies : Subspecies.getAllSubspecies()) {
 					// Special races that slimes/half-demons do not spawn as are slimes and any Subspecies which sets an override (so demons, elementals, or Youko):
-					if(subspecies!=Subspecies.SLIME && subspecies.getSubspeciesOverridePriority()==0) {
+					if(!subspecies.isMaterialSubspecies() && subspecies.getSubspeciesOverridePriority()==0) {
 						if(startingGender.isFeminine()) {
 							for(Entry<AbstractSubspecies, FurryPreference> entry : Main.getProperties().getSubspeciesFeminineFurryPreferencesMap().entrySet()) {
 								if(entry.getValue() != FurryPreference.HUMAN) {
@@ -1427,13 +1427,9 @@ public class CharacterUtils {
 		setBodyHair(body);
 		
 		if(species!=null) {
-			if(stage!=RaceStage.HUMAN) {
+			if(stage!=RaceStage.HUMAN || isSlime) {
 				species.getRace().applyRaceChanges(body);
 				species.applySpeciesChanges(body);
-			}
-			if(isSlime) {
-				Race.SLIME.applyRaceChanges(body);
-				Subspecies.SLIME.applySpeciesChanges(body);
 			}
 		}
 		
