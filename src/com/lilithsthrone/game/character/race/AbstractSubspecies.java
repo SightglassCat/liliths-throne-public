@@ -1121,11 +1121,10 @@ public abstract class AbstractSubspecies {
 			} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 				
-			} else if (fatherSubspecies==Subspecies.SLIME) {
+			} else if (fatherSubspecies.isMaterialSubspecies()) {
 				Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherHalfDemonSubspecies, true);
 				if (Math.random()<0.2) {
-					Race.SLIME.applyRaceChanges(body);
-					Subspecies.SLIME.applySpeciesChanges(body);
+					body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
 				}
 				return body;
 			} else {
@@ -1140,10 +1139,9 @@ public abstract class AbstractSubspecies {
 					} else {
 						return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 					}
-				} else if (fatherSubspecies==Subspecies.SLIME) {
+				} else if (fatherSubspecies.isMaterialSubspecies()) {
 					Body body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
-					Race.SLIME.applyRaceChanges(body);
-					Subspecies.SLIME.applySpeciesChanges(body);
+					body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
 					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
@@ -1163,10 +1161,11 @@ public abstract class AbstractSubspecies {
 				} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 					
-				} else if (fatherSubspecies==Subspecies.SLIME) {
+				} else if (fatherSubspecies.isMaterialSubspecies()) {
 					Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
-					Race.SLIME.applyRaceChanges(body);
-					Subspecies.SLIME.applySpeciesChanges(body);
+                                        if (Math.random()<0.5) {
+                                                body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+                                        }
 					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
@@ -1177,12 +1176,17 @@ public abstract class AbstractSubspecies {
 			if(fatherSubspecies==Subspecies.IMP) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 			} else {
+                                Body body;
 				if (Math.random() < 0.2) {
-					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+					body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 				}
 				else {
-					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
-				}	
+					body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+				}
+                                if (fatherSubspecies.isMaterialSubspecies() && Math.random()<0.8) {
+                                        body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+                                }
+                                return body;
 			}
 			
 		} else {
@@ -2063,7 +2067,7 @@ public abstract class AbstractSubspecies {
                 if (isMaterialSubspecies()) {
                         return subspeciesBodyMaterial;
                 }
-                return null;
+                return BodyMaterial.FLESH;
         }
 	
 	public static Map<AbstractSubspecies, Integer> getGenericSexPartnerSubspeciesMap(Gender gender, AbstractSubspecies... subspeciesToExclude) {
