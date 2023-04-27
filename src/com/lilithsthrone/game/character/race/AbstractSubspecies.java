@@ -903,7 +903,8 @@ public abstract class AbstractSubspecies {
 			} catch(Exception ex) {
 				ex.printStackTrace();
 			}
-		} else if (materialSubspecies) {
+		} 
+                if (materialSubspecies) {
                         body.setBodyMaterial(subspeciesBodyMaterial);
                 }
 	}
