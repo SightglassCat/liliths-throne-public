@@ -1025,7 +1025,8 @@ public class StandardSexActionInteractions {
 								SexActionPresets.thighsToPenis,
 								SexActionPresets.vaginaToPenis,
 								SexActionPresets.assToGroin,
-								SexActionPresets.penisToBreasts),
+								SexActionPresets.penisToBreasts,
+								SexActionPresets.feetToMouth),
 						Util.newArrayListOfValues(
 								OrgasmCumTarget.LEGS,
 								OrgasmCumTarget.GROIN,
@@ -1078,8 +1079,7 @@ public class StandardSexActionInteractions {
 								SexActionPresets.allAreasToAppendages,
 								SexActionPresets.thighsToPenis,
 								SexActionPresets.vaginaToPenis,
-								SexActionPresets.assToGroin,
-								SexActionPresets.feetToMouth),
+								SexActionPresets.assToGroin),
 						Util.newArrayListOfValues(
 								OrgasmCumTarget.LEGS,
 								OrgasmCumTarget.GROIN,
