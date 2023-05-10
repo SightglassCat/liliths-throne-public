@@ -1245,7 +1245,7 @@ public class CharacterUtils {
 		boolean hasVagina = startingGender.getGenderName().isHasVagina();
 		boolean hasPenis = startingGender.getGenderName().isHasPenis();
 		boolean hasBreasts = startingGender.getGenderName().isHasBreasts();
-		boolean isSlime = species.getRace().isMaterialRace();
+		boolean isSlime = species == null ? false : species.getRace().isMaterialRace();
 		boolean isHalfDemon = species == Subspecies.HALF_DEMON;
                 
                 AbstractSubspecies materialSubspecies = null;
