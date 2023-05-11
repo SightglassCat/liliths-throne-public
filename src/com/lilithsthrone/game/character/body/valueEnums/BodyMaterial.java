@@ -11,6 +11,8 @@ import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.Util.Value;
 import com.lilithsthrone.utils.colours.Colour;
 import com.lilithsthrone.utils.colours.PresetColour;
+import com.lilithsthrone.main.Main;
+import com.lilithsthrone.world.places.Darkness;
 
 /**
  * @since 0.1.83
@@ -52,7 +54,7 @@ public enum BodyMaterial {
 		}
 	},
 	
-	SLIME("slime", PresetColour.RACE_SLIME, DamageType.PHYSICAL, false, true, false) {
+	SLIME("slime", "slimy", PresetColour.RACE_SLIME, DamageType.PHYSICAL, false, true, false) {
 		@Override
 		public Map<AbstractAttribute, Float> getAttributeModifiers(GameCharacter target) {
 			return Util.newHashMapOfValues(
@@ -172,8 +174,48 @@ public enum BodyMaterial {
 			return null;
 		}
 	},
+        
+        PLANT("foliage", "leafy", PresetColour.BASE_GREEN, DamageType.PHYSICAL, false, false, false) {
+		@Override
+		public Map<AbstractAttribute, Float> getAttributeModifiers(GameCharacter target) {
+                        if((Main.game.isDayTime() && target.getLocationPlaceType().getDarkness() == Darkness.DAYLIGHT)
+                                || target.getLocationPlaceType().getDarkness() == Darkness.ALWAYS_LIGHT){
+                            return Util.newHashMapOfValues(
+                                            new Value<>(Attribute.RESISTANCE_FIRE, -10f),
+                                            new Value<>(Attribute.RESISTANCE_ICE, -10f),
+                                            new Value<>(Attribute.ACTION_POINTS, 1f));
+                        } else {
+                            return Util.newHashMapOfValues(
+                                            new Value<>(Attribute.MAJOR_PHYSIQUE, -5f),
+                                            new Value<>(Attribute.MAJOR_ARCANE, -5f),
+                                            new Value<>(Attribute.RESISTANCE_FIRE, -10f),
+                                            new Value<>(Attribute.RESISTANCE_ICE, -10f));
+                        }
+		}
+		@Override
+		public List<String> getExtraEffects(GameCharacter target) {
+			return Util.newArrayListOfValues(
+                                        "<b>[style.boldGood(Extra action point in well-lit environments!)]</b>",
+					"<b>[style.boldBad(Lowered stats in darkness!)]</b>");
+		}
+	},
+        
+        FUNGUS("fungus", "spongy", PresetColour.BASE_PINK_SALMON, DamageType.PHYSICAL, false, false, false) {
+		@Override
+		public Map<AbstractAttribute, Float> getAttributeModifiers(GameCharacter target) {
+                        return Util.newHashMapOfValues(
+                                            new Value<>(Attribute.RESISTANCE_FIRE, -10f),
+                                            new Value<>(Attribute.RESISTANCE_ICE, -10f),
+                                            new Value<>(Attribute.RESISTANCE_PHYSICAL, 25f),
+                                            new Value<>(Attribute.RESISTANCE_POISON, 25f));
+		}
+		@Override
+		public List<String> getExtraEffects(GameCharacter target) {
+			return null;
+		}
+	},
 	;
-
+        
 	private String name;
 	private String skinNoun; private String skinAdj;
 	private String skinAltNoun; private String skinAltAdj;

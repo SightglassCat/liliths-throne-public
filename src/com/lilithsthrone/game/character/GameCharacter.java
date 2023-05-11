@@ -18615,6 +18615,11 @@ public abstract class GameCharacter implements XMLSaving {
 			}
 		}
 		
+		if( this.getBodyMaterial()==BodyMaterial.PLANT || this.getBodyMaterial()==BodyMaterial.FUNGUS) {
+			this.addStatusEffect(StatusEffect.RECENTLY_EATEN_QUALITY, 3600*3);
+			this.addStatusEffect(StatusEffect.THIRST_QUENCHED_QUALITY, 3600*3);
+		}
+		
 		for(FluidModifier mod : modifiers) {
 			String s = mod.applyEffects(this, charactersFluid, millilitres, fluid);
 //			System.out.println(s);
@@ -27252,6 +27257,78 @@ public abstract class GameCharacter implements XMLSaving {
 						+ "</p>");
 			}
 		}
+		if(type == BodyMaterial.PLANT) {
+			AbstractBodyCoveringType basePlantCoveringType = BodyCoveringType.getMaterialBodyCoveringType(BodyMaterial.PLANT, BodyCoveringCategory.MAIN_SKIN);
+			BodyCoveringCategory armCoveringCategory = this.getArmCovering().getCategory();
+			if(this.isPlayer()) {
+				tfDescription = "<p>"
+							+ "You begin to feel strangely stiff, as throughout your body your muscles tighten and flex. As your sinews pull you into standing upright, your joints creak as they lock into place."
+							+ " Despite the lack of control over your own body, you feel oddly relaxed. A steadily building feeling of <i>anticipation</i>, as you feel your pulse slow to a low, heavy thump. Under your skin, you feel a strange tingling as you numb to every sensation. ";
+				switch(armCoveringCategory) {
+					case MAIN_SKIN:
+						tfDescription += "From the little motion you have in your fingers, you notice your skin is puffy and turgid, as if the flesh below is swelling with fluid."
+								+ "</p>"
+								+ "<p>"
+								+ " Suddenly, you feel the tension binding your upper body release! As you regain motion in your arms, the skin painlessly peels away, revealing glossy skin underneath, resembling the pristine surface of an unripe fruit."
+								+ " Fascinated, you watch as leaf buds pop out of your skin, unfurling into patches of foliage where your body hair would ordinarily grow."
+							+ "</p>";
+						break;
+					case MAIN_HAIR:
+					case MAIN_FUR:
+						tfDescription += "From the little sensation you have in your arms, you notice a strange prickling."
+								+ "</p>"
+								+ "<p>"
+								+ " Suddenly, you feel the tension binding your upper body release! As you regain motion in your arms, grass-like shoots painlessly burst from your skin, quickly forming dense carpet of moss over your limbs."
+								+ " Fascinated, you watch as leaf buds pop out of your mossy fur, unfurling into patches of foliage where your body hair would ordinarily grow."
+							+ "</p>";
+						break;
+					case MAIN_SCALES:
+						tfDescription += "From the little sensation you have in your arms, you notice a strange pressure under your scales. It almost feels like they could pop off with the slightest touch."
+								+ "</p>"
+								+ "<p>"
+								+ " Suddenly, you feel the tension binding your upper body release! As you regain motion in your arms, your scales suddenly thicken and flare, now resembling the thick leaves of a succulent plant."
+								+ " Fascinated, you watch as leaf buds pop from between your scales, unfurling into patches of foliage where your body hair would ordinarily grow."
+							+ "</p>";
+						break;
+					case MAIN_FEATHER:
+						tfDescription += "From the little sensation you have in your arms, you notice a strange pressure under your feathers. "
+								+ "</p>"
+								+ "<p>"
+								+ " Suddenly, you feel the tension binding your upper body release! As you regain motion in your arms, you suddenly feel your feathers molt off, quickly replaced by shocks of colorful leaves."
+								+ " Fascinated, you watch as more leaf buds pop from between your feathers, unfurling into patches of foliage where your body hair would ordinarily grow."
+							+ "</p>";
+						break;
+					case MAIN_CHITIN:
+						tfDescription += "From the little sensation you have in your arms, you notice a strange pressure under the chitinous plates. It almost feels like they could pop off with the slightest touch."
+								+ "</p>"
+								+ "<p>"
+								+ " Suddenly, you feel the tension binding your upper body release! As you regain motion in your arms, the chitin suddenly flakes off, revealing a new smooth surface beneath. You experimentally rub your fingers over it, and it feels like the firm surface of a succulent plant."
+								+ " Fascinated, you watch as leaf buds pop from between your remaining plates, unfurling into patches of foliage where your body hair would ordinarily grow."
+							+ "</p>";
+						break;
+				}
+				tfDescription += "<p>"
+							+ "With a creak and pop, your lower body unlocks. When you experimentally kick against the ground, you notice the change in their heft, and the resonant <i>clonk</i> as they impact. You realize that your bones have become lighter, as if made of wood!"
+						+ "</p>"
+							+ "Your entire being is now composed of [style.boldGreen(wood and foliage)]!<br/>"
+							+ "<i>- Your body is naturally energized in bright light!<br/>"
+							+ "- You're a little worried about how flammable you seem...<br/>"
+							+ "</i>"
+						+ "</p>";
+				
+			} else {
+				tfDescription = UtilText.parse(this,
+						"<p>"
+							+ "Placeholder for plant transformation"
+						+ "</p>");
+			}
+		}
+		if(type == BodyMaterial.FUNGUS) {
+			tfDescription = UtilText.parse(this,
+						"<p>"
+							+ "Placeholder for fungus transformation"
+						+ "</p>");
+		}
 
 		body.setBodyMaterial(type);
 		postTransformationCalculation(false);
@@ -29767,6 +29844,8 @@ public abstract class GameCharacter implements XMLSaving {
 				case STONE:
 				case WATER:
 				case SLIME:
+				case PLANT:
+				case FUNGUS:
 					return body.getCoverings().get(BodyCoveringType.getMaterialBodyCoveringType(this.getBodyMaterial(), bodyCoveringType.getCategory()));
 				case FLESH:
 			}
