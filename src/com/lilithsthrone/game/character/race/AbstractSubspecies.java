@@ -116,6 +116,7 @@ public abstract class AbstractSubspecies {
 	protected String SVGString;
 	protected String SVGStringUncoloured;
 	protected String SVGStringNoBackground;
+        protected String SVGStringUncolouredNoBackground;
 	protected String SVGStringDesaturated;
 	protected String halfDemonSVGString;
 	protected String demonSVGString;
@@ -1798,7 +1799,7 @@ public abstract class AbstractSubspecies {
 						getSecondaryColour(),
 						getTertiaryColour(),
 						"<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
-				
+				SVGStringUncolouredNoBackground = "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>";
 				SVGStringUncoloured = SVGStringBackground + "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>";
 
 				halfDemonSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
@@ -1926,14 +1927,14 @@ public abstract class AbstractSubspecies {
                                         bMat.getColour(),
                                         bMat.getColour(),
                                         "<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
-                                        + "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+                                        + "<div style='"+fullDivStyle+"'>"+SVGStringUncolouredNoBackground+"</div>");
                         } else {
                                 newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
                                         fillColours.get(0),
                                         fillColours.get(1),
                                         fillColours.get(2),
                                         "<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
-                                        + "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+                                        + "<div style='"+fullDivStyle+"'>"+SVGStringUncolouredNoBackground+"</div>");
                         }
                         if (strokeColor != null) {
                                 //Colour srcColour = new Colour(Util.newColour("#000000"));

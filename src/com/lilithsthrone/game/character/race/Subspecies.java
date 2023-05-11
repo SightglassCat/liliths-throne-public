@@ -4223,7 +4223,7 @@ public class Subspecies {
 		}
 	};
         
-        // SLIMES:
+        // LATEX CREATURE:
 	public static AbstractSubspecies LATEX_CREATURE = new AbstractSubspecies(true,
 			10000,
 			"sightglass_race_latex_liqueur",
