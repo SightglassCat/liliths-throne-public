@@ -27319,14 +27319,14 @@ public abstract class GameCharacter implements XMLSaving {
 			} else {
 				tfDescription = UtilText.parse(this,
 						"<p>"
-							+ "Placeholder for plant transformation"
+							+ "Placeholder for plant on NPC"
 						+ "</p>");
 			}
 		}
 		if(type == BodyMaterial.FUNGUS) {
 			tfDescription = UtilText.parse(this,
 						"<p>"
-							+ "Placeholder for fungus transformation"
+							+ "TODO: fungus transformation on PC and NPC"
 						+ "</p>");
 		}
 

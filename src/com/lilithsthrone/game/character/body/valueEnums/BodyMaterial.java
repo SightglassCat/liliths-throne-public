@@ -181,8 +181,8 @@ public enum BodyMaterial {
                         if((Main.game.isDayTime() && target.getLocationPlaceType().getDarkness() == Darkness.DAYLIGHT)
                                 || target.getLocationPlaceType().getDarkness() == Darkness.ALWAYS_LIGHT){
                             return Util.newHashMapOfValues(
-                                            new Value<>(Attribute.RESISTANCE_FIRE, -10f),
-                                            new Value<>(Attribute.RESISTANCE_ICE, -10f),
+                                            new Value<>(Attribute.RESISTANCE_FIRE, -5f),
+                                            new Value<>(Attribute.RESISTANCE_ICE, -5f),
                                             new Value<>(Attribute.ACTION_POINTS, 1f));
                         } else {
                             return Util.newHashMapOfValues(

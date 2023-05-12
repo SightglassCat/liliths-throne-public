@@ -571,7 +571,7 @@
 	]]>
 	</htmlContent>
 
-	<!-- SLIMES -->
+	<!-- LATEX -->
 
 	<htmlContent tag="LATEX_BASIC"><![CDATA[
 	<p>
@@ -599,6 +599,38 @@
 	<p>
 		Despite their unusual biology, latex creature pregnancies work much the same as ordinary morphs. Typically, if the mother is a latex creature, the offspring will also be as well, while offspring fathered by a latex creature will resemble the mother instead.
 	</p>
+	]]>
+	</htmlContent>
+        
+	<!-- PLANT -->
+
+	<htmlContent tag="PLANT_BASIC"><![CDATA[
+	<p>
+		TODO: Plant Basic Lore
+	</p>
+	]]>
+	</htmlContent>
+
+	<htmlContent tag="PLANT_ADVANCED"><![CDATA[
+	<p>
+                TODO: Plant Advaned Lore
+        </p>
+	]]>
+	</htmlContent>
+        
+	<!-- FUNGUS -->
+
+	<htmlContent tag="FUNGUS_BASIC"><![CDATA[
+	<p>
+		TODO: Fungus Basic Lore
+	</p>
+	]]>
+	</htmlContent>
+
+	<htmlContent tag="FUNGUS_ADVANCED"><![CDATA[
+	<p>
+                TODO: Fungus Advaned Lore
+        </p>
 	]]>
 	</htmlContent>
 
