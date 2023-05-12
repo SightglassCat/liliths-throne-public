@@ -1921,19 +1921,28 @@ public abstract class AbstractSubspecies {
                 if ( !bodyMaterialSVGStringMap.containsKey(bMat) ) {
                         String fullDivStyle = "width:100%;height:100%;margin:0;padding:0;position:absolute;left:0;bottom:0;";
                         String newSVGString;
+                        String background;
+                        switch(bMat){
+                            case SLIME:
+                                background = SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime();
+                                break;
+                            default:
+                                background = SVGImages.SVG_IMAGE_PROVIDER.getRaceBackground();
+                                break;
+                        }       
                         if (fillColours == null || fillColours.size() < 3) {
                                 newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
                                         bMat.getColour(),
                                         bMat.getColour(),
                                         bMat.getColour(),
-                                        "<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
+                                        "<div style='"+fullDivStyle+"'>" + background +"</div>"
                                         + "<div style='"+fullDivStyle+"'>"+SVGStringUncolouredNoBackground+"</div>");
                         } else {
                                 newSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
                                         fillColours.get(0),
                                         fillColours.get(1),
                                         fillColours.get(2),
-                                        "<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime()+"</div>"
+                                        "<div style='"+fullDivStyle+"'>" + background +"</div>"
                                         + "<div style='"+fullDivStyle+"'>"+SVGStringUncolouredNoBackground+"</div>");
                         }
                         if (strokeColor != null) {
