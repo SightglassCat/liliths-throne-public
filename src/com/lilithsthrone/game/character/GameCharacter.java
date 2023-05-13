@@ -18615,7 +18615,7 @@ public abstract class GameCharacter implements XMLSaving {
 			}
 		}
 		
-		if( this.getBodyMaterial()==BodyMaterial.PLANT || this.getBodyMaterial()==BodyMaterial.FUNGUS) {
+		if( this.getBodyMaterial()==BodyMaterial.FUNGUS ) {
 			this.addStatusEffect(StatusEffect.RECENTLY_EATEN_QUALITY, 3600*3);
 			this.addStatusEffect(StatusEffect.THIRST_QUENCHED_QUALITY, 3600*3);
 		}
