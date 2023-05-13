@@ -4391,7 +4391,7 @@ public class Subspecies {
 		}
 	};
         
-        // LATEX CREATURE:
+        // PLANT CREATURE:
 	public static AbstractSubspecies PLANT_CREATURE = new AbstractSubspecies(true,
 			10000,
 			"sightglass_race_latex_liqueur",
@@ -4406,8 +4406,8 @@ public class Subspecies {
 			"plant-girls",
 			null,
 			Nocturnality.DIURNAL,
-			"[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life.",
-                        "[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life." 
+			"[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life, and benefits from bright light.",
+                        "[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life, and benefits from bright light." 
                             + "[npc.Her] demon core is visible wrapped in a leafy calyx, pulsing with potential.",
 			Util.newHashMapOfValues(
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 10f),
@@ -4545,7 +4545,7 @@ public class Subspecies {
 			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
 				return "corrupted plant "+coreSubspecies.getPluralFemaleName(body);
 			}
-			return "corrupted plant "+coreSubspecies.getPluralFemaleName(body);
+			return "plant "+coreSubspecies.getPluralFemaleName(body);
 		}
 
 
@@ -4571,6 +4571,182 @@ public class Subspecies {
 		}
 	};
 	
+        // FUNGUS CREATURE:
+	public static AbstractSubspecies FUNGUS_CREATURE = new AbstractSubspecies(true,
+			10000,
+			"sightglass_race_latex_liqueur",
+			"sightglass_race_latex_licorice",
+			"statusEffects/race/raceSlime",
+			"statusEffects/race/raceBackgroundSlime",
+			"mushroom creature",
+			"mushroom creatures",
+			"mushroom-boy",
+			"mushroom-girl",
+			"mushroom-boys",
+			"mushroom-girls",
+			null,
+			Nocturnality.DIURNAL,
+			"[npc.NameIsFull] a fungus creature, composed of a network of magically-enhanced fungal mycelia. [npc.She] gradually [npc.verb(sap)] the strength of opponents in battle.",
+                        "[npc.NameIsFull] a fungus creature, composed of a network of magically-enhanced fungal mycelia. [npc.She] gradually [npc.verb(sap)] the strength of opponents in battle." 
+                            + "The glow of [npc.her] demon core is visible embedded in [npc.her] chest, pulsing with potential.",
+			Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, 10f),
+					new Value<>(Attribute.MAJOR_ARCANE, 15f),
+                                        new Value<>(Attribute.DAMAGE_LUST, 10f)
+                                        ),
+			Util.newArrayListOfValues(),
+			"Kingdom of Mushrooms",
+			"Kingdom of Mushrooms",
+			"FUNGUS_BASIC",
+			"FUNGUS_ADVANCED",
+			Race.FUNGUS_CREATURE,
+			Util.newHashMapOfValues(
+					new Value<>(PerkCategory.PHYSICAL, 3),
+					new Value<>(PerkCategory.LUST, 5),
+					new Value<>(PerkCategory.ARCANE, 0)),
+			Util.newHashMapOfValues(
+					new Value<>(PerkCategory.PHYSICAL, 3),
+					new Value<>(PerkCategory.LUST, 5),
+					new Value<>(PerkCategory.ARCANE, 0)),
+			PresetColour.BASE_PINK_SALMON,
+			SubspeciesPreference.FOUR_ABUNDANT,
+			"An animated fungus-creature",
+			Util.newHashMapOfValues(
+                                new Value<>(WorldRegion.DOMINION, SubspeciesSpawnRarity.TWO),
+                                new Value<>(WorldRegion.FIELD_CITY, SubspeciesSpawnRarity.FOUR),
+                                new Value<>(WorldRegion.DESERT_CITY, SubspeciesSpawnRarity.TWO),
+                                new Value<>(WorldRegion.JUNGLE_CITY, SubspeciesSpawnRarity.SIX),
+                                new Value<>(WorldRegion.FIELDS, SubspeciesSpawnRarity.THREE),
+                                new Value<>(WorldRegion.JUNGLE, SubspeciesSpawnRarity.SIX),
+                                new Value<>(WorldRegion.YOUKO_FOREST, SubspeciesSpawnRarity.THREE),
+                                new Value<>(WorldRegion.MOUNTAINS, SubspeciesSpawnRarity.TWO),
+                                new Value<>(WorldRegion.SUBMISSION, SubspeciesSpawnRarity.SEVEN)
+                        ),
+			Util.newHashMapOfValues(
+                                new Value<>(WorldType.NIGHTLIFE_CLUB, SubspeciesSpawnRarity.TWO)
+                        ), null, 
+                        Util.newArrayListOfValues(SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
+                        true, BodyMaterial.FUNGUS
+        ) {
+            
+		@Override
+		public String getSVGString(GameCharacter character) {
+			if(character==null) {
+				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial(), 
+                                        "#471a23", Util.newArrayListOfValues("#fffae3", "#f0afa1", "#ed7788"));
+                        }
+                        AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
+			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
+                                "#471a23", Util.newArrayListOfValues("#fffae3", "#f0afa1", "#ed7788"));
+		}
+                
+		@Override
+		public String getName(Body body) {
+			if(body == null) {
+				return super.getName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted fungal "+coreSubspecies.getName(body);
+			}
+			return "fungal "+coreSubspecies.getName(body);
+		}
+		
+		@Override
+		public String getNamePlural(Body body) {
+			if(body ==null) {
+				return super.getNamePlural(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getNamePlural(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted fungal "+coreSubspecies.getNamePlural(body);
+			}
+			return "fungal "+coreSubspecies.getNamePlural(body);
+		}
+
+		@Override
+		public String getSingularMaleName(Body body) {
+			if(body ==null) {
+				return super.getSingularMaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getSingularMaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted fungal "+coreSubspecies.getSingularMaleName(body);
+			}
+			return "fungal "+coreSubspecies.getSingularMaleName(body);
+		}
+
+		@Override
+		public String getSingularFemaleName(Body body) {
+			if(body ==null) {
+				return super.getSingularFemaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getSingularFemaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted fungal "+coreSubspecies.getSingularFemaleName(body);
+			}
+			return "fungal "+coreSubspecies.getSingularFemaleName(body);
+		}
+
+		@Override
+		public String getPluralMaleName(Body body) {
+			if(body ==null) {
+				return super.getPluralMaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getPluralMaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted fungal "+coreSubspecies.getPluralMaleName(body);
+			}
+			return "fungal "+coreSubspecies.getPluralMaleName(body);
+		}
+
+		@Override
+		public String getPluralFemaleName(Body body) {
+			if(body ==null) {
+				return super.getPluralFemaleName(body);
+			}
+			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
+			if(coreSubspecies==Subspecies.HUMAN) {
+				return super.getPluralFemaleName(body);
+			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
+				return "corrupted fungal "+coreSubspecies.getPluralFemaleName(body);
+			}
+			return "fungal "+coreSubspecies.getPluralFemaleName(body);
+		}
+
+
+		@Override
+		public String getSVGStringDesaturated(GameCharacter character) {
+			if(character==null) {
+				return Subspecies.HUMAN.getSVGStringDesaturated(null);
+			}
+			return character.getBody().getFleshSubspecies().getSVGStringDesaturated(character);
+		}
+		@Override
+		public int getSubspeciesWeighting(Body body, AbstractRace race) {
+			if(race==Race.FUNGUS_CREATURE) {
+				return 10_000;
+			}
+			return 0;
+		}
+		public FeralAttributes getFeralAttributes(Body body) {
+			if(body==null) {
+				return super.getFeralAttributes(body);
+			}
+			return body.getFleshSubspecies().getFeralAttributes(body);
+		}
+	};
+        
 	// RODENTS:
 	public static AbstractSubspecies SQUIRREL_MORPH = new AbstractSubspecies(true,
 			6000,
