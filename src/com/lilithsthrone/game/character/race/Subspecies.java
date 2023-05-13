@@ -4411,9 +4411,8 @@ public class Subspecies {
                             + "[npc.Her] demon core is visible wrapped in a leafy calyx, pulsing with potential.",
 			Util.newHashMapOfValues(
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 10f),
-					new Value<>(Attribute.MAJOR_ARCANE, 15f),
+					new Value<>(Attribute.MAJOR_ARCANE, 10f),
                                         new Value<>(Attribute.DAMAGE_LUST, 10f),
-                                        new Value<>(Attribute.HEALTH_MAXIMUM, 50f),
                                         new Value<>(Attribute.VIRILITY, 25f),
                                         new Value<>(Attribute.FERTILITY, 25f)
                                         ),
@@ -4452,6 +4451,30 @@ public class Subspecies {
                         Util.newArrayListOfValues(SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
                         true, BodyMaterial.PLANT
         ) {
+            
+                @Override
+                public Map<AbstractAttribute, Float> getStatusEffectAttributeModifiers(GameCharacter character) {
+                        if (character != null && character.isVisiblyPregnant()) {
+                            return Util.newHashMapOfValues(
+					new Value<>(Attribute.MAJOR_PHYSIQUE, 15f),
+					new Value<>(Attribute.MAJOR_ARCANE, 15f),
+                                        new Value<>(Attribute.DAMAGE_LUST, 20f),
+                                        new Value<>(Attribute.HEALTH_MAXIMUM, 50f),
+                                        new Value<>(Attribute.VIRILITY, 25f),
+                                        new Value<>(Attribute.FERTILITY, 25f)
+                                        );
+                        }
+                        return super.getStatusEffectAttributeModifiers(character);
+                }
+                
+                @Override
+                public String getStatusEffectDescription(GameCharacter character) {
+                        if (character != null && character.isVisiblyPregnant()) {
+                            return super.getStatusEffectDescription(character) 
+                                    + UtilText.parse(character, " [npc.Her] pregnancy gives [npc.him] a healthy glow!");
+                        }
+                        return super.getStatusEffectDescription(character);
+                }
             
 		@Override
 		public String getSVGString(GameCharacter character) {
@@ -4592,7 +4615,8 @@ public class Subspecies {
 			Util.newHashMapOfValues(
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 10f),
 					new Value<>(Attribute.MAJOR_ARCANE, 15f),
-                                        new Value<>(Attribute.DAMAGE_LUST, 10f)
+                                        new Value<>(Attribute.DAMAGE_LUST, 12f),
+                                        new Value<>(Attribute.DAMAGE_POISON, 12f)
                                         ),
 			Util.newArrayListOfValues(),
 			"Kingdom of Mushrooms",
@@ -4628,7 +4652,7 @@ public class Subspecies {
                         Util.newArrayListOfValues(SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
                         true, BodyMaterial.FUNGUS
         ) {
-            
+                                        
 		@Override
 		public String getSVGString(GameCharacter character) {
 			if(character==null) {

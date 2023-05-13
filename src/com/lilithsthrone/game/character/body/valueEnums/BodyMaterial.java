@@ -183,7 +183,8 @@ public enum BodyMaterial {
                             return Util.newHashMapOfValues(
                                             new Value<>(Attribute.RESISTANCE_FIRE, -5f),
                                             new Value<>(Attribute.RESISTANCE_ICE, -5f),
-                                            new Value<>(Attribute.ACTION_POINTS, 1f));
+                                            new Value<>(Attribute.SPELL_COST_MODIFIER, 25f),
+                                            new Value<>(Attribute.DAMAGE_SPELLS, 10f));
                         } else {
                             return Util.newHashMapOfValues(
                                             new Value<>(Attribute.MAJOR_PHYSIQUE, -5f),
@@ -195,7 +196,7 @@ public enum BodyMaterial {
 		@Override
 		public List<String> getExtraEffects(GameCharacter target) {
 			return Util.newArrayListOfValues(
-                                        "<b>[style.boldGood(Extra action point in well-lit environments!)]</b>",
+                                        "<b>[style.boldGood(Spells enhanced in well-lit environments!)]</b>",
 					"<b>[style.boldBad(Lowered stats in darkness!)]</b>");
 		}
 	},
@@ -205,7 +206,6 @@ public enum BodyMaterial {
 		public Map<AbstractAttribute, Float> getAttributeModifiers(GameCharacter target) {
                         return Util.newHashMapOfValues(
                                             new Value<>(Attribute.RESISTANCE_FIRE, -10f),
-                                            new Value<>(Attribute.RESISTANCE_ICE, -10f),
                                             new Value<>(Attribute.RESISTANCE_PHYSICAL, 25f),
                                             new Value<>(Attribute.RESISTANCE_POISON, 25f));
 		}
