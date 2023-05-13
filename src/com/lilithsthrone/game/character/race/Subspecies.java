@@ -4457,11 +4457,11 @@ public class Subspecies {
 		public String getSVGString(GameCharacter character) {
 			if(character==null) {
 				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial(), 
-                                        "#132100", Util.newArrayListOfValues("#5dd446", "#27912f", "#18a34b"));
+                                        "#203603", Util.newArrayListOfValues("#5dd446", "#27912f", "#18a34b"));
                         }
                         AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
-                                "#132100", Util.newArrayListOfValues("#5dd446", "#27912f", "#18a34b"));
+                                "#203603", Util.newArrayListOfValues("#5dd446", "#27912f", "#18a34b"));
 		}
                 
 		@Override
@@ -4633,11 +4633,11 @@ public class Subspecies {
 		public String getSVGString(GameCharacter character) {
 			if(character==null) {
 				return Subspecies.HUMAN.getBodyMaterialSVGString(null, getSubspeciesBodyMaterial(), 
-                                        "#471a23", Util.newArrayListOfValues("#fffae3", "#f0afa1", "#ed7788"));
+                                        "#cf2b5c", Util.newArrayListOfValues("#fffbf2", "#e3b394", "#d96c7e"));
                         }
                         AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
-                                "#471a23", Util.newArrayListOfValues("#fffae3", "#f0afa1", "#ed7788"));
+                                "#cf2b5c", Util.newArrayListOfValues("#fffbf2", "#e3b394", "#d96c7e"));
 		}
                 
 		@Override

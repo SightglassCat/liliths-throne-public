@@ -1923,6 +1923,15 @@ public abstract class AbstractSubspecies {
                         String newSVGString;
                         String background;
                         switch(bMat){
+                            case FUNGUS:
+                                background = SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundFungus();
+                                break;
+                            case PLANT:
+                                background = SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundPlant();
+                                break;
+                            case RUBBER:
+                                background = SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundRubber();
+                                break;
                             case SLIME:
                                 background = SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundSlime();
                                 break;
