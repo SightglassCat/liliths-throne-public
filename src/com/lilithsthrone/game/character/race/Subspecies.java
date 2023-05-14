@@ -4597,8 +4597,8 @@ public class Subspecies {
         // FUNGUS CREATURE:
 	public static AbstractSubspecies FUNGUS_CREATURE = new AbstractSubspecies(true,
 			10000,
-			"sightglass_race_latex_liqueur",
-			"sightglass_race_latex_licorice",
+			"sightglass_race_fungus_kombucha",
+			"sightglass_race_fungus_truffle",
 			"statusEffects/race/raceSlime",
 			"statusEffects/race/raceBackgroundSlime",
 			"mushroom creature",
@@ -4608,7 +4608,7 @@ public class Subspecies {
 			"mushroom-boys",
 			"mushroom-girls",
 			null,
-			Nocturnality.DIURNAL,
+			Nocturnality.NOCTURNAL,
 			"[npc.NameIsFull] a fungus creature, composed of a network of magically-enhanced fungal mycelia. [npc.She] gradually [npc.verb(sap)] the strength of opponents in battle.",
                         "[npc.NameIsFull] a fungus creature, composed of a network of magically-enhanced fungal mycelia. [npc.She] gradually [npc.verb(sap)] the strength of opponents in battle." 
                             + "The glow of [npc.her] demon core is visible embedded in [npc.her] chest, pulsing with potential.",
