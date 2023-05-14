@@ -4394,8 +4394,8 @@ public class Subspecies {
         // PLANT CREATURE:
 	public static AbstractSubspecies PLANT_CREATURE = new AbstractSubspecies(true,
 			10000,
-			"sightglass_race_latex_liqueur",
-			"sightglass_race_latex_licorice",
+			"sightglass_race_plant_water",
+			"sightglass_race_plant_seed",
 			"statusEffects/race/raceSlime",
 			"statusEffects/race/raceBackgroundSlime",
 			"plant creature",
