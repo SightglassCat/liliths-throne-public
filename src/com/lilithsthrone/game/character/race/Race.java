@@ -700,9 +700,9 @@ public class Race {
 
         // PLANT CREATURE
         public static AbstractRace PLANT_CREATURE = new AbstractRace("plant",
-			"plant creatures",
-			"plant creature",
-			"plant creatures",
+			"plant-folk",
+			"plant beast",
+			"plant beasts",
 			"plant creature",
 			PresetColour.BASE_GREEN,
 			Disposition.CIVILIZED,
@@ -710,7 +710,7 @@ public class Race {
 			CombatBehaviour.BALANCED,
 			0.5f,
 			1,
-			2,
+			6,
 			FurryPreference.MAXIMUM,
 			FurryPreference.MAXIMUM,
 			false,
