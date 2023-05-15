@@ -4270,7 +4270,8 @@ public class Subspecies {
 			Util.newHashMapOfValues(
 					new Value<>(WorldType.BAT_CAVERNS, SubspeciesSpawnRarity.TEN)), null, Util.newArrayListOfValues(
 					SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
-                        true, BodyMaterial.RUBBER
+                        true, BodyMaterial.RUBBER,
+                        true, "latex ", "corrupted latex ","latex "
         ) {
             
 		@Override
@@ -4283,21 +4284,7 @@ public class Subspecies {
 			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
                                 "#ffffff", Util.newArrayListOfValues("#404040", "#202020", "#101010"));
 		}
-                
-		@Override
-		public String getName(Body body) {
-			if(body == null) {
-				return super.getName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted latex "+coreSubspecies.getName(body);
-			}
-			return "latex "+coreSubspecies.getName(body);
-		}
-		
+                	
 		@Override
 		public String getNamePlural(Body body) {
 			if(body ==null) {
@@ -4310,20 +4297,6 @@ public class Subspecies {
 				return "corrupted latex "+coreSubspecies.getNamePlural(body);
 			}
 			return "latex "+coreSubspecies.getNamePlural(body);
-		}
-
-		@Override
-		public String getSingularMaleName(Body body) {
-			if(body ==null) {
-				return super.getSingularMaleName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getSingularMaleName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted latex "+coreSubspecies.getSingularMaleName(body);
-			}
-			return "latex "+coreSubspecies.getSingularMaleName(body);
 		}
 
 		@Override
@@ -4449,7 +4422,8 @@ public class Subspecies {
                                 new Value<>(WorldType.NIGHTLIFE_CLUB, SubspeciesSpawnRarity.TWO)
                         ), null, 
                         Util.newArrayListOfValues(SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
-                        true, BodyMaterial.PLANT
+                        true, BodyMaterial.PLANT,
+                        true, "plantfolk "," mandragora ", "beast-plant "
         ) {
             
                 @Override
@@ -4486,20 +4460,6 @@ public class Subspecies {
 			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
                                 "#203603", Util.newArrayListOfValues("#5dd446", "#27912f", "#18a34b"));
 		}
-                
-		@Override
-		public String getName(Body body) {
-			if(body == null) {
-				return super.getName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted plant "+coreSubspecies.getName(body);
-			}
-			return "plant "+coreSubspecies.getName(body);
-		}
 		
 		@Override
 		public String getNamePlural(Body body) {
@@ -4516,20 +4476,6 @@ public class Subspecies {
 		}
 
 		@Override
-		public String getSingularMaleName(Body body) {
-			if(body ==null) {
-				return super.getSingularMaleName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getSingularMaleName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted plant "+coreSubspecies.getSingularMaleName(body);
-			}
-			return "plant "+coreSubspecies.getSingularMaleName(body);
-		}
-
-		@Override
 		public String getSingularFemaleName(Body body) {
 			if(body ==null) {
 				return super.getSingularFemaleName(body);
@@ -4541,20 +4487,6 @@ public class Subspecies {
 				return "corrupted plant "+coreSubspecies.getSingularFemaleName(body);
 			}
 			return "plant "+coreSubspecies.getSingularFemaleName(body);
-		}
-
-		@Override
-		public String getPluralMaleName(Body body) {
-			if(body ==null) {
-				return super.getPluralMaleName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getPluralMaleName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted plant "+coreSubspecies.getPluralMaleName(body);
-			}
-			return "plant "+coreSubspecies.getPluralMaleName(body);
 		}
 
 		@Override
@@ -4650,7 +4582,8 @@ public class Subspecies {
                                 new Value<>(WorldType.NIGHTLIFE_CLUB, SubspeciesSpawnRarity.TWO)
                         ), null, 
                         Util.newArrayListOfValues(SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
-                        true, BodyMaterial.FUNGUS
+                        true, BodyMaterial.FUNGUS,
+                        true, "fungal ", "corrupted fungal ", "fungal "
         ) {
                                         
 		@Override
@@ -4662,20 +4595,6 @@ public class Subspecies {
                         AbstractSubspecies fleshSubspecies = character.getBody().getFleshSubspecies();
 			return fleshSubspecies.getBodyMaterialSVGString(character, getSubspeciesBodyMaterial(), 
                                 "#cf2b5c", Util.newArrayListOfValues("#fffbf2", "#e3b394", "#d96c7e"));
-		}
-                
-		@Override
-		public String getName(Body body) {
-			if(body == null) {
-				return super.getName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted fungal "+coreSubspecies.getName(body);
-			}
-			return "fungal "+coreSubspecies.getName(body);
 		}
 		
 		@Override
@@ -4690,20 +4609,6 @@ public class Subspecies {
 				return "corrupted fungal "+coreSubspecies.getNamePlural(body);
 			}
 			return "fungal "+coreSubspecies.getNamePlural(body);
-		}
-
-		@Override
-		public String getSingularMaleName(Body body) {
-			if(body ==null) {
-				return super.getSingularMaleName(body);
-			}
-			AbstractSubspecies coreSubspecies = body.getFleshSubspecies();
-			if(coreSubspecies==Subspecies.HUMAN) {
-				return super.getSingularMaleName(body);
-			} else if(coreSubspecies==Subspecies.DEMON && body.getSubspeciesOverride()==null) {
-				return "corrupted fungal "+coreSubspecies.getSingularMaleName(body);
-			}
-			return "fungal "+coreSubspecies.getSingularMaleName(body);
 		}
 
 		@Override
