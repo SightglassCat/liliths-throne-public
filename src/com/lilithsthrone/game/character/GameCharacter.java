@@ -27249,6 +27249,17 @@ public abstract class GameCharacter implements XMLSaving {
 
 		if(type == BodyMaterial.RUBBER) {
 			AbstractBodyCoveringType baseRubberCoveringType = BodyCoveringType.getMaterialBodyCoveringType(BodyMaterial.RUBBER, BodyCoveringCategory.MAIN_SKIN);
+
+			this.setAssElasticity(7);
+			this.setNippleElasticity(7);
+			this.setNippleCrotchElasticity(7);
+			this.setFaceElasticity(7);
+			this.setUrethraElasticity(7);
+			this.setSecondUrethraElasticity(7);
+			this.setSpinneretElasticity(7);
+			this.setVaginaElasticity(7);
+			this.setVaginaUrethraElasticity(7);
+			
 			if(this.isPlayer()) {
 				tfDescription = "<p>"
 							+ "You feel a strange roiling in your body, a feeling of swirling tension through every fiber. While not painful, you have trouble staying upright as your muscles refuse to cooperate, and you find yourself unsteadily falling to the ground."

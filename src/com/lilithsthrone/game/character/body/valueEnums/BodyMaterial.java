@@ -146,7 +146,7 @@ public enum BodyMaterial {
 		}
 	},
 	
-	RUBBER("rubber", PresetColour.BASE_BLACK, DamageType.PHYSICAL, true, false, true) {
+	RUBBER("rubber", PresetColour.BASE_BLACK, DamageType.PHYSICAL, true, false, true, true) {
 		@Override
 		public Map<AbstractAttribute, Float> getAttributeModifiers(GameCharacter target) {
 			return Util.newHashMapOfValues(
@@ -160,7 +160,7 @@ public enum BodyMaterial {
 	
 	// Arcane elementals:
 	
-	ARCANE("energy", PresetColour.GENERIC_ARCANE, DamageType.PHYSICAL, false, false, false) {
+	ARCANE("energy", PresetColour.GENERIC_ARCANE, DamageType.PHYSICAL, false, false, false, false) {
 		@Override
 		public Map<AbstractAttribute, Float> getAttributeModifiers(GameCharacter target) {
 			return Util.newHashMapOfValues(
@@ -238,6 +238,7 @@ public enum BodyMaterial {
 	private DamageType unarmedDamageType;
 	private boolean requiresPiercing;
 	private boolean orificesAlwaysMaximumWetness;
+        private boolean orificesAlwaysMaximumElasticity;
 	private boolean ableToWearMakeup;
 
 	private BodyMaterial(String name,
@@ -302,10 +303,11 @@ public enum BodyMaterial {
 		this.unarmedDamageType = unarmedDamageType;
 		this.requiresPiercing = requiresPiercing;
 		this.orificesAlwaysMaximumWetness = orificesAlwaysMaximumWetness;
+                this.orificesAlwaysMaximumElasticity = false;
 		this.ableToWearMakeup = ableToWearMakeup;
 	}
 
-	private BodyMaterial(String noun, String adjective, Colour colour, DamageType unarmedDamageType, boolean requiresPiercing, boolean orificesAlwaysMaximumWetness, boolean ableToWearMakeup) {
+	private BodyMaterial(String noun, String adjective, Colour colour, DamageType unarmedDamageType, boolean requiresPiercing, boolean orificesAlwaysMaximumWetnessm, boolean ableToWearMakeup) {
 		this.name = noun;
 		this.skinNoun = noun;
 		this.skinAdj = adjective;
@@ -345,10 +347,11 @@ public enum BodyMaterial {
 		this.unarmedDamageType = unarmedDamageType;
 		this.requiresPiercing = requiresPiercing;
 		this.orificesAlwaysMaximumWetness = orificesAlwaysMaximumWetness;
+                this.orificesAlwaysMaximumElasticity = false;
 		this.ableToWearMakeup = ableToWearMakeup;
 	}
 
-	private BodyMaterial(String noun, Colour colour, DamageType unarmedDamageType, boolean requiresPiercing, boolean orificesAlwaysMaximumWetness, boolean ableToWearMakeup) {
+	private BodyMaterial(String noun, Colour colour, DamageType unarmedDamageType, boolean requiresPiercing, boolean orificesAlwaysMaximumWetness, boolean orificesAlwaysMaximumElasticity, boolean ableToWearMakeup) {
 		this.name = noun;
 		this.skinNoun = noun;
 		this.skinAdj = noun;
@@ -388,6 +391,7 @@ public enum BodyMaterial {
 		this.unarmedDamageType = unarmedDamageType;
 		this.requiresPiercing = requiresPiercing;
 		this.orificesAlwaysMaximumWetness = orificesAlwaysMaximumWetness;
+                this.orificesAlwaysMaximumElasticity = orificesAlwaysMaximumElasticity;
 		this.ableToWearMakeup = ableToWearMakeup;
 	}
 	
@@ -551,6 +555,10 @@ public enum BodyMaterial {
 	public boolean isOrificesAlwaysMaximumWetness() {
 		return orificesAlwaysMaximumWetness;
 	}
+        
+        public boolean isOrificesAlwaysMaximumElasticity() {
+                return orificesAlwaysMaximumElasticity;
+        }
 
 	public boolean isAbleToWearMakeup() {
 		return ableToWearMakeup;
