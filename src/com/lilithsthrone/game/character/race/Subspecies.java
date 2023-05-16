@@ -4379,8 +4379,8 @@ public class Subspecies {
 			"dryads",
 			null,
 			Nocturnality.DIURNAL,
-			"[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life, and benefits from bright light.",
-                        "[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life, and benefits from bright light." 
+			"[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life, and [npc.verb(benefit)] from bright light.",
+                        "[npc.NameIsFull] a plant creature, composed of magically-enhanced foliage given motion. [npc.She] [npc.has] a deep affinity for growing new life, and [npc.verb(benefit)] from bright light." 
                             + "[npc.Her] demon core is visible wrapped in a leafy calyx, pulsing with potential.",
 			Util.newHashMapOfValues(
 					new Value<>(Attribute.MAJOR_PHYSIQUE, 10f),
