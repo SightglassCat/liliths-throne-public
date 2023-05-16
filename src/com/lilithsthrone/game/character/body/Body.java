@@ -6354,7 +6354,7 @@ public class Body implements XMLSaving {
 	 * @param subspecies Pass in the AbstractSubspecies to which this character should be transformed into a feral version of. Pass in null to transform back from feral to a standard anthro.
 	 */
 	public void setFeral(AbstractSubspecies subspecies) {
-
+		
 		FeralAttributes attributes = subspecies==null?null:subspecies.getFeralAttributes(this);
 		if(attributes==null) {
 			System.err.println("Error in Body.setFeral(): subspecies '"+Subspecies.getIdFromSubspecies(subspecies)+"' does not support FeralAttributes!");

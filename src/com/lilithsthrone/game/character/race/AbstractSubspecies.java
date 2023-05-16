@@ -69,6 +69,7 @@ public abstract class AbstractSubspecies {
 	
 	private boolean shortStature;
 	private boolean bipedalSubspecies;
+	private boolean winged;
 
 	private Map<PersonalityTrait, Float> personalityChanceOverrides;
 	
@@ -115,6 +116,7 @@ public abstract class AbstractSubspecies {
 	
 	protected String SVGString;
 	protected String SVGStringUncoloured;
+        protected String SVGStringUncolouredNoBackground;
 	protected String SVGStringNoBackground;
         protected String SVGStringUncolouredNoBackground;
 	protected String SVGStringDesaturated;
@@ -305,6 +307,7 @@ public abstract class AbstractSubspecies {
 		this.baseSlaveValue = baseSlaveValue;
 		this.subspeciesOverridePriority = 0;
 		
+		this.winged = false;
 		this.shortStature = false;
 		this.bipedalSubspecies = true;
 		
@@ -620,6 +623,7 @@ public abstract class AbstractSubspecies {
 				}
 				this.shortStature = Boolean.valueOf(coreElement.getMandatoryFirstOf("shortStature").getTextContent());
 				this.bipedalSubspecies = Boolean.valueOf(coreElement.getMandatoryFirstOf("bipedalSubspecies").getTextContent());
+				this.winged = coreElement.getOptionalFirstOf("winged").isPresent() ? Boolean.valueOf(coreElement.getMandatoryFirstOf("winged").getTextContent()) : false;
 				
 				personalityChanceOverrides = new HashMap<>();
 				if(coreElement.getOptionalFirstOf("personalityChances").isPresent()) {
@@ -1883,6 +1887,10 @@ public abstract class AbstractSubspecies {
 	public String getDescription(GameCharacter character) {
 		return description;
 	}
+	
+	public boolean isWinged() {
+		return winged;
+	}
 
 	public boolean isAquatic() {
 		return getAffinity() == Affinity.AQUATIC;
@@ -1895,7 +1903,6 @@ public abstract class AbstractSubspecies {
 	public boolean isAquatic(Body body) {
 		return getAffinity(body) == Affinity.AQUATIC;
 	}
-
 	/**
 	 * @param character The character being checked
 	 * @return true if the supplied body has a LegConfiguration of type TAIL, or if its affinity is AQUATIC.
@@ -2056,14 +2063,14 @@ public abstract class AbstractSubspecies {
 						PresetColour.RACE_HALF_DEMON,
 						PresetColour.RACE_HALF_DEMON,
 						"<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundDemon()+"</div>"
-						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncolouredNoBackground+"</div>");
 
 				demonSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
 						PresetColour.RACE_DEMON,
 						PresetColour.RACE_DEMON,
 						PresetColour.RACE_DEMON,
 						"<div style='"+fullDivStyle+"'>" + SVGImages.SVG_IMAGE_PROVIDER.getRaceBackgroundDemon()+"</div>"
-						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncoloured+"</div>");
+						+ "<div style='"+fullDivStyle+"'>"+SVGStringUncolouredNoBackground+"</div>");
 				
 				SVGStringDesaturated = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
 						PresetColour.BASE_GREY,
