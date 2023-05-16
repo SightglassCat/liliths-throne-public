@@ -27274,7 +27274,7 @@ public abstract class GameCharacter implements XMLSaving {
 						+ "<p>"
 							+ "Your entire being is now composed of [style.boldBlack(rubber)]!<br/><i>"
 							+ "- Your body is naturally very resilient to physical force!<br/>"
-							+ "- Your orifices are able to accommodate significantly longer penetrations than before!"
+							+ "- Your orifices are always extremely stretchy!"
 							+ "</i>"
 						+ "</p>";
 				
@@ -27296,7 +27296,7 @@ public abstract class GameCharacter implements XMLSaving {
 						+ "<p>"
 							+ "[npc.Her] entire being is now composed of [style.boldBlack(rubber)]!<br/><i>"
 							+ "- [npc.Her] body is naturally very resilient to physical force!<br/>"
-							+ "- [npc.Her] orifices are able to accommodate significantly longer penetrations than before!"
+							+ "- [npc.Her] orifices are always extremely stretchy!"
 							+ "</i>"
 						+ "</p>");
 			}
@@ -27313,7 +27313,7 @@ public abstract class GameCharacter implements XMLSaving {
 						tfDescription += "From the little motion you have in your fingers, you notice your skin is puffy and turgid, as if the flesh below is swelling with the fluid."
 								+ "</p>"
 								+ "<p>"
-								+ "Suddenly, the golden sunlight flashes, and the stiffness in your limbs evaporates in a wave of euphoria! As you regain motion in your arms, the skin painlessly peels away, revealing glossy skin underneath. It's smooth and supple, resembling the pristine surface, of an unripe fruit."
+								+ "Suddenly, the golden sunlight flashes, and the stiffness in your limbs evaporates in a wave of euphoria! As you regain motion in your arms, the skin painlessly peels away, revealing glossy skin underneath. It's smooth and supple, resembling the pristine surface of an unripe fruit."
 								+ " Fascinated, you watch as leaf buds pop out of your skin, unfurling into patches of foliage where your body hair would ordinarily grow."
 							+ "</p>";
 						break;
@@ -27399,13 +27399,57 @@ public abstract class GameCharacter implements XMLSaving {
 							+ "</p>";
 						break;
 				}
+				tfDescription += "<p>"
+							+ "With a creak and pop, [npc.her] lower body unlocks. When [npc.name] experimentally [npc.verb(kick)] against the ground, you notice the change in their heft, and the resonant <i>clonk</i> as they impact. [npc.Name] [npc.verb(realize)] that [npc.her] bones have become lighter, as if made of wood!"
+						+ "</p>"
+							+ "[npc.Her] entire being is now composed of [style.boldGreen(wood and foliage)]!<br/>"
+							+ "<i>- [npc.Her] body is naturally energized in bright light!<br/>"
+							+ "- [npc.SheIs] a little worried about how flammable [npc.she] [npc.is]...<br/>"
+							+ "</i>"
+						+ "</p>";
 			}
 		}
 		if(type == BodyMaterial.FUNGUS) {
-			tfDescription = UtilText.parse(this,
-						"<p>"
-							+ "TODO: fungus transformation on PC and NPC"
+			if(this.isPlayer()) {
+				tfDescription = UtilText.parse(this,"<p>"
+							+ "You feel strangly lightheaded, a drowziness settling over you like a warm blanket. You have trouble staying upright as your muscles refuse to cooperate, and you find yourself unsteadily falling to the ground."
+							+ " Despite the lack of control over your own body, you feel oddly relaxed. A steadily building feeling of <i>anticipation</i>, as you feel your pulse slow to a low, heavy thump. In your mind, you hear a strange <i>call</i>, pulling your mind into a blissful delirium."
+						+ "</p>"
+						+ "<p>"
+							+ "Slowly your vision goes fades into a fuzzy white. Your mouth feels dry and fuzzy. Your mind feels fuzzy. Your skin, fuzzy. Every sensation fades into a comforting fuzzy numbness. Your entire existence narrows down to the siren call ringing through your head. The only other thing you feel is a throbbing arousal running through your core."
+						+ "</p>"
+						+ "<p>"
+							+ "Your stupor is abruptly interrupted by a strange dampness running over your skin. It feels like it's being being painlessly peeled off. With a jolt, you realize you are covered in a cocoon of some sort of soft foam. Your panic at this confinement is short lived, as you suddenly orgasm!"
+						+ "With a slight pop and a splattering of goo, the thick mat wrapping your body gives way, letting you open your eyes and uncovering your mouth."
+							+ " Finally being able to see, you look down to find that your body is entirely composed of a spongy material. Before your eyes, the pool of goo below you soaks into the absorbant material that makes up your feet. Looking closer at your torso, splits and furrows open and close, puffing out clouds of spores from gills hidden in your body. You realize your body now a mass of [style.boldPink(fungal mycelia!)]"
+						+ "</p>"
+						+ "<p>"
+							+ "Your entire being is now composed of [style.boldPink(fungus)]!<br/><i>"
+							+ "- Your spongy body is naturally resilient to physical force!<br/>"
+							+ "- Your fungal metabolism handles toxic chemicals well, giving you poison resistance.<br/>"
+							+ "- You can feed by absorbing sexual fluids!<br/>"
+							+ "- Spores fill the air around your body, weaking foes and bolstering your damage!"
+							+ "</i>"
 						+ "</p>");
+				
+			} else {
+				tfDescription = UtilText.parse(this,"<p>"
+							+ "[npc.Name] [npc.verb(feel)] strangly lightheaded, a fuzzy drowziness settling over [npc.him] like a warm blanket. [npc.SheHas] trouble staying upright as [npc.her] muscles refuse to cooperate, and [npc.she] [npc.verb(fall)] unsteadily to the ground."
+						+ "</p>"
+						+ "<p>"
+							+ "Fine pale threads begin to extrude themselves from [npc.her] skin. Quickly, they overtake [npc.him] in a cocoon of some sort of soft foam. Despite this [npc.name] [npc.do] not seem to panic at this confinement."
+						+ "With a slight pop and a splattering of goo, the thick mat wrapping [npc.her] body gives way. Underneath, [npc.name] [npc.is] in a stupor with a blissful post-orgasm face, but quickly [npc.verb(regain)] consciousness."
+							+ " Finally being able to see, [npc.she] [npc.verb(look)] down to find that [npc.her] body is entirely composed of a spongy material. Before your eyes, the pool of goo below [npc.him] soaks into the absorbant material that makes up [npc.her] feet. Looking closer at [npc.her] torso, splits and furrows open and close, puffing out clouds of spores from gills hidden in [npc.her] body. You realize [npc.her] body now a mass of [style.boldPink(fungal mycelia!)]"
+						+ "</p>"
+						+ "<p>"
+							+ "[npc.Her] entire being is now composed of [style.boldPink(fungus)]!<br/><i>"
+							+ "- [npc.Her] spongy body is naturally resilient to physical force!<br/>"
+							+ "- [npc.Her] fungal metabolism handles toxic chemicals well, giving you poison resistance.<br/>"
+							+ "- [npc.Name] can feed by absorbing sexual fluids!<br/>"
+							+ "- Spores fill the air around [npc.her] body, weaking foes and bolstering [npc.her] damage!"
+							+ "</i>"
+						+ "</p>");
+			}
 		}
 
 		body.setBodyMaterial(type);
