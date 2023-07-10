@@ -7948,6 +7948,14 @@ public abstract class GameCharacter implements XMLSaving {
 		}
 	}
 
+	/**
+	 * Uses getLastTimeHadSex().
+	 * @return A value <b>in minutes</b> for how long ago this character last had sex.
+	 */
+	public long getTimeSinceLastHadSex() {
+		return Main.game.getMinutesPassed() - getLastTimeHadSex();
+	}
+	
 	@Deprecated
 	/**
 	 * <b>You should use getLastTimeOrgasmedSeconds() instead!</b>
@@ -24449,7 +24457,7 @@ public abstract class GameCharacter implements XMLSaving {
 			this.endIncubationPregnancy(SexAreaOrifice.NIPPLE, true);
 			System.err.println("Warning: Nipple egg pregnancy was ended (with birth) as feral form '"+subspecies.getFeralName(this.getBody())+"' was applied, which does not have breasts.");
 		}
-		body.setFeral(subspecies);
+		body.setFeral(this, subspecies);
 		postTransformationCalculation();
 	}
 	

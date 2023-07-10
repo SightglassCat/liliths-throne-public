@@ -1452,7 +1452,6 @@ public class CharacterUtils {
 	 * If you are wanting to change a newly-spawned NPC's body, then <b>you should consider using GameCharacter.setBody() instead</b>, as that method can also apply personality changes.
 	 */
 	public Body reassignBody(GameCharacter linkedCharacter, Body body, Gender startingGender, AbstractSubspecies species, RaceStage stage, boolean removeDemonOverride) {
-		
 		if(removeDemonOverride) {
 			body.setSubspeciesOverride(null);
 		}
@@ -1462,6 +1461,25 @@ public class CharacterUtils {
 		boolean hasVagina = startingGender.getGenderName().isHasVagina();
 		boolean hasPenis = startingGender.getGenderName().isHasPenis();
 		boolean hasBreasts = startingGender.getGenderName().isHasBreasts();
+		boolean[] virginities = null;
+		
+		// Save virginities to be restored after body reset:
+		if(linkedCharacter!=null) {
+			virginities = new boolean[] {
+				linkedCharacter.isAnalVirgin(),
+				linkedCharacter.isAssVirgin(),
+				linkedCharacter.isFaceVirgin(),
+				linkedCharacter.isNippleCrotchVirgin(),
+				linkedCharacter.isNippleVirgin(),
+				linkedCharacter.isPenisVirgin(),
+				linkedCharacter.isSecondUrethraVirgin(),
+				linkedCharacter.isSpinneretVirgin(),
+				linkedCharacter.isUrethraVirgin(),
+				linkedCharacter.isVaginaUrethraVirgin(),
+				linkedCharacter.isVaginaVirgin(),
+				linkedCharacter.hasHymen()
+			};
+		}
 		
 		body.setArm(new Arm((stage.isArmFurry()?startingBodyType.getArmType():ArmType.HUMAN), startingBodyType.getArmRows()));
 		
@@ -1610,6 +1628,21 @@ public class CharacterUtils {
 		
 		if(linkedCharacter!=null) {
 			linkedCharacter.postTransformationCalculation();
+		}
+
+		if(linkedCharacter!=null) {
+			linkedCharacter.setAnalVirgin(virginities[0]);
+			linkedCharacter.setAssVirgin(virginities[1]);
+			linkedCharacter.setFaceVirgin(virginities[2]);
+			linkedCharacter.setNippleCrotchVirgin(virginities[3]);
+			linkedCharacter.setNippleVirgin(virginities[4]);
+			linkedCharacter.setPenisVirgin(virginities[5]);
+			linkedCharacter.setSecondUrethraVirgin(virginities[6]);
+			linkedCharacter.setSpinneretVirgin(virginities[7]);
+			linkedCharacter.setUrethraVirgin(virginities[8]);
+			linkedCharacter.setVaginaUrethraVirgin(virginities[9]);
+			linkedCharacter.setVaginaVirgin(virginities[10]);
+			linkedCharacter.setHymen(virginities[11]);
 		}
 		
 		return body;
@@ -2791,7 +2824,7 @@ public class CharacterUtils {
 
 		// Desires:
 		int[] posDesireProb = new int[] {1, 1, 2, 2, 2, 3, 3};
-		int[] negDesireProb = new int[] {3, 3, 4, 4, 4, 5, 5};
+		int[] negDesireProb = new int[] {2, 2, 3, 3, 3, 4, 4};
 		int numberOfPositiveDesires = Util.randomItemFrom(posDesireProb);
 		int numberOfNegativeDesires = Util.randomItemFrom(negDesireProb);
 		
