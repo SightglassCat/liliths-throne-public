@@ -930,7 +930,7 @@ public class CharacterUtils {
 				} else if (fatherLegConfigSkipped) {
 					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
 				}
-				body.setFeral(raceTakesAfter);
+				body.setFeral(linkedCharacter, raceTakesAfter);
 				}
 			} else {
 				if(father.isFeral() || (!father.isFeral() && Math.random()<=0.75)) {
@@ -939,7 +939,7 @@ public class CharacterUtils {
 				} else if (fatherLegConfigSkipped) {
 					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
 				}
-				body.setFeral(mother.getSubspecies());
+				body.setFeral(linkedCharacter, mother.getSubspecies());
 				}
 			}
 		} else if(father.isFeral() && Math.random()<=0.3) {
@@ -949,14 +949,14 @@ public class CharacterUtils {
 				} else if (fatherLegConfigSkipped) {
 				body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
 				}
-				body.setFeral(raceTakesAfter);
+				body.setFeral(linkedCharacter, raceTakesAfter);
 			} else if (father.getSubspecies().isFeralConfigurationAvailable(body)) {
 				if (motherLegConfigSkipped) {
 					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), mother.getLegConfiguration());
 				} else if (fatherLegConfigSkipped) {
 					body.getLeg().setLegConfigurationForced(body.getLeg().getType(), father.getLegConfiguration());
 				}
-				body.setFeral(father.getSubspecies());
+				body.setFeral(linkedCharacter, father.getSubspecies());
 			}
 		}
 		

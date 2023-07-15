@@ -102,7 +102,7 @@ public class EvelyxMilker extends NPC {
 					Main.game.getCharacterUtils().applyTaurConversion(this);
 				}
 			} else if (Main.getProperties().taurSpawnRate > 0 && (Math.random() * (1-Main.getProperties().taurSpawnRate/100f)< 0.06)) {
-				body.setFeral(body.getSubspecies());
+				body.setFeral(this, body.getSubspecies());
 			}
 			
 			setName(Name.getRandomTriplet(this.getSubspecies()));
