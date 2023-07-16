@@ -1,5 +1,6 @@
 package com.lilithsthrone.game.character.npc.fields;
 
+import java.time.DayOfWeek;
 import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.CharacterImportSetting;
 import com.lilithsthrone.game.character.EquipClothingSetting;
@@ -283,7 +284,7 @@ public class Eisek extends NPC {
     @Override
     public void dailyUpdate() {
 		if (!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.getDialogueFlagValueFromId("dsg_elis_eisek_banished"))) {
-		    if (Main.game.getDateNow().getDayOfMonth() >= 1 && Main.game.getDateNow().getDayOfMonth() <= 3) {
+			if ((Main.game.getDateNow().getDayOfMonth() >= 1 && Main.game.getDateNow().getDayOfMonth() <= 3) || Main.game.getDayOfWeek() == DayOfWeek.WEDNESDAY) {
 				// Probably could reduce this to only update on the first day, but that might get annoying when adding items in future updates or for modders
 				clearNonEquippedInventory(false);	
 				for(AbstractItemType item : ItemType.getAllItems()) {
@@ -294,17 +295,17 @@ public class Eisek extends NPC {
 				}
 				if(Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.getDialogueFlagValueFromId("dsg_elis_eisek_mob_quest_persuade"))
 						&& Main.game.getPlayer().isQuestCompleted(QuestLine.SIDE_EISEK_MOB)) {
-				    this.addItem(Main.game.getItemGen().generateItem("dsg_race_dragon_dragonfruit_yellow"), 1+Util.random.nextInt(1), false, false);
-				    this.addItem(Main.game.getItemGen().generateItem("dsg_race_dragon_dragonfruit_red"), 1+Util.random.nextInt(1), false, false);
-				    this.addItem(Main.game.getItemGen().generateItem("dsg_race_dragon_dragonfruit_pink"), 1+Util.random.nextInt(1), false, false);
+					this.addItem(Main.game.getItemGen().generateItem("dsg_race_dragon_dragonfruit_yellow"), 1+Util.random.nextInt(1), false, false);
+					this.addItem(Main.game.getItemGen().generateItem("dsg_race_dragon_dragonfruit_red"), 1+Util.random.nextInt(1), false, false);
+					this.addItem(Main.game.getItemGen().generateItem("dsg_race_dragon_dragonfruit_pink"), 1+Util.random.nextInt(1), false, false);
 				}
 				if(this.getLocationPlaceType()!=PlaceType.getPlaceTypeFromId("dsg_fields_elis_market_produce")) {
-				    this.setLocation(WorldType.getWorldTypeFromId("innoxia_fields_elis_market"), PlaceType.getPlaceTypeFromId("dsg_fields_elis_market_produce"));
+					this.setLocation(WorldType.getWorldTypeFromId("innoxia_fields_elis_market"), PlaceType.getPlaceTypeFromId("dsg_fields_elis_market_produce"));
 				}
 				
-		    } else { //Shadow realm'd until his real home exists
+			} else { //Shadow realm'd until his real home exists
 				this.setLocation(WorldType.EMPTY, PlaceType.GENERIC_EMPTY_TILE);
-		    }
+			}
 		}
     }
     
