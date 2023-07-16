@@ -230,7 +230,37 @@ public class RalphsSnacks {
 							resetDiscountCheck();
 						}
 					};
-
+					
+			} else if (index == 6) {
+					return new ResponseTrade("Trade with Ralph (exotic food)", "Go and ask Ralph about the exotic consumable drink items on display.", getRalph()){
+						@Override
+						public void effects() {
+							getRalph().clearNonEquippedInventory(false);
+							for (Map.Entry<AbstractItem, Integer> item : (getRalph()).getModFoodItemsForSale().entrySet())  {
+								if(getRalph().isInventoryFull()) {
+									break;
+								}
+								getRalph().addItem(item.getKey(), item.getValue(), false, false);
+							}
+							Main.game.getDialogueFlags().values.add(DialogueFlagValue.ralphIntroduced);
+							resetDiscountCheck();
+						}
+					};
+			} else if (index == 7) {
+					return new ResponseTrade("Trade with Ralph (exotic drink)", "Go and ask Ralph about the exotic consumable food items on display.", getRalph()){
+						@Override
+						public void effects() {
+							getRalph().clearNonEquippedInventory(false);
+							for (Map.Entry<AbstractItem, Integer> item : (getRalph()).getModDrinkItemsForSale().entrySet())  {
+								if(getRalph().isInventoryFull()) {
+									break;
+								}
+								getRalph().addItem(item.getKey(), item.getValue(), false, false);
+							}
+							Main.game.getDialogueFlags().values.add(DialogueFlagValue.ralphIntroduced);
+							resetDiscountCheck();
+						}
+					};
 			} else if (index == 0) {
 				return new Response("Leave", "Leave Ralph's shop.", EXTERIOR){
 					@Override

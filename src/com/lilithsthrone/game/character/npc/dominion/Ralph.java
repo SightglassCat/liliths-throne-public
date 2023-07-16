@@ -78,6 +78,9 @@ public class Ralph extends NPC {
 	private final Map<AbstractItem, Integer> otherItemsForSale;
 	private final Map<AbstractClothing, Integer> clothingForSale;
 	private final Map<AbstractWeapon, Integer> weaponsForSale;
+	
+	private final Map<AbstractItem, Integer> modFoodItemsForSale;
+	private final Map<AbstractItem, Integer> modDrinkItemsForSale;
 
 	public Ralph() {
 		this(false);
@@ -95,6 +98,9 @@ public class Ralph extends NPC {
 		otherItemsForSale = new HashMap<>();
 		weaponsForSale = new HashMap<>();
 		clothingForSale = new HashMap<>();
+		
+		modFoodItemsForSale = new HashMap<>();
+		modDrinkItemsForSale = new HashMap<>();
 
 		if(!isImported) {
 			dailyUpdate();
@@ -108,6 +114,10 @@ public class Ralph extends NPC {
 	public Map<AbstractItem, Integer> getDrinkItemsForSale() {return drinkItemsForSale; }
 
 	public Map<AbstractItem, Integer> getOtherItemsForSale() {return otherItemsForSale; }
+	
+	public Map<AbstractItem, Integer> getModFoodItemsForSale() {return modFoodItemsForSale; }
+	
+	public Map<AbstractItem, Integer> getModDrinkItemsForSale() {return modDrinkItemsForSale; }
 
 	public Map<AbstractClothing, Integer> getClothingForSale() {
 		return clothingForSale;
@@ -141,6 +151,26 @@ public class Ralph extends NPC {
 			}
 		}
 
+		Element modFoodItemsElement = doc.createElement("modFoodItemsForSale");
+		properties.appendChild(modFoodItemsElement);
+		for(Map.Entry<AbstractItem, Integer> item : modFoodItemsForSale.entrySet()) {
+			try {
+				Element e = item.getKey().saveAsXML(modFoodItemsElement, doc);
+				e.setAttribute("count", String.valueOf(item.getValue()));
+			} catch(Exception ex) {
+			}
+		}
+
+		Element modDrinkItemsElement = doc.createElement("modDrinkItemsForSale");
+		properties.appendChild(modDrinkItemsElement);
+		for(Map.Entry<AbstractItem, Integer> item : modDrinkItemsForSale.entrySet()) {
+			try {
+				Element e = item.getKey().saveAsXML(modDrinkItemsElement, doc);
+				e.setAttribute("count", String.valueOf(item.getValue()));
+			} catch(Exception ex) {
+			}
+		}
+		
 		Element otherItemsElement = doc.createElement("otherItemsForSale");
 		properties.appendChild(otherItemsElement);
 		for(Map.Entry<AbstractItem, Integer> item : otherItemsForSale.entrySet()) {
@@ -220,6 +250,50 @@ public class Ralph extends NPC {
 				}
 			}
 		}
+		
+		Element modFoodItemsElement = (Element) parentElement.getElementsByTagName("modFoodItemsForSale").item(0);
+		if(modFoodItemsElement!=null) {
+			modFoodItemsForSale.clear();
+
+			NodeList nodeList = modFoodItemsElement.getElementsByTagName("item");
+			for(int i=0; i < nodeList.getLength(); i++){
+				Element e = (Element) nodeList.item(i);
+				try {
+					AbstractItem item = AbstractItem.loadFromXML(e, doc);
+					int count = 1;
+					try {
+						count = Integer.parseInt(e.getAttribute("count"));
+					} catch(Exception ex) {
+						modFoodItemsForSale.putIfAbsent(item, 0);
+						count = modFoodItemsForSale.get(item)+1;
+					}
+					modFoodItemsForSale.put(item, count);
+				} catch(Exception ex) {
+				}
+			}
+		}
+		Element modDrinkItemsElement = (Element) parentElement.getElementsByTagName("modDrinkItemsForSale").item(0);
+		if(modDrinkItemsElement!=null) {
+			modDrinkItemsForSale.clear();
+
+			NodeList nodeList = modDrinkItemsElement.getElementsByTagName("item");
+			for(int i=0; i < nodeList.getLength(); i++){
+				Element e = (Element) nodeList.item(i);
+				try {
+					AbstractItem item = AbstractItem.loadFromXML(e, doc);
+					int count = 1;
+					try {
+						count = Integer.parseInt(e.getAttribute("count"));
+					} catch(Exception ex) {
+						modDrinkItemsForSale.putIfAbsent(item, 0);
+						count = modDrinkItemsForSale.get(item)+1;
+					}
+					modDrinkItemsForSale.put(item, count);
+				} catch(Exception ex) {
+				}
+			}
+		}
+		
 		Element otherItemsElement = (Element) parentElement.getElementsByTagName("otherItemsForSale").item(0);
 		if(otherItemsElement!=null) {
 			otherItemsForSale.clear();
@@ -492,12 +566,20 @@ public class Ralph extends NPC {
 				if (generatedItem.getItemTags().contains(ItemTag.FOOD) ||
 					generatedItem.getItemTags().contains(ItemTag.FOOD_QUALITY) ||
 						generatedItem.getItemTags().contains(ItemTag.FOOD_POOR)) {
-					foodItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
+					if (item.isMod()) {
+						modFoodItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
+					} else {
+						foodItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
+					}	
 				}
 				else if (generatedItem.getItemTags().contains(ItemTag.DRINK) ||
 						generatedItem.getItemTags().contains(ItemTag.DRINK_QUALITY) ||
 						generatedItem.getItemTags().contains(ItemTag.DRINK_POOR)) {
-					drinkItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
+					if (item.isMod()) {
+						modDrinkItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
+					} else {
+						drinkItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
+					}
 				}
 				else {
 					otherItemsForSale.put(generatedItem, 6+Util.random.nextInt(12));
@@ -534,6 +616,22 @@ public class Ralph extends NPC {
 					drinkItemsForSale.put((AbstractItem) itemSold, oldCount-quantity);
 				} else {
 					drinkItemsForSale.remove((AbstractItem) itemSold);
+				}
+			}
+			if(modFoodItemsForSale.containsKey(itemSold)) {
+				oldCount = modFoodItemsForSale.get(itemSold);
+				if(oldCount > quantity) {
+					modFoodItemsForSale.put((AbstractItem) itemSold, oldCount-quantity);
+				} else {
+					modFoodItemsForSale.remove((AbstractItem) itemSold);
+				}
+			}
+			if(modDrinkItemsForSale.containsKey(itemSold)) {
+				oldCount = modDrinkItemsForSale.get(itemSold);
+				if(oldCount > quantity) {
+					modDrinkItemsForSale.put((AbstractItem) itemSold, oldCount-quantity);
+				} else {
+					modDrinkItemsForSale.remove((AbstractItem) itemSold);
 				}
 			}
 			if(otherItemsForSale.containsKey(itemSold)) {
