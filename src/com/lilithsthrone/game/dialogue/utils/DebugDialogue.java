@@ -72,6 +72,7 @@ import com.lilithsthrone.game.character.npc.fields.Flash;
 import com.lilithsthrone.game.character.npc.dominion.Jules;
 import com.lilithsthrone.game.character.npc.fields.HeadlessHorseman;
 import com.lilithsthrone.game.character.npc.fields.Vronti;
+import com.lilithsthrone.game.character.npc.fields.Eisek;
 import com.lilithsthrone.game.character.persona.Name;
 /**
  * @since 0.1.0
@@ -844,10 +845,17 @@ public class DebugDialogue {
 						}
 					};
 				} else if (index==34) {
-					return new Response("Centaur Seeding", "The Vronti cums in your vagina!", DEBUG_MENU){
+					return new Response("Centaur Seeding", "Vronti cums in your vagina!", DEBUG_MENU){
 						@Override
 						public void effects() {
 							Main.game.getPlayer().ingestFluid(Main.game.getNpc(Vronti.class), Main.game.getNpc(Vronti.class).getCum(), SexAreaOrifice.VAGINA, 100);
+						}
+					};
+				} else if (index==35) {
+					return new Response("Fruitful Harvest", "Eisek cums in your vagina!", DEBUG_MENU){
+						@Override
+						public void effects() {
+							Main.game.getPlayer().ingestFluid(Main.game.getNpc(Eisek.class), Main.game.getNpc(Eisek.class).getCum(), SexAreaOrifice.VAGINA, 100);
 						}
 					};
 				}
