@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.GameCharacter;
+import com.lilithsthrone.game.character.CharacterUtils;
 import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.body.BodyPartInterface;
 import com.lilithsthrone.game.character.body.CoverableArea;
@@ -32,6 +33,7 @@ import com.lilithsthrone.game.character.npc.misc.GenericSexualPartner;
 import com.lilithsthrone.game.character.npc.misc.OffspringSeed;
 import com.lilithsthrone.game.character.npc.submission.SubmissionAttacker;
 import com.lilithsthrone.game.character.persona.PersonalityTrait;
+import com.lilithsthrone.game.character.persona.Occupation;
 import com.lilithsthrone.game.character.quests.Quest;
 import com.lilithsthrone.game.character.quests.QuestLine;
 import com.lilithsthrone.game.character.race.AbstractSubspecies;
@@ -316,8 +318,23 @@ public class DebugDialogue {
 						};
 					}
 					
+				} else if (index == 17) {
+					if(!Util.newArrayListOfValues(
+							PlaceType.DOMINION_BACK_ALLEYS,
+							PlaceType.DOMINION_CANAL,
+							PlaceType.DOMINION_CANAL_END,
+							PlaceType.DOMINION_ALLEYS_CANAL_CROSSING,
+							PlaceType.SUBMISSION_TUNNELS,
+							PlaceType.getPlaceTypeFromId("innoxia_fields_elis_town_alley")
+							).contains(Main.game.getPlayer().getLocationPlace().getPlaceType())) {
+						return new Response("Spawn prostitute", "You can only spawn an prostitute on: Dominion's alleyway & canal tiles; Submission's tunnel tiles; Elis alleyway tiles.", null);
+					}
+					if(!Main.game.getNonCompanionCharactersPresent().isEmpty()) {
+						return new Response("Spawn prostitute", "You can only spawn an prostitute on empty tiles.", null);
+					}
+					return new Response("Spawn prostitute", "Spawn an prostitute on this tile.", PROSTITUTE_SPAWN_MENU);
+					
 				}
-				
 				
 			} else if(responseTab==1) {
 				if (index == 1) {
@@ -1428,6 +1445,13 @@ public class DebugDialogue {
 		Main.game.setActiveNPC(attacker);
 	}
 	
+	private static void setAsProstitute() {
+		attacker.removePersonalityTrait(PersonalityTrait.MUTE);
+		attacker.setHistory(Occupation.NPC_PROSTITUTE);
+		CharacterUtils.initProstitute(attacker);
+		attacker.equipClothing();
+	}
+	
 	public static final DialogueNode ATTACKER_SPAWN_MENU = new DialogueNode("Spawn Attacker", "", false) {
 		@Override
 		public void applyPreParsingEffects() {
@@ -1511,6 +1535,109 @@ public class DebugDialogue {
 //									false);
 						}
 						
+						attacker.setName(Name.getRandomTriplet(attacker.getSubspecies()));
+						if (attacker.getAgeValue() >= 52 && attacker.hasVagina()) {
+							attacker.setBirthday(attacker.getBirthday().plusYears(attacker.getAgeValue()-52));
+						}
+						attacker.resetInventory(true);
+						attacker.clearNonEquippedInventory(false);
+						Main.game.getCharacterUtils().generateItemsInInventory(attacker, true, true, true);
+						attacker.equipClothing();
+						
+						Main.game.setContent(new Response("", "", attacker.getEncounterDialogue()));
+					}
+				};
+				
+			} else if (index == 0) {
+				return new Response("Back", "", DEBUG_MENU);
+			}
+			return null;
+		}
+	};
+	
+	public static final DialogueNode PROSTITUTE_SPAWN_MENU = new DialogueNode("Spawn Prostitute", "", false) {
+		@Override
+		public void applyPreParsingEffects() {
+			attacker = null;
+		}
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<p>");
+				sb.append("Choose the prostitute's race.");
+			sb.append("</p>");
+			return sb.toString();
+		}
+		@Override
+		public String getResponseTabTitle(int index) {
+			if(index == 0) {
+				return "[style.colourTfPartial(Partial)]";
+
+			} else if(index == 1) {
+				return "[style.colourTfMinor(Minor)]";
+				
+			} else if(index == 2) {
+				return "[style.colourTfLesser(Lesser)]";
+				
+			} else if(index == 3) {
+				return "[style.colourTfGreater(Greater)]";
+				
+			} else if(index == 4) {
+				return "[style.colourHalfDemon(Half-demon)]";
+			}
+			return null;
+		}
+		@Override
+		public Response getResponse(int responseTab, int index) {
+			List<AbstractSubspecies> availableSubspecies = new ArrayList<>(Subspecies.getAllSubspecies());
+			availableSubspecies.removeIf(s->
+					s.getRace()==Race.ELEMENTAL
+//					|| s==Subspecies.LILIN
+//					|| s==Subspecies.ELDER_LILIN
+//					|| s==Subspecies.ANGEL
+					);
+			
+			if (index!=0 && index<availableSubspecies.size()+1) {
+				AbstractSubspecies subspecies = availableSubspecies.get(index - 1);
+				String name = subspecies.getName(null);
+				
+				return new ResponseEffectsOnly(
+						Util.capitaliseSentence(name),
+						"Spawn an prostitute of the subspecies: "+name) {
+					@Override
+					public void effects() {
+						initAttacker();
+						
+						if(subspecies==Subspecies.HALF_DEMON || responseTab==4) {
+							attacker.setSubspeciesOverride(null);
+							attacker.setBody(
+									Main.game.getCharacterUtils().generateHalfDemonBody(attacker, attacker.getGender(), responseTab==4?subspecies:Subspecies.HUMAN, false),
+									false);
+						} else {
+							attacker.setSubspeciesOverride(null);
+							RaceStage stage = responseTab==0
+									?RaceStage.PARTIAL
+									:(responseTab==1
+										?RaceStage.PARTIAL_FULL
+										:(responseTab==2
+											?RaceStage.LESSER
+											:RaceStage.GREATER));
+							
+							if(subspecies==Subspecies.DEMON) {
+								stage = RaceStage.GREATER;
+							}
+							
+							attacker.setBody(attacker.getGender(), subspecies, stage, true);
+							
+//							Main.game.getCharacterUtils().reassignBody(
+//									attacker,
+//									attacker.getBody(),
+//									attacker.getGender(),
+//									subspecies,
+//									stage,
+//									false);
+						}
+						setAsProstitute();
 						attacker.setName(Name.getRandomTriplet(attacker.getSubspecies()));
 						if (attacker.getAgeValue() >= 52 && attacker.hasVagina()) {
 							attacker.setBirthday(attacker.getBirthday().plusYears(attacker.getAgeValue()-52));
