@@ -2679,6 +2679,7 @@ public class CharacterUtils {
 		} else {
 			List<Occupation> histories = Occupation.getAvailableHistories(character);
 			histories.removeIf((his) -> his.isLowlife());
+			histories.add(Occupation.NPC_FARMER);
 			character.setHistory(Util.randomItemFrom(histories));
 		}
 	}
