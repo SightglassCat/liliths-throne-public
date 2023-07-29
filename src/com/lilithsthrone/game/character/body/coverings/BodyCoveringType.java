@@ -1306,6 +1306,28 @@ public class BodyCoveringType {
 								case EYE_IRIS:
 									naturalPattern = CoveringPattern.EYE_IRISES;
                                                                         useAvailablePatterns = false;
+									
+									switch(mat){
+										case RUBBER:
+										case FUNGUS:
+											naturalColours.add(PresetColour.COVERING_WHITE);
+											naturalColours.add(PresetColour.COVERING_RED);
+											naturalColours.add(PresetColour.COVERING_ORANGE);
+											naturalColours.add(PresetColour.COVERING_YELLOW);
+											naturalColours.add(PresetColour.COVERING_GREEN);
+											naturalColours.add(PresetColour.COVERING_BLUE);
+											naturalColours.add(PresetColour.COVERING_PURPLE);
+											break;
+										case PLANT:
+											naturalColours.add(PresetColour.COVERING_BROWN);
+											naturalColours.add(PresetColour.EYE_HAZEL);
+											naturalColours.add(PresetColour.COVERING_RED);
+											naturalColours.add(PresetColour.COVERING_ORANGE);
+											naturalColours.add(PresetColour.COVERING_YELLOW);
+											naturalColours.add(PresetColour.COVERING_BLUE);
+											break;
+									}
+									
 									break;
 								case EYE_PUPIL:
 									naturalPattern = CoveringPattern.EYE_PUPILS;

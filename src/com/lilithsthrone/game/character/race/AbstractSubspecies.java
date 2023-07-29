@@ -21,6 +21,8 @@ import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.AbstractAttribute;
 import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.body.Body;
+import com.lilithsthrone.game.character.body.coverings.AbstractBodyCoveringType;
+import com.lilithsthrone.game.character.body.coverings.BodyCoveringCategory;
 import com.lilithsthrone.game.character.body.coverings.BodyCoveringType;
 import com.lilithsthrone.game.character.body.coverings.Covering;
 import com.lilithsthrone.game.character.body.valueEnums.Affinity;
@@ -1016,6 +1018,12 @@ public abstract class AbstractSubspecies {
 		} 
                 if (materialSubspecies) {
                         body.setBodyMaterial(subspeciesBodyMaterial);
+			AbstractBodyCoveringType eyeCovering;
+			Colour newEyeColour;
+
+			eyeCovering = BodyCoveringType.getMaterialBodyCoveringType(subspeciesBodyMaterial, BodyCoveringCategory.EYE_IRIS);
+			newEyeColour = Util.randomItemFrom(eyeCovering.getNaturalColoursPrimary());
+			body.getCovering(eyeCovering, false).setPrimaryColour(newEyeColour);
                 }
 	}
 

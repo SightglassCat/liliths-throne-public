@@ -2131,10 +2131,11 @@ public class CharacterUtils {
 		}
 		
 		// Eye:
-		if(Math.random()<0.35f) {
-			if (character.getBodyMaterial() == BodyMaterial.FLESH) {
-				randomiseEyeColour(character);
-			}
+		if (Math.random()<0.35f && character.getBodyMaterial() == BodyMaterial.FLESH) {
+			randomiseEyeColour(character);
+		}
+		if (Math.random()<0.15f && character.getBodyMaterial() == BodyMaterial.FLESH) {
+			randomiseEyeColour(character);
 		}
 		// Face:
 		if(character.hasFetish(Fetish.FETISH_ORAL_GIVING) || character.getHistory()==Occupation.NPC_PROSTITUTE) {
@@ -2309,45 +2310,60 @@ public class CharacterUtils {
 	}
 	
 	public void randomiseEyeColour(GameCharacter character) {
-		AbstractBodyCoveringType eyeCovering = character.getEyeCovering();
-		Colour newEyeColour;
-		if(Math.random()<0.15) {
-			newEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
-		} else if (Math.random()<0.20) {
-			newEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
-		} else if (Math.random()<0.25) {
-			newEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
-		} else if (Math.random()<0.333) {
-			newEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
-		} else if (Math.random()<0.50) {
-			newEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
-		} else { 
-			newEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
-		}
-		if(Math.random()<0.03) {
-			Colour newSecondaryEyeColour;
+		if (character.getBodyMaterial() == BodyMaterial.FLESH) {
+			AbstractBodyCoveringType eyeCovering = character.getEyeCovering();
+			Colour newEyeColour;
 			if(Math.random()<0.15) {
-				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
+				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
 			} else if (Math.random()<0.20) {
-				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
+				newEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
 			} else if (Math.random()<0.25) {
-				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
+				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
 			} else if (Math.random()<0.333) {
-				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
+				newEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
 			} else if (Math.random()<0.50) {
-				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
+				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
 			} else { 
-				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
+				newEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
 			}
-			if (newSecondaryEyeColour != newEyeColour) {
-				character.setEyeCovering(new Covering(
-					eyeCovering, 
-					CoveringPattern.EYE_IRISES_HETEROCHROMATIC, 
-					newEyeColour, false, 
-					newSecondaryEyeColour, false));
+			if(Math.random()<0.03) {
+				Colour newSecondaryEyeColour;
+				if(Math.random()<0.15) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
+				} else if (Math.random()<0.20) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
+				} else if (Math.random()<0.25) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
+				} else if (Math.random()<0.333) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
+				} else if (Math.random()<0.50) {
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
+				} else { 
+					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
+				}
+				if (newSecondaryEyeColour != newEyeColour) {
+					character.setEyeCovering(new Covering(
+						eyeCovering, 
+						CoveringPattern.EYE_IRISES_HETEROCHROMATIC, 
+						newEyeColour, false, 
+						newSecondaryEyeColour, false));
+				}
+			} else {
+				character.setEyeCovering(new Covering(eyeCovering, newEyeColour));
 			}
-		} else {
-			character.setEyeCovering(new Covering(eyeCovering, newEyeColour));
+		} else if ( character.getBodyMaterial() == BodyMaterial.RUBBER
+			|| character.getBodyMaterial() == BodyMaterial.PLANT
+			|| character.getBodyMaterial() == BodyMaterial.FUNGUS) {
+			if(Math.random()<1f) {
+				AbstractBodyCoveringType eyeCovering;
+				Colour newEyeColour;
+
+				eyeCovering = BodyCoveringType.getMaterialBodyCoveringType(character.getBodyMaterial(), BodyCoveringCategory.EYE_IRIS);
+				newEyeColour = Util.randomItemFrom(eyeCovering.getNaturalColoursPrimary());
+				System.err.println(eyeCovering.getName(character));
+				System.err.println(newEyeColour.getName());
+				character.getCovering(eyeCovering).setPrimaryColour(newEyeColour);
+			}
 		}
 	}
 	
