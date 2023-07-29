@@ -51,6 +51,7 @@ import com.lilithsthrone.game.character.body.abstractTypes.AbstractFaceType;
 import com.lilithsthrone.game.character.body.abstractTypes.AbstractHairType;
 import com.lilithsthrone.game.character.body.abstractTypes.AbstractTailType;
 import com.lilithsthrone.game.character.body.coverings.AbstractBodyCoveringType;
+import com.lilithsthrone.game.character.body.coverings.BodyCoveringCategory;
 import com.lilithsthrone.game.character.body.coverings.BodyCoveringType;
 import com.lilithsthrone.game.character.body.coverings.Covering;
 import com.lilithsthrone.game.character.body.tags.BodyPartTag;
@@ -72,6 +73,7 @@ import com.lilithsthrone.game.character.body.types.VaginaType;
 import com.lilithsthrone.game.character.body.types.WingType;
 import com.lilithsthrone.game.character.body.valueEnums.AgeCategory;
 import com.lilithsthrone.game.character.body.valueEnums.BodyHair;
+import com.lilithsthrone.game.character.body.valueEnums.BodyMaterial;
 import com.lilithsthrone.game.character.body.valueEnums.BreastShape;
 import com.lilithsthrone.game.character.body.valueEnums.Capacity;
 import com.lilithsthrone.game.character.body.valueEnums.CoveringModifier;
@@ -2130,45 +2132,8 @@ public class CharacterUtils {
 		
 		// Eye:
 		if(Math.random()<0.35f) {
-			AbstractBodyCoveringType eyeCovering = character.getEyeCovering();
-			Colour newEyeColour;
-			if(Math.random()<0.15) {
-				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
-			} else if (Math.random()<0.20) {
-				newEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
-			} else if (Math.random()<0.25) {
-				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
-			} else if (Math.random()<0.333) {
-				newEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
-			} else if (Math.random()<0.50) {
-				newEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
-			} else { 
-				newEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
-			}
-			if(Math.random()<0.03) {
-				Colour newSecondaryEyeColour;
-				if(Math.random()<0.15) {
-					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
-				} else if (Math.random()<0.20) {
-					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
-				} else if (Math.random()<0.25) {
-					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
-				} else if (Math.random()<0.333) {
-					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
-				} else if (Math.random()<0.50) {
-					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
-				} else { 
-					newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
-				}
-				if (newSecondaryEyeColour != newEyeColour) {
-					character.setEyeCovering(new Covering(
-						eyeCovering, 
-						CoveringPattern.EYE_IRISES_HETEROCHROMATIC, 
-						newEyeColour, false, 
-						newSecondaryEyeColour, false));
-				}
-			} else {
-				character.setEyeCovering(new Covering(eyeCovering, newEyeColour));
+			if (character.getBodyMaterial() == BodyMaterial.FLESH) {
+				randomiseEyeColour(character);
 			}
 		}
 		// Face:
@@ -2341,6 +2306,49 @@ public class CharacterUtils {
 		int count = baseCount + Util.random.nextInt(variation-baseCount+1);
 		
 		return Math.max(1, (int)(years*count));
+	}
+	
+	public void randomiseEyeColour(GameCharacter character) {
+		AbstractBodyCoveringType eyeCovering = character.getEyeCovering();
+		Colour newEyeColour;
+		if(Math.random()<0.15) {
+			newEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
+		} else if (Math.random()<0.20) {
+			newEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
+		} else if (Math.random()<0.25) {
+			newEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
+		} else if (Math.random()<0.333) {
+			newEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
+		} else if (Math.random()<0.50) {
+			newEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
+		} else { 
+			newEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
+		}
+		if(Math.random()<0.03) {
+			Colour newSecondaryEyeColour;
+			if(Math.random()<0.15) {
+				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalIrisColours);
+			} else if (Math.random()<0.20) {
+				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeIrisColours);
+			} else if (Math.random()<0.25) {
+				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalDemonIrisColours);
+			} else if (Math.random()<0.333) {
+				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyeDemonIrisColours);
+			} else if (Math.random()<0.50) {
+				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.naturalPredatorIrisColours);
+			} else { 
+				newSecondaryEyeColour = Util.randomItemFrom(ColourListPresets.dyePredatorIrisColours);
+			}
+			if (newSecondaryEyeColour != newEyeColour) {
+				character.setEyeCovering(new Covering(
+					eyeCovering, 
+					CoveringPattern.EYE_IRISES_HETEROCHROMATIC, 
+					newEyeColour, false, 
+					newSecondaryEyeColour, false));
+			}
+		} else {
+			character.setEyeCovering(new Covering(eyeCovering, newEyeColour));
+		}
 	}
 	
 	public void generateAndApplySexCounts(GameCharacter character) {
