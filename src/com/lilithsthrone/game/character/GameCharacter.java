@@ -19869,6 +19869,8 @@ public abstract class GameCharacter implements XMLSaving {
 		
 		restingLust += this.getAttributeValue(Attribute.RESTING_LUST);
 		
+		restingLust = Math.max(0, restingLust);
+		
 		for(AbstractClothing c : this.getClothingCurrentlyEquipped()) {
 			if(c.isVibrator()) {
 				switch(c.getVibratorIntensity()) {
@@ -19887,7 +19889,7 @@ public abstract class GameCharacter implements XMLSaving {
 			}
 		}
 		
-		return Math.max(0, Math.min(restingLust, Attribute.RESTING_LUST.getUpperLimit()));
+		return Math.min(restingLust, Attribute.RESTING_LUST.getUpperLimit());
 	}
 	
 	public String setLust(float lust) {
