@@ -502,8 +502,7 @@ public class LilayaHomeGeneric {
 				if(!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.daddyFound)
 						&& !Main.game.getPlayer().getFetishDesire(Fetish.FETISH_INCEST).isNegative()
 						&& Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.MAIN, Quest.MAIN_2_D_MEETING_A_LILIN) // Only trigger after having met Lyssieth
-						&& Main.game.isExtendedWorkTime()
-						&& time.getMonth().equals(Month.JUNE) && time.getDayOfMonth()>=14 && time.getDayOfMonth()<=21) { // Father's day timing, 3rd week of June
+						&& Main.game.isExtendedWorkTime()) {
 					return new Response("Enter", UtilText.parse(characterAnsweringDoor, "Knock on the door and wait for [npc.name] to let you in."), DaddyDialogue.FIRST_ENCOUNTER) {
 						@Override
 						public void effects() {
