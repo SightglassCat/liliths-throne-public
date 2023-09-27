@@ -4469,6 +4469,9 @@ public abstract class GameCharacter implements XMLSaving {
 		if (getDesiredJobs().contains(Occupation.NPC_PROSTITUTE)) {
 			occupations.add(Occupation.NPC_PROSTITUTE);
 		}
+		if (getDesiredJobs().contains(Occupation.NPC_FARMER)) {
+			occupations.add(Occupation.NPC_FARMER);
+		}
 		clearDesiredJobs();
 		this.setHistory(Util.randomItemFrom(occupations));
 	}
