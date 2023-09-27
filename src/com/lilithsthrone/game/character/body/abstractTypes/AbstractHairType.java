@@ -213,6 +213,8 @@ public abstract class AbstractHairType implements BodyPartTypeInterface {
                         return "slime-"+name;
                     case PLANT:
                         return "leaf-"+name;
+					case SILICONE:
+						return "silicone-"+name;
                     default:
                         return name;
                 }
@@ -225,6 +227,8 @@ public abstract class AbstractHairType implements BodyPartTypeInterface {
                         return "slime-"+namePlural;
                     case PLANT:
                         return "leaf-"+namePlural;
+					case SILICONE:
+						return "silicone-"+namePlural;
                     default:
                         return namePlural;
                 }

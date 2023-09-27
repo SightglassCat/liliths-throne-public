@@ -1249,9 +1249,9 @@ public class CharacterUtils {
 		boolean hasBreasts = startingGender.getGenderName().isHasBreasts();
 		boolean isSlime = species == null ? false : species.getRace().isMaterialRace();
 		boolean isHalfDemon = species == Subspecies.HALF_DEMON;
-                
-                AbstractSubspecies materialSubspecies = null;
-                if (isSlime) {materialSubspecies = species; }
+		
+		AbstractSubspecies materialSubspecies = null;
+		if (isSlime) {materialSubspecies = species; }
 		
 		if(isSlime || isHalfDemon) {
 			if(linkedCharacter==null || !linkedCharacter.isUnique()) {
@@ -1439,10 +1439,10 @@ public class CharacterUtils {
 				species.applySpeciesChanges(body);
 			}
 		}
-                if (materialSubspecies != null) {
-                    materialSubspecies.getRace().applyRaceChanges(body);
-                    materialSubspecies.applySpeciesChanges(body);
-                }
+		if (materialSubspecies != null) {
+			materialSubspecies.getRace().applyRaceChanges(body);
+			materialSubspecies.applySpeciesChanges(body);
+		}
                         
 		body.setSubspeciesOverride(null); // Set override to null so that it can be recalculated based on the final body type.
 		body.calculateRace(linkedCharacter);
@@ -1474,7 +1474,6 @@ public class CharacterUtils {
 				linkedCharacter.isNippleCrotchVirgin(),
 				linkedCharacter.isNippleVirgin(),
 				linkedCharacter.isPenisVirgin(),
-				linkedCharacter.isSecondUrethraVirgin(),
 				linkedCharacter.isSpinneretVirgin(),
 				linkedCharacter.isUrethraVirgin(),
 				linkedCharacter.isVaginaUrethraVirgin(),
@@ -1639,12 +1638,11 @@ public class CharacterUtils {
 			linkedCharacter.setNippleCrotchVirgin(virginities[3]);
 			linkedCharacter.setNippleVirgin(virginities[4]);
 			linkedCharacter.setPenisVirgin(virginities[5]);
-			linkedCharacter.setSecondUrethraVirgin(virginities[6]);
-			linkedCharacter.setSpinneretVirgin(virginities[7]);
-			linkedCharacter.setUrethraVirgin(virginities[8]);
-			linkedCharacter.setVaginaUrethraVirgin(virginities[9]);
-			linkedCharacter.setVaginaVirgin(virginities[10]);
-			linkedCharacter.setHymen(virginities[11]);
+			linkedCharacter.setSpinneretVirgin(virginities[6]);
+			linkedCharacter.setUrethraVirgin(virginities[7]);
+			linkedCharacter.setVaginaUrethraVirgin(virginities[8]);
+			linkedCharacter.setVaginaVirgin(virginities[9]);
+			linkedCharacter.setHymen(virginities[10]);
 		}
 		
 		return body;
