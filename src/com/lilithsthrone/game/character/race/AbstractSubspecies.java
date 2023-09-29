@@ -21,6 +21,8 @@ import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.AbstractAttribute;
 import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.body.Body;
+import com.lilithsthrone.game.character.body.coverings.AbstractBodyCoveringType;
+import com.lilithsthrone.game.character.body.coverings.BodyCoveringCategory;
 import com.lilithsthrone.game.character.body.coverings.BodyCoveringType;
 import com.lilithsthrone.game.character.body.coverings.Covering;
 import com.lilithsthrone.game.character.body.valueEnums.Affinity;
@@ -996,6 +998,12 @@ public abstract class AbstractSubspecies {
 		} 
                 if (materialSubspecies) {
                         body.setBodyMaterial(subspeciesBodyMaterial);
+			AbstractBodyCoveringType eyeCovering;
+			Colour newEyeColour;
+
+			eyeCovering = BodyCoveringType.getMaterialBodyCoveringType(subspeciesBodyMaterial, BodyCoveringCategory.EYE_IRIS);
+			newEyeColour = Util.randomItemFrom(eyeCovering.getNaturalColoursPrimary());
+			body.getCovering(eyeCovering, false).setPrimaryColour(newEyeColour);
                 }
 	}
 
@@ -1212,6 +1220,12 @@ public abstract class AbstractSubspecies {
 			} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 				
+			} else if (fatherSubspecies.isMaterialSubspecies()) {
+				Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherHalfDemonSubspecies, true);
+				if (Math.random()<0.2) {
+					body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+				}
+				return body;
 			} else {
 				return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, fatherSubspecies, true);
 			}
@@ -1224,6 +1238,10 @@ public abstract class AbstractSubspecies {
 					} else {
 						return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 					}
+				} else if (fatherSubspecies.isMaterialSubspecies()) {
+					Body body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+					body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 				}
@@ -1242,6 +1260,12 @@ public abstract class AbstractSubspecies {
 				} else if(fatherSubspecies==Subspecies.IMP || fatherSubspecies==Subspecies.IMP_ALPHA) {
 					return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 					
+				} else if (fatherSubspecies.isMaterialSubspecies()) {
+					Body body = Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
+                                        if (Math.random()<0.5) {
+                                                body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+                                        }
+					return body;
 				} else {
 					return Main.game.getCharacterUtils().generateHalfDemonBody(linkedCharacter, startingGender, motherHalfDemonSubspecies, true);
 				}
@@ -1251,7 +1275,17 @@ public abstract class AbstractSubspecies {
 			if(fatherSubspecies==Subspecies.IMP) {
 				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 			} else {
-				return Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+                                Body body;
+				if (Math.random() < 0.2) {
+					body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
+				}
+				else {
+					body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
+				}
+                                if (fatherSubspecies.isMaterialSubspecies() && Math.random()<0.8) {
+                                        body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+                                }
+                                return body;
 			}
 			
 		} else {
@@ -1371,7 +1405,7 @@ public abstract class AbstractSubspecies {
 	}
  	
 	/**
-	 * @param   The character whose subspecies's name is to be returned. Can pass in null.
+	 * @param   The character whose subspecies's name is to be returned. Can pass in null.
 	 * @param body
 	 * @return  The singular name of this character's subspecies.
 	 */
@@ -1416,7 +1450,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose subspecies's pluralised name is to be returned. Can pass in null.
+	 * @param   The character whose subspecies's pluralised name is to be returned. Can pass in null.
 	 * @param body
 	 * @return  The plural name of this character's subspecies.
 	 */
@@ -1461,7 +1495,7 @@ public abstract class AbstractSubspecies {
 	}
 	
 	/**
-	 * @param   The character whose male subspecies name is to be returned. Can pass in null.
+	 * @param   The character whose male subspecies name is to be returned. Can pass in null.
 	 * @param body
 	 * @return  The singular male name of this character's subspecies.
 	 */
@@ -1506,7 +1540,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose female subspecies name is to be returned. Can pass in null.
+	 * @param   The character whose female subspecies name is to be returned. Can pass in null.
 	 * @param body
 	 * @return  The singular female name of this character's subspecies.
 	 */
@@ -1551,7 +1585,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose male subspecies's pluralised name is to be returned. Can pass in null.
+	 * @param   The character whose male subspecies's pluralised name is to be returned. Can pass in null.
 	 * @param body
 	 * @return  The plural male name of this character's subspecies.
 	 */
@@ -1596,7 +1630,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose female subspecies's pluralised name is to be returned. Can pass in null.
+	 * @param   The character whose female subspecies's pluralised name is to be returned. Can pass in null.
 	 * @param body
 	 * @return  The plural female name of this character's subspecies.
 	 */
@@ -2329,17 +2363,17 @@ public abstract class AbstractSubspecies {
 	public int getBaseSlaveValue(GameCharacter character) {
 		return baseSlaveValue;
 	}
-        
-        public boolean isMaterialSubspecies() {
-                return materialSubspecies;
-        }
-        
-        public BodyMaterial getSubspeciesBodyMaterial() {
-                if (isMaterialSubspecies()) {
-                        return subspeciesBodyMaterial;
-                }
-                return null;
-        }
+	
+	public boolean isMaterialSubspecies() {
+			return materialSubspecies;
+	}
+	
+	public BodyMaterial getSubspeciesBodyMaterial() {
+			if (isMaterialSubspecies()) {
+					return subspeciesBodyMaterial;
+			}
+			return BodyMaterial.FLESH;
+	}
 	
 	public static Map<AbstractSubspecies, Integer> getGenericSexPartnerSubspeciesMap(Gender gender, AbstractSubspecies... subspeciesToExclude) {
 		Map<AbstractSubspecies, Integer> availableRaces = new HashMap<>();
