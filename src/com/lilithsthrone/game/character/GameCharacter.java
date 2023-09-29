@@ -30281,12 +30281,9 @@ public abstract class GameCharacter implements XMLSaving {
 				case STONE:
 				case WATER:
 				case SLIME:
-<<<<<<< HEAD
 				case PLANT:
 				case FUNGUS:
-=======
 				case SILICONE:
->>>>>>> innoxia
 					return body.getCoverings().get(BodyCoveringType.getMaterialBodyCoveringType(this.getBodyMaterial(), bodyCoveringType.getCategory()));
 				case FLESH:
 			}
