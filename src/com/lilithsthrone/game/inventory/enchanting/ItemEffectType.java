@@ -2586,7 +2586,7 @@ public class ItemEffectType {
 								return Util.newArrayListOfValues("Changes the target's body material to flesh.");
 							}
 							@Override
-							public String itemEffectOverride(TFModifier primaryModifier, TFModifier secondaryModifier, TFPotency potency, int limit, GameCharacter user, GameCharacter target, ItemEffectTimer timer) {D
+							public String itemEffectOverride(TFModifier primaryModifier, TFModifier secondaryModifier, TFPotency potency, int limit, GameCharacter user, GameCharacter target, ItemEffectTimer timer) {
 								return getAssociatedRace().getRacialBodyMaterialSet().contains(target.getBodyMaterial())
 										? target.setBodyMaterial(BodyMaterial.FLESH)
 										: "<p style='margin-bottom:0; padding-bottom:0;'>" +

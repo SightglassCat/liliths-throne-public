@@ -5580,6 +5580,8 @@ public class Subspecies {
 			Nocturnality.CATHEMERAL,
 			"[npc.NameIsFull] an extremely realistic-looking, autonomous sex doll, created from arcane-infused silicone at the shop 'Lovienne's Luxuries'."
 					+ " [npc.Her] artificial body and the nature of [npc.her] arcane-powered automation grants [npc.herHim] numerous characteristics.",
+			"[npc.NameIsFull] an extremely realistic-looking, autonomous sex doll, created from arcane-infused silicone at the shop 'Lovienne's Luxuries'."
+					+ " [npc.Her] artificial body and the nature of [npc.her] arcane-powered automation grants [npc.herHim] numerous characteristics.",
 			Util.newHashMapOfValues(),
 			Util.newArrayListOfValues(
 					"[style.boldExcellent(Doll-specific perk tree)]",

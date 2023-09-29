@@ -6557,12 +6557,6 @@ public class Body implements XMLSaving {
 					
 					for(BodyCoveringCategory cat : BodyCoveringCategory.values()) {
 						if(cat.isInfluencedByMaterialType()) {
-<<<<<<< HEAD
-							AbstractBodyCoveringType slimeCovering = BodyCoveringType.getMaterialBodyCoveringType(mat, cat);
-                                                        coverings.put(slimeCovering,
-									new Covering(slimeCovering,
-											slimeCovering.getNaturalPatterns().entrySet().iterator().next().getKey(),
-=======
 							AbstractBodyCoveringType nonFleshCovering = BodyCoveringType.getMaterialBodyCoveringType(mat, cat);
 							CoveringPattern pattern = currentCovering.getPattern();
 							if(!nonFleshCovering.getAllPatterns().keySet().contains(pattern)) {
@@ -6577,7 +6571,6 @@ public class Body implements XMLSaving {
 									new Covering(nonFleshCovering,
 											pattern, //nonFleshCovering.getNaturalPatterns().entrySet().iterator().next().getKey(),
 											modifier,
->>>>>>> origin/innoxia
 											coverings.get(coreSlimeCovering).getPrimaryColour(),
 											false,
 											coverings.get(coreSlimeCovering).getPrimaryColour(),

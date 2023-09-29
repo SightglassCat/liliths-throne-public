@@ -27719,7 +27719,6 @@ public abstract class GameCharacter implements XMLSaving {
 			this.setNippleCrotchElasticity(7);
 			this.setFaceElasticity(7);
 			this.setUrethraElasticity(7);
-			this.setSecondUrethraElasticity(7);
 			this.setSpinneretElasticity(7);
 			this.setVaginaElasticity(7);
 			this.setVaginaUrethraElasticity(7);
