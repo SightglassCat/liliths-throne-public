@@ -54,6 +54,7 @@ import com.lilithsthrone.world.places.PlaceType;
 
 import com.lilithsthrone.game.character.body.valueEnums.BodyMaterial;
 import com.lilithsthrone.game.character.fetishes.Fetish;
+import com.lilithsthrone.utils.colours.BaseColour;
 
 /**
  * @since 0.4
@@ -1983,6 +1984,54 @@ public abstract class AbstractSubspecies {
 					getSecondaryColour(),
 					getTertiaryColour(),
 					"<div style='width:100%;height:100%;position:absolute;left:0;bottom:0;'>"+bookSVGString+"</div>");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void initBookSVGString(String strokeColour, List<String> fillColourCodes) {
+		try {
+			List<Colour> fillColours = new ArrayList();
+			for (String fcc : fillColourCodes) {
+				fillColours.add(new Colour(Util.newColour(fcc)));
+			}
+			if(this.isFromExternalFile()) {
+				List<String> lines = Files.readAllLines(Paths.get(bookPathName + ".svg"));
+				StringBuilder sb = new StringBuilder();
+				for(String line : lines) {
+					sb.append(line);
+				}
+				bookSVGString = sb.toString();
+				
+			} else {
+				InputStream is = this.getClass().getResourceAsStream(bookPathName + ".svg");
+				if(is==null) {
+					System.err.println("Error! Subspecies book icon file does not exist (Trying to read from '"+bookPathName+"')! (Code 1)");
+				}
+				bookSVGString = Util.inputStreamToString(is);
+				is.close();
+			}
+			
+			if (fillColours.size() >= 3){
+				bookSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
+					fillColours.get(0),
+					fillColours.get(1),
+					fillColours.get(2),
+					"<div style='width:100%;height:100%;position:absolute;left:0;bottom:0;'>"+bookSVGString+"</div>");
+			} else {
+				bookSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
+					colour,
+					getSecondaryColour(),
+					getTertiaryColour(),
+					"<div style='width:100%;height:100%;position:absolute;left:0;bottom:0;'>"+bookSVGString+"</div>");
+			}
+			List<Colour> targetColourList = Util.newArrayListOfValues(new Colour(Util.newColour(strokeColour)));
+			ColourReplacement replacement = new ColourReplacement(true, Util.newArrayListOfValues("#000000"), targetColourList, null);
+			bookSVGString = SvgUtil.colourReplacement(Subspecies.getIdFromSubspecies(this),
+				targetColourList,
+				Util.newArrayListOfValues(replacement),
+				bookSVGString
+				);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
