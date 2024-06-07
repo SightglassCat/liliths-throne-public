@@ -5782,10 +5782,14 @@ public class Subspecies {
 
 		@Override
 		public String getSVGStringDesaturated(GameCharacter character) {
-			if(character==null) {
-				return Subspecies.HUMAN.getDollSVGStringDesaturated(null);
+			if(character==null || character.getHalfDemonSubspecies()==null) {
+				return Subspecies.HUMAN.getSVGStringDesaturated(character);
 			}
-			return character.getBody().getFleshSubspecies().getDollSVGStringDesaturated(character);
+			AbstractSubspecies coreSubspecies = character.getHalfDemonSubspecies();
+			if(coreSubspecies==Subspecies.HALF_DEMON) {
+				coreSubspecies = Subspecies.HUMAN;
+			}
+			return coreSubspecies.getSVGStringDesaturated(character);
 		}
 
 		@Override
