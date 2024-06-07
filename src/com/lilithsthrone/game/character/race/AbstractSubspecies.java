@@ -124,7 +124,6 @@ public abstract class AbstractSubspecies {
 	protected String SVGStringUncoloured;
 	protected String SVGStringUncolouredNoBackground;
 	protected String SVGStringNoBackground;
-        protected String SVGStringUncolouredNoBackground;
 	protected String SVGStringDesaturated;
 	protected String slimeSVGString;
 	protected String dollSVGString;
@@ -1323,10 +1322,9 @@ public abstract class AbstractSubspecies {
 				else {
 					body = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP, RaceStage.GREATER);
 				}
-                                if (fatherSubspecies.isMaterialSubspecies() && Math.random()<0.8) {
-                                        body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
-                                }
-                                return body;
+				if (fatherSubspecies.isMaterialSubspecies() && Math.random()<0.8) {
+						body.setBodyMaterial(fatherSubspecies.getSubspeciesBodyMaterial());
+				}
 				preGeneratedBody = Main.game.getCharacterUtils().generateBody(linkedCharacter, startingGender, RacialBody.DEMON, Subspecies.IMP_ALPHA, RaceStage.GREATER);
 			}
 			
@@ -1451,8 +1449,7 @@ public abstract class AbstractSubspecies {
 	}
  	
 	/**
-	 * @param   The character whose subspecies's name is to be returned. Can pass in null.
-	 * @param body
+	 * @param body The character whose subspecies's name is to be returned. Can pass in null.
 	 * @return  The singular name of this character's subspecies.
 	 */
 	public String getName(Body body) {
@@ -1496,8 +1493,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose subspecies's pluralised name is to be returned. Can pass in null.
-	 * @param body
+	 * @param body The character whose subspecies's pluralised name is to be returned. Can pass in null.
 	 * @return  The plural name of this character's subspecies.
 	 */
 	public String getNamePlural(Body body) {
@@ -1541,8 +1537,7 @@ public abstract class AbstractSubspecies {
 	}
 	
 	/**
-	 * @param   The character whose male subspecies name is to be returned. Can pass in null.
-	 * @param body
+	 * @param body The character whose male subspecies name is to be returned. Can pass in null.
 	 * @return  The singular male name of this character's subspecies.
 	 */
 	public String getSingularMaleName(Body body) {
@@ -1586,8 +1581,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose female subspecies name is to be returned. Can pass in null.
-	 * @param body
+	 * @param body The character whose female subspecies name is to be returned. Can pass in null.
 	 * @return  The singular female name of this character's subspecies.
 	 */
 	public String getSingularFemaleName(Body body) {
@@ -1631,8 +1625,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose male subspecies's pluralised name is to be returned. Can pass in null.
-	 * @param body
+	 * @param body The character whose male subspecies's pluralised name is to be returned. Can pass in null.
 	 * @return  The plural male name of this character's subspecies.
 	 */
 	public String getPluralMaleName(Body body) {
@@ -1676,8 +1669,7 @@ public abstract class AbstractSubspecies {
 	}
 
 	/**
-	 * @param   The character whose female subspecies's pluralised name is to be returned. Can pass in null.
-	 * @param body
+	 * @param body The character whose female subspecies's pluralised name is to be returned. Can pass in null.
 	 * @return  The plural female name of this character's subspecies.
 	 */
 	public String getPluralFemaleName(Body body) {
