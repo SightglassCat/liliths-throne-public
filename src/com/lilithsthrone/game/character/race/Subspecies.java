@@ -14,6 +14,9 @@ import com.lilithsthrone.game.character.attributes.AbstractAttribute;
 import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.attributes.IntelligenceLevel;
 import com.lilithsthrone.game.character.body.Body;
+import com.lilithsthrone.game.character.body.FluidCum;
+import com.lilithsthrone.game.character.body.FluidGirlCum;
+import com.lilithsthrone.game.character.body.FluidMilk;
 import com.lilithsthrone.game.character.body.LegConfigurationAffinity;
 import com.lilithsthrone.game.character.body.Wing;
 import com.lilithsthrone.game.character.body.abstractTypes.AbstractFaceType;
@@ -23,6 +26,7 @@ import com.lilithsthrone.game.character.body.coverings.BodyCoveringType;
 import com.lilithsthrone.game.character.body.coverings.Covering;
 import com.lilithsthrone.game.character.body.types.EarType;
 import com.lilithsthrone.game.character.body.types.FaceType;
+import com.lilithsthrone.game.character.body.types.FluidType;
 import com.lilithsthrone.game.character.body.types.HairType;
 import com.lilithsthrone.game.character.body.types.HornType;
 import com.lilithsthrone.game.character.body.types.LegType;
@@ -260,6 +264,10 @@ public class Subspecies {
 		public boolean isWinged() {
 			return true;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 
 	// DEMON:
@@ -327,6 +335,10 @@ public class Subspecies {
 		public boolean isWinged() {
 			return true;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 	
 	public static AbstractSubspecies LILIN = new AbstractSubspecies(false,
@@ -391,6 +403,10 @@ public class Subspecies {
 		}
 		@Override
 		public boolean isWinged() {
+			return true;
+		}
+		@Override
+		public boolean isDoesNotAge() {
 			return true;
 		}
 	};
@@ -577,6 +593,10 @@ public class Subspecies {
 		public boolean isWinged() {
 			return true;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 	
 	public static AbstractSubspecies HALF_DEMON = new AbstractSubspecies(false,
@@ -735,6 +755,10 @@ public class Subspecies {
 		public boolean isWinged() {
 			return true;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 	
 	public static AbstractSubspecies IMP = new AbstractSubspecies(false,
@@ -815,6 +839,10 @@ public class Subspecies {
 		public boolean isWinged() {
 			return true;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 	
 	public static AbstractSubspecies IMP_ALPHA = new AbstractSubspecies(false,
@@ -893,6 +921,10 @@ public class Subspecies {
 		}
 		@Override
 		public boolean isWinged() {
+			return true;
+		}
+		@Override
+		public boolean isDoesNotAge() {
 			return true;
 		}
 	};
@@ -1936,6 +1968,10 @@ public class Subspecies {
 			}
 			return 0;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 
 	public static AbstractSubspecies FOX_ASCENDANT_ARCTIC = new AbstractSubspecies(false,
@@ -2063,6 +2099,10 @@ public class Subspecies {
 				}
 			}
 			return 0;
+		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
 		}
 	};
 	
@@ -2201,6 +2241,10 @@ public class Subspecies {
 				}
 			}
 			return 0;
+		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
 		}
 	};
 	
@@ -5594,6 +5638,7 @@ public class Subspecies {
 		}
 	};
 
+
 	// DOLLS:
 	public static AbstractSubspecies DOLL = new AbstractSubspecies(true,
 			10000,
@@ -5632,7 +5677,7 @@ public class Subspecies {
 					new Value<>(PerkCategory.ARCANE, 1)),
 			PresetColour.RACE_DOLL,
 			SubspeciesPreference.ZERO_NONE,
-			"A lifelike rubber doll, which has been enchanted so as to be able to move, speak, and obey commands.",
+			"A lifelike silicone doll, which has been enchanted so as to be able to move, speak, and obey commands.",
 			null,
 			Util.newHashMapOfValues(), null, Util.newArrayListOfValues(
 					SubspeciesFlag.HIDDEN_FROM_PREFERENCES),
@@ -5646,6 +5691,10 @@ public class Subspecies {
 		public void applySpeciesChanges(Body body) {
 			// Doll subspecies are set in the Main.game.getCharacterUtils().generateBody() method
 			body.setBodyMaterial(BodyMaterial.SILICONE);
+			body.getBreast().setMilk(new FluidMilk(FluidType.MILK_DOLL, false));
+			body.getBreastCrotch().setMilk(new FluidMilk(FluidType.MILK_DOLL, true));
+			body.getPenis().getTesticle().setCum(new FluidCum(FluidType.CUM_DOLL));
+			body.getVagina().setGirlcum(new FluidGirlCum(FluidType.GIRL_CUM_DOLL));
 		}
 		@Override
 		public String getName(Body body) {
@@ -5732,6 +5781,14 @@ public class Subspecies {
 		}
 
 		@Override
+		public String getSVGStringDesaturated(GameCharacter character) {
+			if(character==null) {
+				return Subspecies.HUMAN.getDollSVGStringDesaturated(null);
+			}
+			return character.getBody().getFleshSubspecies().getDollSVGStringDesaturated(character);
+		}
+
+		@Override
 		public int getSubspeciesWeighting(Body body, AbstractRace race) {
 			if(race==Race.DOLL) {
 				return 20_000; // Dolls should always be dolls, no matter their underlying subspecies
@@ -5743,6 +5800,10 @@ public class Subspecies {
 				return super.getFeralAttributes(body);
 			}
 			return body.getFleshSubspecies().getFeralAttributes(body);
+		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
 		}
 	};
 	
@@ -5841,6 +5902,10 @@ public class Subspecies {
 		public BodyMaterial getSubspeciesBodyMaterial() {
 			return BodyMaterial.FIRE;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 	
 	public static AbstractSubspecies ELEMENTAL_EARTH = new AbstractSubspecies(false,
@@ -5934,6 +5999,10 @@ public class Subspecies {
 		public BodyMaterial getSubspeciesBodyMaterial() {
 			return BodyMaterial.STONE;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 
 	public static AbstractSubspecies ELEMENTAL_WATER = new AbstractSubspecies(false,
@@ -6025,6 +6094,10 @@ public class Subspecies {
 		@Override
 		public BodyMaterial getSubspeciesBodyMaterial() {
 			return BodyMaterial.WATER;
+		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
 		}
 	};
 
@@ -6118,6 +6191,10 @@ public class Subspecies {
 		public BodyMaterial getSubspeciesBodyMaterial() {
 			return BodyMaterial.AIR;
 		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
+		}
 	};
 
 	public static AbstractSubspecies ELEMENTAL_ARCANE = new AbstractSubspecies(true,
@@ -6209,6 +6286,10 @@ public class Subspecies {
 		@Override
 		public BodyMaterial getSubspeciesBodyMaterial() {
 			return BodyMaterial.ARCANE;
+		}
+		@Override
+		public boolean isDoesNotAge() {
+			return true;
 		}
 	};
 
